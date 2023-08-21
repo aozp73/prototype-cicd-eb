@@ -1,0 +1,130 @@
+let modeCnt = 0
+window.addEventListener('scroll', function() {
+    let navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) { 
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
+
+function toggleEditMode() {
+    modeCnt += 1
+    if (modeCnt >= 2) {
+        location.reload();
+    }
+
+    const controls = document.querySelectorAll('.edit-controls');
+    controls.forEach(control => {
+        if (control.style.display === 'none') {
+            control.style.display = 'block';
+        } else {
+            control.style.display = 'none';
+        }
+    });
+}
+
+// 사진 미리보기 ~
+function previewImage(event, container_number) {
+    const reader = new FileReader();
+    const file = event.target.files[0];
+    
+    reader.onloadend = function() {
+        const imagePreview = document.querySelector('#image-preview-' + container_number);
+        imagePreview.classList.remove('blog-image-preview'); 
+        imagePreview.classList.add('blog-image-preview-change');
+        imagePreview.style.backgroundImage = 'url(' + reader.result + ')';
+        imagePreview.style.backgroundSize = '100% 100%';
+       
+        if (container_number === 'new') {
+             document.querySelector('.plus-icon').style.display = 'none'; 
+        }
+    }
+    
+    if (file) {
+        reader.readAsDataURL(file);
+    } else {
+        resetPreview();
+    }
+}
+// ~ 사진 미리보기
+
+function resetPreview() {
+    const imagePreview = document.querySelector('.blog-image-preview');
+    imagePreview.style.backgroundImage = 'none';
+    document.querySelector('.plus-icon').style.display = 'block';
+}
+
+// update ~
+function updateForm(event, container_number) {
+    let section = document.getElementById('container-' + container_number);
+    let heading = section.querySelector('#heading-' + container_number + ' h3').innerText;
+    let subheading = section.querySelector('#subheading-' + container_number + ' h4').innerText;
+    let content = section.querySelector('#content-' + container_number + ' p').innerText;
+
+    let backgroundImage = section.querySelector('.blog-image-preview-change').style.backgroundImage.slice(5, -2);
+    
+    section.innerHTML = `
+        <div class="mb-4">
+            <div class="mb-4">
+                <input type="text" class="form-control" id="postTitle-${container_number}" value="${heading}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-5">
+                <div class="blog-image-preview-change mb-3" id="image-preview-${container_number}" style="height: 261px; background-image: url('${backgroundImage}'); background-size: 100% 100%;" onclick="document.getElementById('imageInput-${container_number}').click();">
+                    <input type="file" id="imageInput-${container_number}" style="display: none;" onchange="previewImage(event, ${container_number})">
+                </div>
+            </div>
+            <div class="col-7">
+                <form id="postForm-${container_number}">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="postSubTitle-${container_number}" value="${subheading}">
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" id="postContent-${container_number}" rows="8">${content}</textarea>
+                    </div>
+                </form>
+                <div class="my-3 d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary" onclick="updatePost(${container_number})">수정완료</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function updatePost(container_number) {
+    let postTitle = document.getElementById('postTitle-' + container_number).value;
+    let postSubTitle = document.getElementById('postSubTitle-' + container_number).value;
+    let postContent = document.getElementById('postContent-' + container_number).value;
+
+    let backgroundImage = document.getElementById('image-preview-' + container_number).style.backgroundImage.slice(5, -2);
+    console.log("PK:",container_number)
+    console.log("Title:", postTitle);
+    console.log("Subtitle:", postSubTitle);
+    console.log("Content:", postContent);
+    console.log("Background Image URL:", backgroundImage);
+}
+// ~ update
+
+// add ~ 
+function addPost() {
+    const imagePreview = document.getElementById('image-preview-new');
+    const backgroundImage = imagePreview.style.backgroundImage.slice(5, -2); 
+
+    const postTitle = document.getElementById('postTitle-new').value;
+    const postSubTitle = document.getElementById('postSubTitle-new').value;
+    const postContent = document.getElementById('postContent-new').value;
+
+    console.log("Title:", postTitle);
+    console.log("Subtitle:", postSubTitle);
+    console.log("Content:", postContent);
+    console.log("Image URL:", backgroundImage);
+}
+// ~ add 
+
+// delete ~ 
+function deletePost(container_number) {
+    console.log(container_number);
+}
+// ~ delete 
