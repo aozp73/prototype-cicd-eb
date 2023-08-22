@@ -409,6 +409,6 @@
     <!-- 수정 Form Modal -->
 
 
-<script src="/js/project.js"></script>
+<script src="/js/myproject.js"></script>
     
 <%@ include file="layout/footer.jsp" %>

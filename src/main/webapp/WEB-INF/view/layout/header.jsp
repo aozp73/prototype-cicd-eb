@@ -37,7 +37,7 @@
                         <a class="nav-link" href="/resume">Resume</a>
                     </li>
                     <li class="nav-item me-4">
-                        <a class="nav-link" href="/project">Project</a>
+                        <a class="nav-link" href="/myproject">Project</a>
                     </li>
                     <li class="nav-item me-4">
                         <a class="nav-link" href="/skills">Skills</a>
