@@ -26,6 +26,13 @@
     z-index: 1000;
 }
 
+.logout-button {
+    position: fixed;
+    top: 90px;
+    right: 10px;
+    z-index: 1000;
+}
+
 
 /* resume (button) */
 .delete-btn {

@@ -50,6 +50,9 @@
                 <sec:authorize access="hasRole('ROLE_admin')">
                     <button type="button" class="btn btn-primary mb-2 ms-2 edit-button" onclick="toggleEditMode()">편집모드</button>
                 </sec:authorize>
+                <sec:authorize access="hasRole('ROLE_admin')">
+                    <a href="/auth/logout" class="btn btn-secondary btn-sm mb-2 ms-2 logout-button">Logout</a>
+                </sec:authorize>
                
 
             </div>
