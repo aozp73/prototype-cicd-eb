@@ -1,4 +1,4 @@
-package com.portfolio.portfolio_project.controller;
+package com.portfolio.portfolio_project.web.resume;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

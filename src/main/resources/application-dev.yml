@@ -16,12 +16,16 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 1234
+  # sql:
+  #   init:
+  #     mode: always
 
   data:
     mongodb:
       uri: mongodb://localhost:27017/portfolio
 
   jpa:
+    # defer-datasource-initialization: true
     open-in-view: false
     hibernate:
       # ddl-auto: create
@@ -33,3 +37,5 @@ spring:
   output:
     ansi:
       enabled: always
+
+name: ${MY.JWT}
