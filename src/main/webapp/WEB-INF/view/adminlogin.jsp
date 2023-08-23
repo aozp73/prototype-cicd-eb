@@ -11,15 +11,10 @@
                             Login
                         </div>
                         <div class="card-body">
-                            <form action="/auth/signin" method="POST">
-                                <c:if test="${param.error != null}">
-                                    <div class="alert alert-danger">
-                                        올바르지 않은 정보입니다.
-                                    </div>
-                                </c:if>
+                            <form>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email address</label>
-                                    <input type="email" name="username" class="form-control" id="email" aria-describedby="emailHelp" required>
+                                    <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Password</label>
@@ -30,7 +25,7 @@
                                         <input type="checkbox" class="form-check-input" id="remember">
                                         <label class="form-check-label" for="remember">Remember</label>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Login</button>
+                                    <button type="button" class="btn btn-primary" onclick="login()">Login</button>
                                 </div>
                             </form>
                         </div>
@@ -41,18 +36,6 @@
 
     </div>
 
+<script src="/js/adminlogin.js"></script>
 
-    <hr class="bg-secondary mb-5 mt-0">
-
-</body>
-<script>
-    window.addEventListener('scroll', function() {
-        let navbar = document.querySelector('.navbar');
-        if (window.scrollY > 50) { 
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
-</script>
-</html>
+<%@ include file="layout/footer.jsp" %>

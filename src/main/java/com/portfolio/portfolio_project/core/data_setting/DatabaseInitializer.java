@@ -28,7 +28,7 @@ public class DatabaseInitializer implements CommandLineRunner {
             User user = User.builder()
                     .email("aozp73@naver.com")
                     .password(encPassword)
-                    .role("admin")
+                    .role("ROLE_admin")
                     .createdAt(LocalDateTime.now())
                     .build();
             userRepository.save(user);
