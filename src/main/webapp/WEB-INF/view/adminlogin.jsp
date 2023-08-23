@@ -2,7 +2,6 @@
     
     <%@ include file="layout/header.jsp" %>    
 
-
     <div class="py-5" style="background-color: #F9F9F9; height: 700px;" id="main-container">
         <div class="container mt-5">
             <div class="row justify-content-center">
@@ -12,14 +11,19 @@
                             Login
                         </div>
                         <div class="card-body">
-                            <form>
+                            <form action="/auth/signin" method="POST">
+                                <c:if test="${param.error != null}">
+                                    <div class="alert alert-danger">
+                                        올바르지 않은 정보입니다.
+                                    </div>
+                                </c:if>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" required>
+                                    <input type="email" name="username" class="form-control" id="email" aria-describedby="emailHelp" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="password" required>
+                                    <input type="password" name="password" class="form-control" id="password" required>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <div class="mb-3 form-check">

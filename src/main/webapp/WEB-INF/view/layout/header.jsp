@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +47,10 @@
                         <a class="nav-link" href="/blog">TechBlog</a>
                     </li>
                 </ul>
-                <button type="button" class="btn btn-primary mb-2 ms-2 edit-button" onclick="toggleEditMode()">편집모드</button>
+                <sec:authorize access="hasRole('ROLE_admin')">
+                    <button type="button" class="btn btn-primary mb-2 ms-2 edit-button" onclick="toggleEditMode()">편집모드</button>
+                </sec:authorize>
+               
 
             </div>
         </div>
