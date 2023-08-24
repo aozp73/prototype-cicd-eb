@@ -1,9 +1,10 @@
 package com.portfolio.portfolio_project.domain.mongodb.resume.resume_academy_edu;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
 
 import org.hibernate.annotations.Comment;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,6 +15,8 @@ import lombok.Setter;
 @Setter
 @Document(collection = "resume_academy_edu_tb")
 public class ResumeAcademyEdu {
+// MongoDB는 @Comment, @Column 지원하지 않음
+// 가독성을 위해 작성
     @Id
     private String id;
 
@@ -36,4 +39,11 @@ public class ResumeAcademyEdu {
     @Comment("이력 페이지 - 기타내용")
     @Column(name = "academy_etc")
     private String academyEtc;
+
+    @Comment("이력 페이지 - 등록 시간")
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+    @Comment("이력 페이지 - 수정 시간")
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

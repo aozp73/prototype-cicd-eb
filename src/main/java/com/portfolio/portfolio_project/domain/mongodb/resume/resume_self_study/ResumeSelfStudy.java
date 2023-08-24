@@ -1,12 +1,14 @@
 package com.portfolio.portfolio_project.domain.mongodb.resume.resume_self_study;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 
 import org.hibernate.annotations.Comment;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +16,8 @@ import lombok.Setter;
 @Setter
 @Document(collection = "resume_self_study_tb")
 public class ResumeSelfStudy {
+// MongoDB는 @Comment, @Column 지원하지 않음
+// 가독성을 위해 작성
     @Id
     private String id;
 
@@ -32,4 +36,11 @@ public class ResumeSelfStudy {
     @Comment("이력 페이지 - 개인학습 블로깅 링크")
     @Column(name = "self_study_blogging_link")
     private String selfStudyBloggingLink;
+
+    @Comment("이력 페이지 - 등록 시간")
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+    @Comment("이력 페이지 - 수정 시간")
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }
