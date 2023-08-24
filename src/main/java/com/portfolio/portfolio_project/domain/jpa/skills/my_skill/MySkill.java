@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,10 +34,10 @@ public class MySkill {
     @Column(name = "skill")
     private String skill;
 
-    @ManyToOne    
+    @ManyToOne(fetch = FetchType.LAZY)
     @Comment("기술스택 페이지 - BackEnd, FrontEnd, DevOps, ETC 스킬코드")
     @JoinColumn(name = "my_skill_code_id")
-    private MySkillTypeCode mySkillCode;
+    private MySkillTypeCode mySkillTypeCode;
 
     @Comment("기술스택 페이지 - 등록 시간")
     @Column(name = "created_at")
