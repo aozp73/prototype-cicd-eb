@@ -21,7 +21,7 @@ import com.portfolio.portfolio_project.domain.jpa.myproject.my_project.MyProject
 import com.portfolio.portfolio_project.domain.jpa.myproject.my_project.MyProjectRepository;
 
 @DataJpaTest
-@TestPropertySource(locations = "classpath:application-test.yml")
+@TestPropertySource(properties = {"spring.config.location = classpath:application-test.yml"})
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class MyProjectRepositoryTest {
 

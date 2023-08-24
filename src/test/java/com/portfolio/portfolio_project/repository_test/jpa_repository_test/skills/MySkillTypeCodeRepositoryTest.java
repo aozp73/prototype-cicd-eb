@@ -20,7 +20,7 @@ import com.portfolio.portfolio_project.domain.jpa.skills.my_skill_type_code.MySk
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill_type_code.MySkillTypeCodeRepository;
 
 @DataJpaTest
-@TestPropertySource(locations = "classpath:application-test.yml")
+@TestPropertySource(properties = {"spring.config.location = classpath:application-test.yml"})
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class MySkillTypeCodeRepositoryTest {
 
@@ -35,7 +35,7 @@ public class MySkillTypeCodeRepositoryTest {
 
     @BeforeEach
     public void init() {
-        em.createNativeQuery("ALTER TABLE my_skill_type_tb AUTO_INCREMENT = 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE my_skill_type_code_tb AUTO_INCREMENT = 1").executeUpdate();
         setUp();
     }
 

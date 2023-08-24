@@ -21,7 +21,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-@Table(name = "my_skill_type_tb")
+@Table(name = "my_skill_type_code_tb")
 public class MySkillTypeCode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

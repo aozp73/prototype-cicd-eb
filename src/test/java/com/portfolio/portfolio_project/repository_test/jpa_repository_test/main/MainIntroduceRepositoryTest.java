@@ -20,7 +20,7 @@ import com.portfolio.portfolio_project.domain.jpa.main.main_introduce.MainIntrod
 import com.portfolio.portfolio_project.domain.jpa.main.main_introduce.MainIntroduceRepository;
 
 @DataJpaTest
-@TestPropertySource(locations = "classpath:application-test.yml")
+@TestPropertySource(properties = {"spring.config.location = classpath:application-test.yml"})
 @AutoConfigureTestDatabase(replace = Replace.NONE) // 실제 테이터베이스 사용 (테스트용 스키마 생성)
 public class MainIntroduceRepositoryTest {
 

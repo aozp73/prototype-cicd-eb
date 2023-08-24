@@ -20,7 +20,7 @@ import com.portfolio.portfolio_project.domain.jpa.myblog.my_blog.MyBlog;
 import com.portfolio.portfolio_project.domain.jpa.myblog.my_blog.MyBlogRepository;
 
 @DataJpaTest
-@TestPropertySource(locations = "classpath:application-test.yml")
+@TestPropertySource(properties = {"spring.config.location = classpath:application-test.yml"})
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class MyBlogRepositoryTest {
 
