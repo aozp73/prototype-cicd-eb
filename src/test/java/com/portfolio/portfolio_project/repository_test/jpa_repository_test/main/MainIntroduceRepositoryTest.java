@@ -6,8 +6,6 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 
-import org.aspectj.lang.annotation.After;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,7 +52,7 @@ public class MainIntroduceRepositoryTest {
 
         if (optionalMainIntroduce.isPresent()) {
             MainIntroduce mainIntroduce = optionalMainIntroduce.get();
-            String updatedTitle = "Title 수정 테스트";
+            String updatedTitle = "update 테스트";
             mainIntroduce.setTitle(updatedTitle);
             
             MainIntroduce updatedMainIntroduce = entityManager.merge(mainIntroduce);
