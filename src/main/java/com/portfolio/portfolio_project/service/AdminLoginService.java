@@ -7,11 +7,10 @@ import javax.transaction.Transactional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.portfolio.portfolio_project.core.exception.CustomException;
 import com.portfolio.portfolio_project.core.exception.Exception400;
 import com.portfolio.portfolio_project.core.jwt.MyJwtProvider;
-import com.portfolio.portfolio_project.domain.user.User;
-import com.portfolio.portfolio_project.domain.user.UserRepository;
+import com.portfolio.portfolio_project.domain.jpa.user.User;
+import com.portfolio.portfolio_project.domain.jpa.user.UserRepository;
 import com.portfolio.portfolio_project.web.adminlogin.InAdminLogin;
 
 import lombok.RequiredArgsConstructor;

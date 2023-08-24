@@ -6,7 +6,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.portfolio.portfolio_project.domain.user.User;
+import com.portfolio.portfolio_project.domain.jpa.user.User;
 
 import lombok.Data;
 
