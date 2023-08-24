@@ -1,4 +1,4 @@
-package com.portfolio.portfolio_project.domain.resume.resume_school_edu;
+package com.portfolio.portfolio_project.domain.mongodb.resume.resume_school_edu;
 
 import java.time.LocalDate;
 import javax.persistence.Id;

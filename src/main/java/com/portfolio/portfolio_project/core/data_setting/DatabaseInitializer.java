@@ -7,8 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.portfolio.portfolio_project.domain.user.User;
-import com.portfolio.portfolio_project.domain.user.UserRepository;
+import com.portfolio.portfolio_project.domain.jpa.user.User;
+import com.portfolio.portfolio_project.domain.jpa.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

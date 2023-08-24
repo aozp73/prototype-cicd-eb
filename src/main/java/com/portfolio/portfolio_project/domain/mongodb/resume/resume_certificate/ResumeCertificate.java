@@ -1,4 +1,4 @@
-package com.portfolio.portfolio_project.domain.resume.resume_certificate;
+package com.portfolio.portfolio_project.domain.mongodb.resume.resume_certificate;
 
 import java.time.LocalDate;
 import javax.persistence.Id;

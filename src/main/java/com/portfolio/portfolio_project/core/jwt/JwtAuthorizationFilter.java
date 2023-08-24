@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.portfolio.portfolio_project.core.config.PrincipalDetails;
-import com.portfolio.portfolio_project.domain.user.User;
+import com.portfolio.portfolio_project.domain.jpa.user.User;
 
 import lombok.extern.slf4j.Slf4j;
 

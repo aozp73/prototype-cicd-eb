@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.portfolio.portfolio_project.domain.user.User;
-import com.portfolio.portfolio_project.domain.user.UserRepository;
+import com.portfolio.portfolio_project.domain.jpa.user.User;
+import com.portfolio.portfolio_project.domain.jpa.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

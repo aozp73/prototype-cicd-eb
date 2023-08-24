@@ -1,4 +1,4 @@
-package com.portfolio.portfolio_project.domain.resume.resume_academy_edu;
+package com.portfolio.portfolio_project.domain.mongodb.resume.resume_academy_edu;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

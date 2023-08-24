@@ -1,4 +1,4 @@
-package com.portfolio.portfolio_project.domain.user;
+package com.portfolio.portfolio_project.domain.jpa.user;
 
 import java.time.LocalDateTime;
 
