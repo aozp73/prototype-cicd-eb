@@ -8,11 +8,14 @@ import org.springframework.data.annotation.Id;
 
 import org.hibernate.annotations.Comment;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @Document(collection = "resume_school_edu_tb")
 public class ResumeSchoolEdu {
 // MongoDB는 @Comment, @Column 지원하지 않음
