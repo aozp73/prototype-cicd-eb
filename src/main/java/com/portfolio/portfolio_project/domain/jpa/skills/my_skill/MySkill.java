@@ -1,5 +1,7 @@
 package com.portfolio.portfolio_project.domain.jpa.skills.my_skill;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,12 +29,19 @@ public class MySkill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Comment("Java, HTML, Docker 등 스킬")
+    @Comment("기술스택 페이지 - Java, HTML, Docker 등 스킬")
     @Column(name = "skill")
     private String skill;
 
     @ManyToOne    
-    @Comment("BackEnd, FrontEnd, DevOps, ETC 스킬코드")
+    @Comment("기술스택 페이지 - BackEnd, FrontEnd, DevOps, ETC 스킬코드")
     @JoinColumn(name = "my_skill_code_id")
     private MySkillTypeCode mySkillCode;
+
+    @Comment("기술스택 페이지 - 등록 시간")
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+    @Comment("기술스택 페이지 - 수정 시간")
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

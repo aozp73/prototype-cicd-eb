@@ -1,5 +1,8 @@
 package com.portfolio.portfolio_project.domain.jpa.myproject.my_project_role;
 
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -29,12 +32,19 @@ public class MyProjectRole {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Comment("어떤 프로젝트의 Role인지")
+    @Comment("프로젝트 페이지 - 어떤 프로젝트의 Role인지")
     @JoinColumn(name = "project_id")
     private MyProject project;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Comment("해당 프로젝트의 roleCode가 무엇인지")
+    @Comment("프로젝트 페이지 - 해당 프로젝트의 roleCode가 무엇인지")
     @JoinColumn(name = "role_code_id")
     private MyProjectRoleCode roleCode;
+
+    @Comment("프로젝트 페이지 - 등록 시간")
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+    @Comment("프로젝트 페이지 - 수정 시간")
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

@@ -1,6 +1,7 @@
 package com.portfolio.portfolio_project.domain.jpa.myproject.my_project;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -62,5 +63,12 @@ public class MyProject {
     @Comment("프로젝트 페이지 - S3 또는 저장된 장소")
     @Column(name = "individual_performance_img_url")
     private String individualPerformanceImgUrl;
+
+    @Comment("프로젝트 페이지 - 등록 시간")
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+    @Comment("프로젝트 페이지 - 수정 시간")
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
 }

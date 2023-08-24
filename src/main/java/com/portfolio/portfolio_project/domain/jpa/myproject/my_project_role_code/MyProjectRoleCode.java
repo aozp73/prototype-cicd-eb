@@ -28,7 +28,7 @@ public class MyProjectRoleCode {
     @Column(name = "id")
     private Long id;
 
-    @Comment("BackEnd, FrontEnd, DevOps")
+    @Comment("프로젝트 페이지 - BackEnd, FrontEnd, DevOps")
     @Enumerated(EnumType.STRING)
     @Column(name = "project_role")
     private ProjectRole projectRole;

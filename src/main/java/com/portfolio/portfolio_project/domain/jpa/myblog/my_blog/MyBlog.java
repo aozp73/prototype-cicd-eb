@@ -1,5 +1,7 @@
 package com.portfolio.portfolio_project.domain.jpa.myblog.my_blog;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,4 +41,11 @@ public class MyBlog {
     @Comment("블로그 - S3 또는 저장된 장소")
     @Column(name = "blog_img_url")
     private String blogImgUrl;
+
+    @Comment("블로그 - 등록 시간")
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+    @Comment("블로그 - 수정 시간")
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }
