@@ -20,7 +20,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://localhost:27017/portfolio
+      uri: mongodb://localhost:27017/portfolio_test
 
   jpa:
     open-in-view: false
