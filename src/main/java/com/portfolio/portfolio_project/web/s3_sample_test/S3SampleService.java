@@ -24,10 +24,10 @@ public class S3SampleService {
 
     public void S3SampleTest(UpdateInDTO updateInDTO) throws IOException{
         MultipartFile multipartFile2 = BASE64DecodedMultipartFile
-                .convertBase64ToMultipartFile(updateInDTO.getImgBase64());
+                .convertBase64ToMultipartFile(updateInDTO.getImgBase64(), updateInDTO.fileName, updateInDTO.fileContentType);
 
         List<String> nameAndUrl = S3Utils.uploadFile(multipartFile2, "main_introduce", bucket, amazonS3Client);
-        System.out.println("테스트 : " + nameAndUrl.get(0));
-        System.out.println("테스트 : " + nameAndUrl.get(1));
+        System.out.println("name : " + nameAndUrl.get(0));
+        System.out.println("Url : " + nameAndUrl.get(1));
     }
 }

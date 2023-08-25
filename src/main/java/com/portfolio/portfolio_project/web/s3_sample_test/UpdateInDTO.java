@@ -7,4 +7,6 @@ import lombok.Setter;
 @Setter
 public class UpdateInDTO {
     String imgBase64;
+    String fileName;
+    String fileContentType;
 }

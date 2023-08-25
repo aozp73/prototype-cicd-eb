@@ -98,13 +98,29 @@ function addPost(){
     postTitle = $(`#postTitle-new`).val()
     postContent = $(`#postContent-new`).val()
     let input = document.getElementById(`fileInput-new`);
+    let file = input.files[0];
+
     console.log(postTitle)
     console.log(postContent)
 
-    readFileAsDataURL(input, function(dataURL) {
-        let jsonPayload = JSON.stringify(dataURL);
-        console.log(jsonPayload)    
-    });
+    if (file) {
+        let imageName = file.name;
+        let contentType = file.type;
+
+        console.log("Image Name:", imageName);
+        console.log("Content Type:", contentType);
+
+        // 파일을 Base64 문자열로 읽습니다.
+        readFileAsDataURL(input, function (dataURL) {
+            let jsonPayload = JSON.stringify(dataURL);
+            console.log(jsonPayload);
+
+            // ajax 통신 코드
+
+        });
+    } else {
+        alert("파일이 선택되지 않았습니다.");
+    }
 
     // ajax 통신 이 후 추가 (PK값에 따라 사진 배치 다르게)
     inner = `

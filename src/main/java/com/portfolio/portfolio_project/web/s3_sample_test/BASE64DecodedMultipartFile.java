@@ -12,7 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.portfolio.portfolio_project.core.exception.Exception400;
 
 public class BASE64DecodedMultipartFile implements MultipartFile {
-    public static MultipartFile convertBase64ToMultipartFile(String base64)
+
+    public static MultipartFile convertBase64ToMultipartFile(String base64, String fileName, String contentType) 
             throws IOException {
         byte[] decodedData;
         try {
@@ -22,32 +23,35 @@ public class BASE64DecodedMultipartFile implements MultipartFile {
             // 하드 디스크는 이진데이터를 읽어 저장하므로 base64 문자셋 -> 이진 데이터 디코딩
             decodedData = Base64.getDecoder().decode(base64Data);
             // byte[] decodedBytes = Base64.decodeBase64(base64);
-
         } catch (Exception e) {
             throw new Exception400("해당 이미지는 올바른 base64 문자열이 아닙니다.");
         }
-        return new BASE64DecodedMultipartFile(decodedData);
+        return new BASE64DecodedMultipartFile(decodedData, fileName, contentType);
     }
 
     private final byte[] imgContent;
+    private final String fileName;
+    private final String contentType;
 
-    public BASE64DecodedMultipartFile(byte[] imgContent) {
+    public BASE64DecodedMultipartFile(byte[] imgContent, String fileName, String contentType) {
         this.imgContent = imgContent;
+        this.fileName = fileName;
+        this.contentType = contentType;
     }
 
     @Override
     public String getName() {
-        return "base64.jpg";
+        return fileName;
     }
 
     @Override
     public String getOriginalFilename() {
-        return "base64.jpg";
+        return fileName;
     }
 
     @Override
     public String getContentType() {
-        return "image/jpeg";
+        return contentType;
     }
 
     @Override

@@ -12,13 +12,12 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.portfolio.portfolio_project.core.exception.Exception400;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class S3Utils {
-
-    private final AmazonS3Client amazonS3Client;
 
     public static List<String> uploadFile(MultipartFile multipartFile, String keyword, String bucket,
             AmazonS3Client amazonS3Client) throws IOException {
@@ -31,10 +30,10 @@ public class S3Utils {
         try (InputStream inputStream = multipartFile.getInputStream()) {
             amazonS3Client.putObject(new PutObjectRequest(bucket, key, inputStream, objectMetadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
+        } catch (IOException e) {
+            throw new Exception400("S3 업로드 중 오류 발생" +  e.getMessage());
         }
-
         String storeFileUrl = amazonS3Client.getUrl(bucket, key).toString();
-
         List<String> nameAndUrl = new ArrayList<>();
         nameAndUrl.add(key);
         nameAndUrl.add(storeFileUrl);
@@ -44,8 +43,9 @@ public class S3Utils {
 
     public static String makeStoreFileName(String originalFilename) {
         int index = originalFilename.lastIndexOf(".");
+        String name = originalFilename.substring(0, index);
         String ext = originalFilename.substring(index + 1);
-        String storeFileName = UUID.randomUUID() + "." + ext;
+        String storeFileName = name + "_" + UUID.randomUUID() + "." + ext;
 
         return storeFileName;
     };

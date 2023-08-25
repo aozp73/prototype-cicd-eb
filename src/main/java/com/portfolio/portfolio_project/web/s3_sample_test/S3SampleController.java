@@ -18,8 +18,6 @@ public class S3SampleController {
     public String s3test(@RequestBody UpdateInDTO updateInDTO) throws IOException {
 
         s3SampleService.S3SampleTest(updateInDTO);
-
         return "a";
     }
-
 }
