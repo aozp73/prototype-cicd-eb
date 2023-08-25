@@ -102,7 +102,7 @@
 
         <!-- 새 글 쓰기 -->
         <div class="edit-controls" style="display: none;">
-            <div class="container mt-5">
+            <div class="container mt-5" style="width: 1100px">
 
                 <form id="postForm">
                     <div class="mb-3">
@@ -111,7 +111,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="postContent" class="form-label">내용</label>
-                        <textarea class="form-control" id="postContent-new" rows="5" placeholder="내용을 입력하세요"></textarea>
+                        <textarea class="form-control" id="postContent-new" rows="7" placeholder="내용을 입력하세요"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="postImage" class="form-label">사진 업로드</label>
