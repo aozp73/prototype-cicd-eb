@@ -110,7 +110,7 @@ function addPost(){
         console.log("Image Name:", imageName);
         console.log("Content Type:", contentType);
 
-        // 파일을 Base64 문자열로 읽습니다.
+        // 파일을 Base64 문자열로 읽기
         readFileAsDataURL(input, function (dataURL) {
             let jsonPayload = JSON.stringify(dataURL);
             console.log(jsonPayload);

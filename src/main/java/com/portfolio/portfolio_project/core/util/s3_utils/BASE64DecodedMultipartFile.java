@@ -1,4 +1,4 @@
-package com.portfolio.portfolio_project.web.s3_sample_test;
+package com.portfolio.portfolio_project.core.util.s3_utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

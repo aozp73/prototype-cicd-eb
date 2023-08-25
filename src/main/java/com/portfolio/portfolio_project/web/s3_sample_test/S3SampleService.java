@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.portfolio.portfolio_project.core.util.s3_utils.BASE64DecodedMultipartFile;
+import com.portfolio.portfolio_project.core.util.s3_utils.S3Utils;
 
 import lombok.RequiredArgsConstructor;
 
