@@ -98,15 +98,13 @@ function addPost(){
     postTitle = $(`#postTitle-new`).val()
     postContent = $(`#postContent-new`).val()
     let input = document.getElementById(`fileInput-new`);
-    
+    console.log(postTitle)
+    console.log(postContent)
+
     readFileAsDataURL(input, function(dataURL) {
-        let imgData = {
-            "image": dataURL
-        };
-        let jsonPayload = JSON.stringify(imgData);
+        let jsonPayload = JSON.stringify(dataURL);
         console.log(jsonPayload)    
     });
-
 
     // ajax 통신 이 후 추가 (PK값에 따라 사진 배치 다르게)
     inner = `
