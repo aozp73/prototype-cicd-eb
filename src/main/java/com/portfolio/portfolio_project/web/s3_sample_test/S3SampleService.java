@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 
 import lombok.RequiredArgsConstructor;
 
+@Service
 @RequiredArgsConstructor
 public class S3SampleService {
 
@@ -24,7 +26,7 @@ public class S3SampleService {
         MultipartFile multipartFile2 = BASE64DecodedMultipartFile
                 .convertBase64ToMultipartFile(updateInDTO.getImgBase64());
 
-        List<String> nameAndUrl = S3Utils.uploadFile(multipartFile2, "CompanyProfile", bucket, amazonS3Client);
+        List<String> nameAndUrl = S3Utils.uploadFile(multipartFile2, "main_introduce", bucket, amazonS3Client);
         System.out.println("테스트 : " + nameAndUrl.get(0));
         System.out.println("테스트 : " + nameAndUrl.get(1));
     }
