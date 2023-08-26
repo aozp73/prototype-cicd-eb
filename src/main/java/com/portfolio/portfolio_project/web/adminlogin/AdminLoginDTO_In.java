@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-public class InAdminLogin {
+public class AdminLoginDTO_In {
 
     @Getter
     @Setter

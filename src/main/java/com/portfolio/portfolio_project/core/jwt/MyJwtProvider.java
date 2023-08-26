@@ -13,6 +13,8 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.portfolio.portfolio_project.domain.jpa.user.User;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class MyJwtProvider {
 
@@ -36,12 +38,14 @@ public class MyJwtProvider {
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXP))
                 .withClaim("id", user.getId())
                 .withClaim("email", user.getEmail())
-                .withClaim("role", user.getRole())
+                .withClaim("role", "ROLE_" + user.getRole())
                 .sign(Algorithm.HMAC512(SECRET));
+
         return TOKEN_PREFIX + jwt;
     }
 
     public DecodedJWT verify(String jwt) throws TokenExpiredException, Exception {
+        
         DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(SECRET))
                 .build().verify(jwt);
         return decodedJWT;
