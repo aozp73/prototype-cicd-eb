@@ -34,4 +34,20 @@ public class MainIntroduceDTO_Out {
              return dtoList;
         }
     }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class PutDTO {
+        private Long id;
+        private String postTitle;
+        private String postContent;
+        private String imgURL;
+
+        public static PutDTO fromEntity(MainIntroduce entity) {
+            return new PutDTO(entity.getId(), entity.getTitle(), entity.getContent(), entity.getIntroduceImgUrl());
+        }
+
+    }
 }

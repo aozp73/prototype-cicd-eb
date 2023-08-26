@@ -31,15 +31,14 @@ public class MainIntroduceController {
 
     @PostMapping("/auth/main")
     public ResponseEntity<?> main_post(@RequestBody MainIntroduceDTO_In.postDTO postDTO_In){
-        
         MainIntroduceDTO_Out.PostDTO postDTO_Out = mainIntroduceService.main_post(postDTO_In);
 
         return ResponseEntity.ok().body(new ResponseDTO<>().data(postDTO_Out));
     }
     @PutMapping("/auth/main")
     public ResponseEntity<?> main_put(@RequestBody MainIntroduceDTO_In.putDTO putDTO_In){
-       
+        MainIntroduceDTO_Out.PutDTO putDTO_Out = mainIntroduceService.main_put(putDTO_In);
 
-        return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
+        return ResponseEntity.ok().body(new ResponseDTO<>().data(putDTO_Out));
     }
 }

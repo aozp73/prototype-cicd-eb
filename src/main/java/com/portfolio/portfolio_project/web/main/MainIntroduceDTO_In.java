@@ -45,5 +45,9 @@ public class MainIntroduceDTO_In {
         private String imageData;
         private Boolean imgChangeCheck;
 
+        public void putEntity(MainIntroduce mainIntroduce, putDTO putDTO) {
+            mainIntroduce.setTitle(putDTO.getPostTitle());
+            mainIntroduce.setContent(putDTO.getPostContent());
+        }   
     }
 }
