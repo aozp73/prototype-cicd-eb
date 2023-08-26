@@ -26,6 +26,7 @@ function toggleEditMode() {
 }
 
 function updateForm(event, container_number) {
+    console.log(container_number)
     event.preventDefault();
     let section = document.getElementById('content-' + container_number);
         if (container_number % 2 === 0) {
@@ -192,6 +193,18 @@ function appendNewPost(postDTO) {
             control.style.display = 'block';
         } 
     });
+
+    resetForm();
+}
+
+function resetForm() {
+    // 제목, 내용 필드 초기화
+    $('#postTitle-new').val('');
+    $('#postContent-new').val('');
+  
+    // 파일 입력 및 이미지 미리보기 초기화
+    $('#fileInput-new').val('');
+    $('#imagePreview').empty();
 }
 
 function previewImage(event) {

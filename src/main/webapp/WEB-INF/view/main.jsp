@@ -23,8 +23,8 @@
                     </div>
                     <div class="edit-controls" style="display: none;">
                         <div class="my-3 me-5 d-flex justify-content-end">  
-                            <button type="button" class="btn btn-outline-secondary me-2" onclick="`updateForm(event, ${mainIntroduce.id})`">수정하기</button>
-                            <button type="button" class="btn btn-outline-danger me-5" onclick="`deletePost(${mainIntroduce.id})`">삭제하기</button>
+                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${mainIntroduce.id})">수정하기</button>
+                            <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${mainIntroduce.id})">삭제하기</button>
                         </div>
                     </div>
                 </div>
@@ -45,8 +45,8 @@
                     </div>
                     <div class="edit-controls" style="display: none;">
                         <div class="my-3 me-1 d-flex justify-content-end">
-                            <button type="button" class="btn btn-outline-secondary me-2" onclick="`updateForm(event, ${mainIntroduce.id})`">수정하기</button>
-                            <button type="button" class="btn btn-outline-danger me-5" onclick="`deletePost(${mainIntroduce.id})`">삭제하기</button>
+                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${mainIntroduce.id})">수정하기</button>
+                            <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${mainIntroduce.id})">삭제하기</button>
                         </div>
                     </div>
                 </div>
