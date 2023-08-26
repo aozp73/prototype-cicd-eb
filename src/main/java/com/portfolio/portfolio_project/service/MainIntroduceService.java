@@ -33,6 +33,7 @@ public class MainIntroduceService {
     @Value("${static}")
     private String staticRegion;
 
+    @Transactional(readOnly = true)
     public List<MainIntroduceDTO_Out.PostDTO> main_findAll(){
         List<MainIntroduce> mainIntroduces = mainIntroduceRepository.findAll();
         
@@ -95,5 +96,18 @@ public class MainIntroduceService {
         }
 
         return MainIntroduceDTO_Out.PutDTO.fromEntity(mainIntroducePS);
+    }
+
+    @Transactional
+    public void main_delete(Long postPK){
+        MainIntroduce mainIntroducePS = mainIntroduceRepository.findById(postPK).orElseThrow(() -> {
+            throw new Exception400("삭제 하려는 게시물이 존재하지 않습니다.");
+        });
+
+        try {
+            mainIntroduceRepository.delete(mainIntroducePS);
+        } catch (Exception e) {
+            throw new Exception500("게시물 삭제에 실패하였습니다.");
+        }
     }
 }

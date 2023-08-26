@@ -37,15 +37,17 @@ public class MainIntroduceController {
 
         return ResponseEntity.ok().body(new ResponseDTO<>().data(postDTO_Out));
     }
+
     @PutMapping("/auth/main")
     public ResponseEntity<?> main_put(@RequestBody MainIntroduceDTO_In.putDTO putDTO_In){
         MainIntroduceDTO_Out.PutDTO putDTO_Out = mainIntroduceService.main_put(putDTO_In);
 
         return ResponseEntity.ok().body(new ResponseDTO<>().data(putDTO_Out));
     }
+
     @DeleteMapping("/auth/main")
-    public ResponseEntity<?> main_delete(@RequestParam("postPK") Integer postPK){
-        System.out.println("테스트 : " + postPK);
+    public ResponseEntity<?> main_delete(@RequestParam("postPK") Long postPK){
+        mainIntroduceService.main_delete(postPK);
 
         return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
     }
