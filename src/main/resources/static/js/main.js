@@ -139,54 +139,60 @@ function addPost() {
     });
 }  
 
-    function appendNewPost(postDTO) {
-        const index = document.querySelectorAll('.post-container').length;
-        let newPostHTML = "";
-        if (index % 2 === 0) {
-            newPostHTML = `
-            <div class="container post-container ps-5" style="height:450px" id="content-${postDTO.id}">
-              <div class="row">
-                <div class="col-5 me-5">
-                  <img src="${postDTO.imgURL}" alt="Description of Image" class="img-fluid responsive-image">
-                </div>
-                <div class="col-5 pt-3">
-                  <h2>${postDTO.postTitle}</h2><hr>
-                  ${postDTO.postContent}
-                </div>
-                <div class="col-2"></div>
-              </div>
-              <div class="edit-controls" style="display: none;">
-                <div class="my-3 me-5 d-flex justify-content-end">
-                  <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${postDTO.id})">수정하기</button>
-                  <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${postDTO.id})">삭제하기</button>
-                </div>
-              </div>
-            </div>`;
-        } else {
-          // Use the second template
-          newPostHTML = `
-            <div class="container post-container pe-5" style="height:450px" id="content-${postDTO.id}">
-              <div class="row">
-                <div class="col-1"></div>
-                <div class="col-5 pt-3">
-                  <h2>${postDTO.postTitle}</h2><hr>
-                  ${postDTO.postContent}
-                </div>
-                <div class="col-5 ms-5">
-                  <img src="${postDTO.imgURL}" alt="Description of Image" class="img-fluid responsive-image">
-                </div>
-              </div>
-              <div class="edit-controls" style="display: none;">
-                <div class="my-3 me-1 d-flex justify-content-end">
-                  <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${postDTO.id})">수정하기</button>
-                  <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${postDTO.id})">삭제하기</button>
-                </div>
-              </div>
-            </div>`;
-        }
-        // 새 게시물의 HTML을 기존 목록에 추가합니다.
-        $("#postBox").append(newPostHTML);
+function appendNewPost(postDTO) {
+    const index = document.querySelectorAll('.post-container').length;
+    let newPostHTML = "";
+    if (index % 2 === 0) {
+        newPostHTML = `
+        <div class="container post-container ps-5" style="height:450px" id="content-${postDTO.id}">
+            <div class="row">
+            <div class="col-5 me-5">
+                <img src="${postDTO.imgURL}" alt="Description of Image" class="img-fluid responsive-image">
+            </div>
+            <div class="col-5 pt-3">
+                <h2>${postDTO.postTitle}</h2><hr>
+                ${postDTO.postContent}
+            </div>
+            <div class="col-2"></div>
+            </div>
+            <div class="edit-controls" style="display: none;">
+            <div class="my-3 me-5 d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${postDTO.id})">수정하기</button>
+                <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${postDTO.id})">삭제하기</button>
+            </div>
+            </div>
+        </div>`;
+    } else {
+        // Use the second template
+        newPostHTML = `
+        <div class="container post-container pe-5" style="height:450px" id="content-${postDTO.id}">
+            <div class="row">
+            <div class="col-1"></div>
+            <div class="col-5 pt-3">
+                <h2>${postDTO.postTitle}</h2><hr>
+                ${postDTO.postContent}
+            </div>
+            <div class="col-5 ms-5">
+                <img src="${postDTO.imgURL}" alt="Description of Image" class="img-fluid responsive-image">
+            </div>
+            </div>
+            <div class="edit-controls" style="display: none;">
+            <div class="my-3 me-1 d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${postDTO.id})">수정하기</button>
+                <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${postDTO.id})">삭제하기</button>
+            </div>
+            </div>
+        </div>`;
     }
+
+    $("#postBox").append(newPostHTML);
+    const controls = document.querySelectorAll('.edit-controls');
+    controls.forEach(control => {
+        if (control.style.display === 'none') {
+            control.style.display = 'block';
+        } 
+    });
+}
 
 function previewImage(event) {
     const reader = new FileReader();

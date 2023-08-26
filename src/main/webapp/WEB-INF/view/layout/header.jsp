@@ -55,9 +55,6 @@
                     <button type="button" class="btn btn-primary mb-2 ms-2 edit-button" style="display:none" onclick="toggleEditMode()">편집모드</button>
                     <button type="button" class="btn btn-secondary btn-sm mb-2 ms-2 logout-button" style="display:none" onclick="logout()">로그아웃</button>
 
-
-               
-
             </div>
         </div>
     </header>        
