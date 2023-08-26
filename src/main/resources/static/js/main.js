@@ -93,9 +93,9 @@ function updateForm(event, pk, postIndex) {
 
 function deletePost(pk) {
     const jwtToken = localStorage.getItem('jwtToken'); 
-    console.log(pk)
+
     $.ajax({
-        url: '/auth/delete?postPK=' + pk, 
+        url: '/auth/main?postPK=' + pk, 
         type: 'DELETE', 
         headers: {
             'Authorization': jwtToken  

@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.portfolio.portfolio_project.core.dto.ResponseDTO;
 import com.portfolio.portfolio_project.service.MainIntroduceService;
@@ -22,7 +24,7 @@ public class MainIntroduceController {
     private final MainIntroduceService mainIntroduceService;
 
     @GetMapping("/main")
-    public String mainpage(Model model){
+    public String main_getAll(Model model){
         List<MainIntroduceDTO_Out.PostDTO> mainIntroduceList = mainIntroduceService.main_findAll();
         model.addAttribute("mainIntroduceList", mainIntroduceList);
 
@@ -40,5 +42,11 @@ public class MainIntroduceController {
         MainIntroduceDTO_Out.PutDTO putDTO_Out = mainIntroduceService.main_put(putDTO_In);
 
         return ResponseEntity.ok().body(new ResponseDTO<>().data(putDTO_Out));
+    }
+    @DeleteMapping("/auth/main")
+    public ResponseEntity<?> main_delete(@RequestParam("postPK") Integer postPK){
+        System.out.println("테스트 : " + postPK);
+
+        return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
     }
 }
