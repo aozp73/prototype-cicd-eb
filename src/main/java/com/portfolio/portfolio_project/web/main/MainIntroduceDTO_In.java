@@ -31,4 +31,19 @@ public class MainIntroduceDTO_In {
                 .build();
         }
     }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class putDTO {
+        private Long postPK;
+        private String postTitle;
+        private String postContent;
+        private String imageName;
+        private String contentType;
+        private String imageData;
+        private Boolean imgChangeCheck;
+
+    }
 }

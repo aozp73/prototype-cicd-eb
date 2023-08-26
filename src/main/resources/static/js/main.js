@@ -255,7 +255,6 @@ function updatePost(pk){
 
     let postImageElement = document.getElementById('postImage-' + pk);
     let postImageSrc = postImageElement.src;
-
     let isBase64Image = postImageSrc.startsWith('data:image/');
 
     if (isBase64Image) {
@@ -263,15 +262,13 @@ function updatePost(pk){
         contentType = file.type;
         imgChangeCheck = true;
     } else {
-
+        postImageSrc = '';
     }
 
-    
     postTitle = $(`#postTitle-${pk}`).val()
     postContent = $(`#postContent-${pk}`).val()
     postContent = postContent.replace(/\n/g, "<br>");
-    
-    console.log("디버깅55")
+
 
     let payload = {
         postPK: pk,

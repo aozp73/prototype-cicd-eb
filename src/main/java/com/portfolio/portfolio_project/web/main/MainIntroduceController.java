@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.portfolio.portfolio_project.core.dto.ResponseDTO;
@@ -34,5 +35,11 @@ public class MainIntroduceController {
         MainIntroduceDTO_Out.PostDTO postDTO_Out = mainIntroduceService.main_post(postDTO_In);
 
         return ResponseEntity.ok().body(new ResponseDTO<>().data(postDTO_Out));
+    }
+    @PutMapping("/auth/main")
+    public ResponseEntity<?> main_put(@RequestBody MainIntroduceDTO_In.putDTO putDTO_In){
+       
+
+        return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
     }
 }

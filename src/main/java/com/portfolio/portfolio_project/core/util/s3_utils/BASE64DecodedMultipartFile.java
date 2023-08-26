@@ -9,8 +9,6 @@ import java.util.Base64;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.portfolio.portfolio_project.core.exception.Exception400;
-
 public class BASE64DecodedMultipartFile implements MultipartFile {
 
     public static MultipartFile convertBase64ToMultipartFile(String base64, String fileName, String contentType) 
