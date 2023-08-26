@@ -24,8 +24,6 @@ public class MainIntroduceDTO_In {
 
         public MainIntroduce toEntity() {
             return MainIntroduce.builder()
-                .introduceImgName(this.imageName)
-                .introduceImgUrl("") 
                 .title(this.postTitle)
                 .content(this.postContent)
                 .createdAt(LocalDateTime.now()) 

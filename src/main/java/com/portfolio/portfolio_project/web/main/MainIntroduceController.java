@@ -23,9 +23,9 @@ public class MainIntroduceController {
     }
 
     @PostMapping("/auth/main")
-    public ResponseEntity<?> main_post(@RequestBody MainIntroduceDTO_In.postDTO postDTO){
-        // System.out.println("디버깅" + postDTO.getImageData());
-        mainIntroduceService.main_post(postDTO);
-        return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
+    public ResponseEntity<?> main_post(@RequestBody MainIntroduceDTO_In.postDTO postDTO_In){
+        MainIntroduceDTO_Out.postDTO postDTO_Out = mainIntroduceService.main_post(postDTO_In);
+
+        return ResponseEntity.ok().body(new ResponseDTO<>().data(postDTO_Out));
     }
 }

@@ -6,14 +6,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.portfolio.portfolio_project.core.exception.Exception500;
 import com.portfolio.portfolio_project.core.util.s3_utils.BASE64DecodedMultipartFile;
 import com.portfolio.portfolio_project.core.util.s3_utils.S3Utils;
+import com.portfolio.portfolio_project.domain.jpa.main.main_introduce.MainIntroduce;
 import com.portfolio.portfolio_project.domain.jpa.main.main_introduce.MainIntroduceRepository;
 import com.portfolio.portfolio_project.web.main.MainIntroduceDTO_In;
+import com.portfolio.portfolio_project.web.main.MainIntroduceDTO_Out;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,11 +32,12 @@ public class MainIntroduceService {
     @Value("${static}")
     private String staticRegion;
 
-    public void main_post(MainIntroduceDTO_In.postDTO postDTO){
+    @Transactional
+    public MainIntroduceDTO_Out.postDTO main_post(MainIntroduceDTO_In.postDTO postDTO_In){
         MultipartFile multipartFile2;
         try {
             multipartFile2 = BASE64DecodedMultipartFile
-                .convertBase64ToMultipartFile(postDTO.getImageData(), postDTO.getImageName(), postDTO.getContentType());
+                .convertBase64ToMultipartFile(postDTO_In.getImageData(), postDTO_In.getImageName(), postDTO_In.getContentType());
         } catch (Exception e) {
             throw new Exception500("MultiPartFIle 변환에 실패하였습니다. :" + e.getStackTrace());
         }
@@ -44,8 +48,13 @@ public class MainIntroduceService {
         } catch (IOException e) {
             throw new Exception500("S3 File 업로드에 실패하였습니다.");
         }
-        System.out.println("name : " + nameAndUrl.get(0));
-        System.out.println("Url : " + nameAndUrl.get(1));
 
+        MainIntroduce mainIntroduce = postDTO_In.toEntity();
+        mainIntroduce.setIntroduceImgName(nameAndUrl.get(0));
+        mainIntroduce.setIntroduceImgUrl(nameAndUrl.get(1));
+
+        mainIntroduceRepository.save(mainIntroduce);
+        
+        return new MainIntroduceDTO_Out.postDTO(mainIntroduce);
     }
 }
