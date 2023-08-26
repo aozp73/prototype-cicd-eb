@@ -15,7 +15,7 @@ public class S3SampleController {
     private final S3SampleService s3SampleService;
 
     @PostMapping("/s3/test")
-    public String s3test(@RequestBody UpdateInDTO updateInDTO) throws IOException {
+    public String s3test(@RequestBody UpdateInDTO updateInDTO) throws Exception {
         s3SampleService.S3SampleTest(updateInDTO);
         return "a";
     }

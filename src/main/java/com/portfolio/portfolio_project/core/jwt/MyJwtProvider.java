@@ -13,8 +13,6 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.portfolio.portfolio_project.domain.jpa.user.User;
 
-import lombok.extern.slf4j.Slf4j;
-@Slf4j
 @Service
 public class MyJwtProvider {
 

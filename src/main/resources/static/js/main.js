@@ -116,7 +116,8 @@ function addPost() {
             contentType: file.type,
             imageData: JSON.stringify(dataURL)
         };
-
+        let imageData = JSON.stringify(dataURL);
+        console.log("Encoded image data:", imageData);
         $.ajax({
             url: '/auth/main',
             type: 'POST',

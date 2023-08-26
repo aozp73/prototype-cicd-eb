@@ -7,9 +7,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.portfolio.portfolio_project.core.dto.ResponseDTO;
+import com.portfolio.portfolio_project.service.MainIntroduceService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Controller
-public class MainController {
+public class MainIntroduceController {
+
+    private final MainIntroduceService mainIntroduceService;
 
     @GetMapping("/main")
     public String mainpage(){
@@ -18,11 +24,8 @@ public class MainController {
 
     @PostMapping("/auth/main")
     public ResponseEntity<?> main_post(@RequestBody MainIntroduceDTO_In.postDTO postDTO){
-        System.out.println("테스트 : " + postDTO.getPostTitle());
-        System.out.println("테스트 : " + postDTO.getPostContent());
-        System.out.println("테스트 : " + postDTO.getImageName());
-        System.out.println("테스트 : " + postDTO.getContentType());
-        
+        // System.out.println("디버깅" + postDTO.getImageData());
+        mainIntroduceService.main_post(postDTO);
         return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
     }
 }

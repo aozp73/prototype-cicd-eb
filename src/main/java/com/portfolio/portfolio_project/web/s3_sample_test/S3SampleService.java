@@ -24,7 +24,7 @@ public class S3SampleService {
     @Value("${static}")
     private String staticRegion;
 
-    public void S3SampleTest(UpdateInDTO updateInDTO) throws IOException{
+    public void S3SampleTest(UpdateInDTO updateInDTO) throws Exception{
         MultipartFile multipartFile2 = BASE64DecodedMultipartFile
                 .convertBase64ToMultipartFile(updateInDTO.getImgBase64(), updateInDTO.fileName, updateInDTO.fileContentType);
 
