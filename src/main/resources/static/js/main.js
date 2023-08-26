@@ -25,27 +25,32 @@ function toggleEditMode() {
     });
 }
 
-function updateForm(event, container_number) {
-    console.log(container_number)
+function updateForm(event, container_number, postIndex) {
+
     event.preventDefault();
+    let postTitle = $("#postTitle-" + container_number).text();
+    let postContent = $("#postContent-" + container_number).html();
+    let postImageSrc = $("#postImage-" + container_number).attr('src');
+
+
     let section = document.getElementById('content-' + container_number);
-        if (container_number % 2 === 0) {
+        if (postIndex % 2 !== 0) {
             section.innerHTML = `
                 <div class="row">
                     <div class="col-1">
                     </div>
                     <div class="col-5 pt-3">
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="postTitle-${container_number}" placeholder="제목을 입력하세요" value="새로운 것을 배우고, 기록하는 것을 좋아하는 개발자">
+                            <input type="text" class="form-control" id="postTitle-${container_number}" placeholder="제목을 입력하세요" value="${postTitle}">
                         </div>
                         <hr>
                         <div class="mb-3">
-                            <textarea class="form-control" id="postContent-${container_number}" rows="5" placeholder="내용을 입력하세요">학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.</textarea>
+                            <textarea class="form-control" id="postContent-${container_number}" rows="5" placeholder="내용을 입력하세요">${postContent}</textarea>
                         </div>
                     </div>
                     <div class="ms-5 col-5">
                         <div class="mb-2">
-                            <img src="image/mainpage-sample.png" alt="Description of Image" class="img-fluid responsive-image" id="imageToChange-${container_number}">
+                            <img src="${postImageSrc}" alt="Description of Image" class="img-fluid responsive-image" id="imageToChange-${container_number}">
                         </div>
                         <input type="file" id="fileInput-${container_number}" onchange="checkImage(${container_number})">
                     </div>
@@ -67,17 +72,17 @@ function updateForm(event, container_number) {
                 <div class="row">
                     <div class="col-5 me-5">
                         <div class="mb-2">
-                        <img src="image/mainpage-sample.png" alt="Description of Image" class="img-fluid responsive-image" id="imageToChange-${container_number}">
+                            <img src="${postImageSrc}" alt="Description of Image" class="img-fluid responsive-image" id="imageToChange-${container_number}">
                         </div>
                         <input type="file" id="fileInput-${container_number}" onchange="checkImage(${container_number})">
                     </div>
                     <div class="col-5 pt-3">
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="postTitle-${container_number}" placeholder="제목을 입력하세요" value="새로운 것을 배우고, 기록하는 것을 좋아하는 개발자">
+                            <input type="text" class="form-control" id="postTitle-${container_number}" placeholder="제목을 입력하세요" value="${postTitle}">
                         </div>
                         <hr>
                         <div class="mb-3">
-                            <textarea class="form-control" id="postContent-${container_number}" rows="5" placeholder="내용을 입력하세요">학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.</textarea>
+                            <textarea class="form-control" id="postContent-${container_number}" rows="5" placeholder="내용을 입력하세요">${postContent}</textarea>
                         </div>
                     </div>
                     <div class="col-2">
@@ -88,7 +93,7 @@ function updateForm(event, container_number) {
                 </div>
             `;
         }                
-    }
+}
 
 function deletePost(container_number) {
 
@@ -158,7 +163,7 @@ function appendNewPost(postDTO) {
             </div>
             <div class="edit-controls" style="display: none;">
             <div class="my-3 me-5 d-flex justify-content-end">
-                <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${postDTO.id})">수정하기</button>
+                <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${postDTO.id}, ${index + 1}})">수정하기</button>
                 <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${postDTO.id})">삭제하기</button>
             </div>
             </div>
@@ -179,7 +184,7 @@ function appendNewPost(postDTO) {
             </div>
             <div class="edit-controls" style="display: none;">
             <div class="my-3 me-1 d-flex justify-content-end">
-                <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${postDTO.id})">수정하기</button>
+                <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${postDTO.id}, ${index + 1}})">수정하기</button>
                 <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${postDTO.id})">삭제하기</button>
             </div>
             </div>

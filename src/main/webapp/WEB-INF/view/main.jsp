@@ -12,18 +12,18 @@
                 <div class="container post-container ps-5" style="height:450px" id="content-${mainIntroduce.id}">
                      <div class="row">
                         <div class="col-5 me-5">
-                            <img src="${mainIntroduce.imgURL}" alt="Description of Image" class="img-fluid responsive-image">
+                            <img src="${mainIntroduce.imgURL}" id="postImage-${mainIntroduce.id}" alt="Description of Image" class="img-fluid responsive-image">
                         </div>
                         <div class="col-5 pt-3">
-                            <h2>${mainIntroduce.postTitle}</h2><hr>
-                            ${mainIntroduce.postContent}
+                            <h2 id="postTitle-${mainIntroduce.id}">${mainIntroduce.postTitle}</h2><hr>
+                            <div id="postContent-${mainIntroduce.id}">${mainIntroduce.postContent}</div>
                         </div>
                         <div class="col-2">
                         </div>
                     </div>
                     <div class="edit-controls" style="display: none;">
                         <div class="my-3 me-5 d-flex justify-content-end">  
-                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${mainIntroduce.id})">수정하기</button>
+                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${mainIntroduce.id}, ${status.index})">수정하기</button>
                             <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${mainIntroduce.id})">삭제하기</button>
                         </div>
                     </div>
@@ -36,16 +36,16 @@
                         <div class="col-1">
                         </div>
                         <div class="col-5 pt-3">
-                            <h2>${mainIntroduce.postTitle}</h2><hr>
-                            ${mainIntroduce.postContent}
+                            <h2 id="postTitle-${mainIntroduce.id}">${mainIntroduce.postTitle}</h2><hr>
+                            <div id="postContent-${mainIntroduce.id}">${mainIntroduce.postContent}</div>
                         </div>
                         <div class="col-5 ms-5">
-                            <img src="${mainIntroduce.imgURL}" alt="Description of Image" class="img-fluid responsive-image">
+                            <img src="${mainIntroduce.imgURL}" id="postImage-${mainIntroduce.id}" alt="Description of Image" class="img-fluid responsive-image">
                         </div>
                     </div>
                     <div class="edit-controls" style="display: none;">
                         <div class="my-3 me-1 d-flex justify-content-end">
-                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${mainIntroduce.id})">수정하기</button>
+                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${mainIntroduce.id}, ${status.index})">수정하기</button>
                             <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${mainIntroduce.id})">삭제하기</button>
                         </div>
                     </div>
