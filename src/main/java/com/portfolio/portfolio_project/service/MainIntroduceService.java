@@ -3,7 +3,6 @@ package com.portfolio.portfolio_project.service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.portfolio.portfolio_project.core.exception.CustomException;
 import com.portfolio.portfolio_project.core.exception.Exception400;
 import com.portfolio.portfolio_project.core.exception.Exception500;
 import com.portfolio.portfolio_project.core.util.s3_utils.BASE64DecodedMultipartFile;

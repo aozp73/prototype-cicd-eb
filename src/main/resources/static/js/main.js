@@ -30,6 +30,7 @@ function updateForm(event, pk, postIndex) {
     event.preventDefault();
     let postTitle = $("#postTitle-" + pk).text();
     let postContent = $("#postContent-" + pk).html();
+    postContent = postContent.replace(/<br>/g, "\n");
     let postImageSrc = $("#postImage-" + pk).attr('src');
 
     let section = document.getElementById('content-' + pk);
