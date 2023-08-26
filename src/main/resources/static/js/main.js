@@ -94,39 +94,54 @@ function deletePost(container_number) {
 
 }
 
-function addPost(){
-    postTitle = $(`#postTitle-new`).val()
-    postContent = $(`#postContent-new`).val()
-    let input = document.getElementById(`fileInput-new`);
+function addPost() {
+    const jwtToken = localStorage.getItem('jwtToken'); 
+
+    let input = document.getElementById('fileInput-new');
     let file = input.files[0];
-
-    console.log(postTitle)
-    console.log(postContent)
-
-    if (file) {
-        let imageName = file.name;
-        let contentType = file.type;
-
-        console.log("Image Name:", imageName);
-        console.log("Content Type:", contentType);
-
-        // 파일을 Base64 문자열로 읽기
-        readFileAsDataURL(input, function (dataURL) {
-            let jsonPayload = JSON.stringify(dataURL);
-            console.log(jsonPayload);
-
-            // ajax 통신 코드
-
-        });
-    } else {
+    if (!file) {
         alert("파일이 선택되지 않았습니다.");
+        return;
     }
+
+    let postTitle = $('#postTitle-new').val();
+    let postContent = $('#postContent-new').val();
+
+
+    readFileAsDataURL(input, function(dataURL) {
+        let payload = {
+            postTitle: postTitle,
+            postContent: postContent,
+            imageName: file.name,
+            contentType: file.type,
+            imageData: JSON.stringify(dataURL)
+        };
+
+        $.ajax({
+            url: '/auth/main',
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            headers: {
+                'Authorization': jwtToken 
+            },
+            data: JSON.stringify(payload),  
+
+            success: function(data, textStatus, jqXHR) {
+                console.log(data);
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    });
+
 
     // ajax 통신 이 후 추가 (PK값에 따라 사진 배치 다르게)
     inner = `
-
+    
     `
-}
+}    
 
 function previewImage(event) {
     const reader = new FileReader();

@@ -68,11 +68,9 @@
         }
         window.onload = function() {
             if (!checkIfLoggedIn()) {
-                // 로그인하지 않은 경우 숨기고 싶은 요소를 숨깁니다.
                 document.querySelector('.edit-button').style.display = 'none';
                 document.querySelector('.logout-button').style.display = 'none';
             } else {
-                // 로그인한 경우 보이고 싶은 요소를 표시합니다.
                 document.querySelector('.edit-button').style.display = 'block';
                 document.querySelector('.logout-button').style.display = 'block';
             }
