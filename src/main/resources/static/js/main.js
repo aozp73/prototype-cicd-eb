@@ -91,9 +91,22 @@ function updateForm(event, pk, postIndex) {
         }                
 }
 
-function deletePost(container_number) {
-
-
+function deletePost(pk) {
+    const jwtToken = localStorage.getItem('jwtToken'); 
+    console.log(pk)
+    $.ajax({
+        url: '/auth/delete?postPK=' + pk, 
+        type: 'DELETE', 
+        headers: {
+            'Authorization': jwtToken  
+        },
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
 }
 
 function addPost() {
@@ -118,7 +131,7 @@ function addPost() {
             contentType: file.type,
             imageData: JSON.stringify(dataURL)
         };
-        console.log(payload)
+
         $.ajax({
             url: '/auth/main',
             type: 'POST',
@@ -142,7 +155,7 @@ function addPost() {
 
 function appendNewPost(postDTO) {
     const index = document.querySelectorAll('.post-container').length;
-    console.log(index)
+
     let newPostHTML = "";
     if (index % 2 === 0) {
         newPostHTML = `
