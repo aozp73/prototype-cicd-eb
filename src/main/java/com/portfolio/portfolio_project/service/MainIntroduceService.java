@@ -17,6 +17,7 @@ import com.portfolio.portfolio_project.domain.jpa.main.main_introduce.MainIntrod
 import com.portfolio.portfolio_project.domain.jpa.main.main_introduce.MainIntroduceRepository;
 import com.portfolio.portfolio_project.web.main.MainIntroduceDTO_In;
 import com.portfolio.portfolio_project.web.main.MainIntroduceDTO_Out;
+import com.portfolio.portfolio_project.web.main.MainIntroduceDTO_Out.PostDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,8 +33,14 @@ public class MainIntroduceService {
     @Value("${static}")
     private String staticRegion;
 
+    public List<MainIntroduceDTO_Out.PostDTO> main_findAll(){
+        List<MainIntroduce> mainIntroduces = mainIntroduceRepository.findAll();
+        
+        return MainIntroduceDTO_Out.PostDTO.fromEntityList(mainIntroduces);
+    }
+
     @Transactional
-    public MainIntroduceDTO_Out.postDTO main_post(MainIntroduceDTO_In.postDTO postDTO_In){
+    public MainIntroduceDTO_Out.PostDTO main_post(MainIntroduceDTO_In.postDTO postDTO_In){
         MultipartFile multipartFile2;
         try {
             multipartFile2 = BASE64DecodedMultipartFile
@@ -55,6 +62,6 @@ public class MainIntroduceService {
 
         mainIntroduceRepository.save(mainIntroduce);
         
-        return new MainIntroduceDTO_Out.postDTO(mainIntroduce);
+        return MainIntroduceDTO_Out.PostDTO.fromEntity(mainIntroduce);
     }
 }

@@ -11,14 +11,18 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Comment;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Builder
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "main_introduce_tb")
 public class MainIntroduce {
     @Id

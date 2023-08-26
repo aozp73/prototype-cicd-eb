@@ -5,100 +5,58 @@
 
     <div class="py-5" style="background-color: #F9F9F9" id="main-container">
 
+    <c:forEach var="mainIntroduce" items="${mainIntroduceList}" varStatus="status">
+        <c:choose>
+        
+            <c:when test="${status.index % 2 == 0}">
+                <div class="container post-container ps-5" style="height:450px" id="content-${mainIntroduce.id}">
+                     <div class="row">
+                        <div class="col-5 me-5">
+                            <img src="${mainIntroduce.imgURL}" alt="Description of Image" class="img-fluid responsive-image">
+                        </div>
+                        <div class="col-5 pt-3">
+                            <h2>${mainIntroduce.postTitle}</h2><hr>
+                            ${mainIntroduce.postContent}
+                        </div>
+                        <div class="col-2">
+                        </div>
+                    </div>
+                    <div class="edit-controls" style="display: none;">
+                        <div class="my-3 me-5 d-flex justify-content-end">  
+                            <button type="button" class="btn btn-outline-secondary me-2" onclick="`updateForm(event, ${mainIntroduce.id})`">수정하기</button>
+                            <button type="button" class="btn btn-outline-danger me-5" onclick="`deletePost(${mainIntroduce.id})`">삭제하기</button>
+                        </div>
+                    </div>
+                </div>
+            </c:when>
 
-        <div class="container ps-5" style="height:450px" id="content-1">
-            <div class="row">
-                <div class="col-5 me-5">
-                    <img src="image/mainpage-sample.png" alt="Description of Image" class="img-fluid responsive-image">
+            <c:otherwise>
+                <div class="container post-container pe-5" style="height:450px" id="content-${mainIntroduce.id}">
+                    <div class="row">
+                        <div class="col-1">
+                        </div>
+                        <div class="col-5 pt-3">
+                            <h2>${mainIntroduce.postTitle}</h2><hr>
+                            ${mainIntroduce.postContent}
+                        </div>
+                        <div class="col-5 ms-5">
+                            <img src="${mainIntroduce.imgURL}" alt="Description of Image" class="img-fluid responsive-image">
+                        </div>
+                    </div>
+                    <div class="edit-controls" style="display: none;">
+                        <div class="my-3 me-1 d-flex justify-content-end">
+                            <button type="button" class="btn btn-outline-secondary me-2" onclick="`updateForm(event, ${mainIntroduce.id})`">수정하기</button>
+                            <button type="button" class="btn btn-outline-danger me-5" onclick="`deletePost(${mainIntroduce.id})`">삭제하기</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-5 pt-3">
-                    <h2>새로운 것을 배우고, 기록하는 것을 좋아하는 개발자</h2><hr>
-                    학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.
-                    학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.
-                    학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.
-                    학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.
-                </div>
-                <div class="col-2">
-                </div>
-            </div>
-            <div class="edit-controls" style="display: none;">
-                <div class="my-3 me-5 d-flex justify-content-end">  
-                    <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, 1)">수정하기</button>
-                    <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost()">삭제하기</button>
-                </div>
-            </div>
-        </div>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
 
-        <div class="container pe-5" style="height:450px" id="content-2">
-            <div class="row">
-                <div class="col-1">
-                </div>
-                <div class="col-5 pt-3">
-                    <h2>새로운 것을 배우고, 기록하는 것을 좋아하는 개발자</h2><hr>
-                    학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.
-                    학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.
-                    학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.
-                    학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.
-                </div>
-                <div class="ms-5 col-5">
-                    <img src="image/mainpage-sample.png" alt="Description of Image" class="img-fluid responsive-image">
-                </div>
-            </div>
-            <div class="edit-controls" style="display: none;">
-                <div class="my-3 me-1 d-flex justify-content-end">
-                    <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, 2)">수정하기</button>
-                    <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost()">삭제하기</button>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="container ps-5" style="height:450px" id="content-3">
-            <div class="row">
-                <div class="col-5 me-5">
-                    <img src="image/mainpage-sample.png" alt="Description of Image" class="img-fluid responsive-image">
-                </div>
-                <div class="col-5 pt-3">
-                    <h2>새로운 것을 배우고, 기록하는 것을 좋아하는 개발자</h2><hr>
-                    학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.
-                    학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.
-                    학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.
-                    학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.
-                </div>
-                <div class="col-2">
-                </div>
-            </div>
-            <div class="edit-controls" style="display: none;">
-                <div class="my-3 me-5 d-flex justify-content-end">  
-                    <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, 3)">수정하기</button>
-                    <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost()">삭제하기</button>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="container pe-5" style="height:450px" id="content-4">
-            <div class="row">
-                <div class="col-1">
-                </div>
-                <div class="col-5 pt-3">
-                    <h2>새로운 것을 배우고, 기록하는 것을 좋아하는 개발자</h2><hr>
-                    학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.
-                    학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.
-                    학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.
-                    학습한 내용을 기록하며, 프로젝트 진행간 기술 블로그 작성을 즐겨합니다.
-                </div>
-                <div class="ms-5 col-5">
-                    <img src="image/mainpage-sample.png" alt="Description of Image" class="img-fluid responsive-image">
-                </div>
-            </div>
-            <div class="edit-controls" style="display: none;">
-                <div class="my-3 me-1 d-flex justify-content-end">
-                    <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, 4)">수정하기</button>
-                    <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost()">삭제하기</button>
-                </div>
-            </div>
-        </div>
+    <div id="postBox">
+    
+    </div>
 
         <!-- 새 글 쓰기 -->
         <div class="edit-controls" style="display: none;">

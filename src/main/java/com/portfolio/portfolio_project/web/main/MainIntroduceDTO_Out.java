@@ -1,5 +1,8 @@
 package com.portfolio.portfolio_project.web.main;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.portfolio.portfolio_project.domain.jpa.main.main_introduce.MainIntroduce;
 
 import lombok.AllArgsConstructor;
@@ -13,15 +16,22 @@ public class MainIntroduceDTO_Out {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class postDTO {
+    public static class PostDTO {
+        private Long id;
         private String postTitle;
         private String postContent;
         private String imgURL;
 
-        public postDTO(MainIntroduce mainIntroducePS) {
-            this.postTitle = mainIntroducePS.getTitle();
-            this.postContent = mainIntroducePS.getContent();
-            this.imgURL = mainIntroducePS.getIntroduceImgUrl();
+        public static PostDTO fromEntity(MainIntroduce entity) {
+            return new PostDTO(entity.getId(), entity.getTitle(), entity.getContent(), entity.getIntroduceImgUrl());
+        }
+
+        public static List<PostDTO> fromEntityList(List<MainIntroduce> entityList) {
+            List<PostDTO> dtoList = new ArrayList<>();
+            for (MainIntroduce entity : entityList) {
+                dtoList.add(PostDTO.fromEntity(entity));
+            }
+             return dtoList;
         }
     }
 }
