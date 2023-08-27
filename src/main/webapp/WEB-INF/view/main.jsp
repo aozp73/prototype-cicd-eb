@@ -9,7 +9,7 @@
         <c:choose>
         
             <c:when test="${status.index % 2 == 0}">
-                <div class="container post-container ps-5" style="height:450px" id="content-${mainIntroduce.id}">
+                <div class="container post-container ps-5" style="height:450px" data-index="${status.index + 1}" id="content-${mainIntroduce.id}">
                      <div class="row">
                         <div class="col-5 me-5">
                             <img src="${mainIntroduce.imgURL}" id="postImage-${mainIntroduce.id}" alt="Description of Image" class="img-fluid responsive-image">
@@ -23,7 +23,7 @@
                     </div>
                     <div class="edit-controls" style="display: none;">
                         <div class="my-3 me-5 d-flex justify-content-end">  
-                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${mainIntroduce.id}, ${status.index})">수정하기</button>
+                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${mainIntroduce.id}, ${status.index + 1})">수정하기</button>
                             <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${mainIntroduce.id})">삭제하기</button>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
             </c:when>
 
             <c:otherwise>
-                <div class="container post-container pe-5" style="height:450px" id="content-${mainIntroduce.id}">
+                <div class="container post-container pe-5" style="height:450px" data-index="${status.index + 1}" id="content-${mainIntroduce.id}">
                     <div class="row">
                         <div class="col-1">
                         </div>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="edit-controls" style="display: none;">
                         <div class="my-3 me-1 d-flex justify-content-end">
-                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${mainIntroduce.id}, ${status.index})">수정하기</button>
+                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${mainIntroduce.id}, ${status.index + 1})">수정하기</button>
                             <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${mainIntroduce.id})">삭제하기</button>
                         </div>
                     </div>

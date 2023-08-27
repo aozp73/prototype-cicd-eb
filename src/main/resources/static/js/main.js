@@ -8,6 +8,15 @@ window.addEventListener('scroll', function() {
     }
 });
 
+document.addEventListener('DOMContentLoaded', (event) => {
+
+        const controls = document.querySelectorAll('.edit-controls');
+        controls.forEach(control => {
+            control.style.display = 'block';
+        });
+
+});
+
 // 편집 모드 (toggle)
 function toggleEditMode() {
     modeCnt += 1
@@ -34,7 +43,7 @@ function updateForm(event, pk, postIndex) {
     let postImageSrc = $("#postImage-" + pk).attr('src');
 
     let section = document.getElementById('content-' + pk);
-        if ((postIndex + 1) % 2 !== 0) { 
+        if (postIndex % 2 !== 0) { 
 
             section.innerHTML = `
                 <div class="row">
@@ -57,7 +66,7 @@ function updateForm(event, pk, postIndex) {
                     </div>
                 </div>
                 <div class="my-3 me-5 d-flex justify-content-end">  
-                    <button class="btn btn-outline-secondary" onclick="updatePost(${pk})">수정완료</button>
+                    <button class="btn btn-outline-secondary" onclick="updatePost(${pk}, ${postIndex})">수정완료</button>
                 </div>
             `;            
 
@@ -84,7 +93,7 @@ function updateForm(event, pk, postIndex) {
                     </div>
                 </div>
                 <div class="my-3 d-flex justify-content-end">  
-                    <button class="btn btn-outline-secondary" onclick="updatePost(${pk})">수정완료</button>
+                    <button class="btn btn-outline-secondary" onclick="updatePost(${pk}, ${postIndex})">수정완료</button>
                 </div>
             `;
 
@@ -102,6 +111,8 @@ function deletePost(pk) {
         },
         success: function(response) {
             console.log(response);
+            location.reload(true);
+            
         },
         error: function(error) {
             console.error(error);
@@ -154,12 +165,12 @@ function addPost() {
 }  
 
 function appendNewPost(postDTO) {
-    const index = document.querySelectorAll('.post-container').length;
-
+    const index = document.querySelectorAll('.post-container').length + 1;
+    console.log(postDTO)
     let newPostHTML = "";
-    if (index % 2 === 0) {
+    if (index % 2 !== 0) {
         newPostHTML = `
-        <div class="container post-container ps-5" style="height:450px" id="content-${postDTO.id}">
+        <div class="container post-container ps-5" style="height:450px" data-index="${index}" id="content-${postDTO.id}">
             <div class="row">
             <div class="col-5 me-5">
                 <img src="${postDTO.imgURL}" alt="Description of Image" id="postImage-${postDTO.id}" class="img-fluid responsive-image">
@@ -180,7 +191,7 @@ function appendNewPost(postDTO) {
     } else {
         // Use the second template
         newPostHTML = `
-        <div class="container post-container pe-5" style="height:450px" id="content-${postDTO.id}">
+        <div class="container post-container pe-5" style="height:450px" data-index="${index}" id="content-${postDTO.id}">
             <div class="row">
             <div class="col-1"></div>
             <div class="col-5 pt-3">
@@ -259,7 +270,7 @@ function checkImage(pk) {
     }
 }
 
-function updatePost(pk){   
+function updatePost(pk, index){   
     const jwtToken = localStorage.getItem('jwtToken'); 
     let input = document.getElementById('fileInput-'+pk);
     let file = input.files[0];
@@ -285,7 +296,7 @@ function updatePost(pk){
 
 
     let payload = {
-        postPK: pk,
+        id: pk,
         postTitle: postTitle,
         postContent: postContent,
         imageName: imageName,
@@ -306,14 +317,62 @@ function updatePost(pk){
 
         success: function(response, textStatus, jqXHR) {
             console.log(response);
+
+            const db_pk = response.data.id;
+            const db_postTitle = response.data.postTitle;
+            const db_postContent = response.data.postContent;
+            const db_imgURL = response.data.imgURL;
+
+            const container = document.getElementById('content-' + pk);
+
+            if (index % 2 !== 0) {
+                container.innerHTML = `
+                    <div class="row">
+                        <div class="col-5 me-5">
+                            <img src="${db_imgURL}" id="postImage-${db_pk}" alt="Description of Image" class="img-fluid responsive-image">
+                        </div>
+                        <div class="col-5 pt-3">
+                            <h2 id="postTitle-${db_pk}">${db_postTitle}</h2><hr>
+                            <div id="postContent-${db_pk}">${db_postContent}</div>
+                        </div>
+                        <div class="col-2">
+                        </div>
+                    </div>
+                    <div class="edit-controls" style="display: block;">
+                        <div class="my-3 me-5 d-flex justify-content-end">  
+                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${db_pk}, ${index})">수정하기</button>
+                            <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${db_pk})">삭제하기</button>
+                        </div>
+                    </div>
+                
+                `
+            } else {
+                container.innerHTML = `
+                    <div class="row">
+                        <div class="col-1">
+                        </div>
+                        <div class="col-5 pt-3">
+                            <h2 id="postTitle-${db_pk}">${postTitle}</h2><hr>
+                            <div id="postContent-${db_pk}">${postContent}</div>
+                        </div>
+                        <div class="col-5 ms-5">
+                            <img src="${db_imgURL}" id="postImage-${db_pk}" alt="Description of Image" class="img-fluid responsive-image">
+                        </div>
+                    </div>
+                    <div class="edit-controls" style="display: block;">
+                        <div class="my-3 me-1 d-flex justify-content-end">
+                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${db_pk}, ${index})">수정하기</button>
+                            <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${db_pk})">삭제하기</button>
+                        </div>
+                    </div>
+                `
+            }
         },
         error: function(error) {
             console.error(error);
         }
     });
 
-
-    // ajax 통신 이 후, reload
 }
 
 function readFileAsDataURL(input, callback) {

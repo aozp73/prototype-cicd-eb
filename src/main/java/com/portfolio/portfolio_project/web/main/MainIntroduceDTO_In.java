@@ -37,7 +37,7 @@ public class MainIntroduceDTO_In {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class putDTO {
-        private Long postPK;
+        private Long id;
         private String postTitle;
         private String postContent;
         private String imageName;

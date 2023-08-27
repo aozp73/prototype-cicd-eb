@@ -69,7 +69,7 @@ public class MainIntroduceService {
 
     @Transactional
     public MainIntroduceDTO_Out.PutDTO main_put(MainIntroduceDTO_In.putDTO putDTO_In){
-        MainIntroduce mainIntroducePS = mainIntroduceRepository.findById(putDTO_In.getPostPK()).orElseThrow(() -> {
+        MainIntroduce mainIntroducePS = mainIntroduceRepository.findById(putDTO_In.getId()).orElseThrow(() -> {
             throw new Exception400("업데이트 하려는 게시물이 존재하지 않습니다.");
         });
 
