@@ -1,5 +1,6 @@
 package com.portfolio.portfolio_project.core.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,12 +16,17 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.portfolio.portfolio_project.core.jwt.JwtAuthorizationFilter;
+import com.portfolio.portfolio_project.core.jwt.MyJwtProvider;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Configuration
 public class SecurityConfig {
+
+    @Autowired
+    private MyJwtProvider myJwtProvider;
+
     @Bean
     BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -31,7 +37,7 @@ public class SecurityConfig {
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            builder.addFilterAt(new JwtAuthorizationFilter(authenticationManager), BasicAuthenticationFilter.class);
+            builder.addFilterAt(new JwtAuthorizationFilter(authenticationManager , myJwtProvider), BasicAuthenticationFilter.class);
             super.configure(builder);
         }
     }
@@ -83,7 +89,7 @@ public class SecurityConfig {
         // 9. 인증, 권한 필터 설정
         http.authorizeRequests(
                 authroize -> authroize.antMatchers("/auth/**").authenticated()// 인증이 필요한곳
-                        .antMatchers("/auth/**").access("hasRole('admin')")
+                        .antMatchers("/auth/**").access("hasRole('ROLE_admin')")
                         .anyRequest().permitAll());
 
         return http.build();

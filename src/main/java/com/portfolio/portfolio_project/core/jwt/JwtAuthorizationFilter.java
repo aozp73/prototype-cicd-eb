@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,17 +23,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
-    @Autowired
     private MyJwtProvider myJwtProvider;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, MyJwtProvider myJwtProvider) {
         super(authenticationManager);
+        this.myJwtProvider = myJwtProvider;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-
         String prefixJwt = request.getHeader(MyJwtProvider.HEADER);
 
         if (prefixJwt == null) {
@@ -49,6 +47,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             String role = decodedJWT.getClaim("role").asString();
 
             User user = User.builder().id(id).email(email).role(role).build();
+            
             PrincipalDetails myUserDetails = new PrincipalDetails(user);
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                     myUserDetails,
@@ -59,7 +58,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         } catch (TokenExpiredException tee) {
             log.error("토큰 만료됨");
         } catch (Exception sve) {
-            log.error("토큰 검증 실패"); 
+            log.error("토큰 검증 실패", sve); 
         } finally {
             chain.doFilter(request, response);
         }

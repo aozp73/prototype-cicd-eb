@@ -11,7 +11,7 @@ import com.portfolio.portfolio_project.core.exception.Exception400;
 import com.portfolio.portfolio_project.core.jwt.MyJwtProvider;
 import com.portfolio.portfolio_project.domain.jpa.user.User;
 import com.portfolio.portfolio_project.domain.jpa.user.UserRepository;
-import com.portfolio.portfolio_project.web.adminlogin.InAdminLogin;
+import com.portfolio.portfolio_project.web.adminlogin.AdminLoginDTO_In;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +23,7 @@ public class AdminLoginService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
-    public String 로그인(InAdminLogin.LoginDTO loginDTO) {
+    public String 로그인(AdminLoginDTO_In.LoginDTO loginDTO) {
 
         Optional<User> userOP = userRepository.findByEmail(loginDTO.getEmail());
 

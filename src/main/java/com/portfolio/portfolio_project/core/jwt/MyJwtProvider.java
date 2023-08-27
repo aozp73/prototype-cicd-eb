@@ -36,12 +36,14 @@ public class MyJwtProvider {
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXP))
                 .withClaim("id", user.getId())
                 .withClaim("email", user.getEmail())
-                .withClaim("role", user.getRole())
+                .withClaim("role", "ROLE_" + user.getRole())
                 .sign(Algorithm.HMAC512(SECRET));
+
         return TOKEN_PREFIX + jwt;
     }
 
     public DecodedJWT verify(String jwt) throws TokenExpiredException, Exception {
+        
         DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(SECRET))
                 .build().verify(jwt);
         return decodedJWT;

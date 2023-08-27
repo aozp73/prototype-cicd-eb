@@ -24,7 +24,7 @@ public class AdminLoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody InAdminLogin.LoginDTO loginDTO) {
+    public ResponseEntity<?> login(@RequestBody AdminLoginDTO_In.LoginDTO loginDTO) {
         String jwt = adminLoginService.로그인(loginDTO);
 
         return ResponseEntity.ok().header(MyJwtProvider.HEADER, jwt)

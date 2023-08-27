@@ -9,23 +9,21 @@ import java.util.Base64;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.portfolio.portfolio_project.core.exception.Exception400;
-
 public class BASE64DecodedMultipartFile implements MultipartFile {
 
     public static MultipartFile convertBase64ToMultipartFile(String base64, String fileName, String contentType) 
-            throws IOException {
+            throws Exception {
         byte[] decodedData;
-        try {
-            String[] parts = base64.split(",");
-            // base64Data : data:image/png;base64, 없앤 base64 String 값
-            String base64Data = parts[1];
-            // 하드 디스크는 이진데이터를 읽어 저장하므로 base64 문자셋 -> 이진 데이터 디코딩
-            decodedData = Base64.getDecoder().decode(base64Data);
-            // byte[] decodedBytes = Base64.decodeBase64(base64);
-        } catch (Exception e) {
-            throw new Exception400("해당 이미지는 올바른 base64 문자열이 아닙니다.");
-        }
+
+        base64 = base64.trim().replace("\"", "");
+        String[] parts = base64.split(",");
+
+        // base64Data : data:image/png;base64, 없앤 base64 String 값
+        String base64Data = parts[1];
+        // 하드 디스크는 이진데이터를 읽어 저장하므로 base64 문자셋 -> 이진 데이터 디코딩
+        decodedData = Base64.getDecoder().decode(base64Data);
+        // byte[] decodedBytes = Base64.decodeBase64(base64);
+
         return new BASE64DecodedMultipartFile(decodedData, fileName, contentType);
     }
 

@@ -55,9 +55,6 @@
                     <button type="button" class="btn btn-primary mb-2 ms-2 edit-button" style="display:none" onclick="toggleEditMode()">편집모드</button>
                     <button type="button" class="btn btn-secondary btn-sm mb-2 ms-2 logout-button" style="display:none" onclick="logout()">로그아웃</button>
 
-
-               
-
             </div>
         </div>
     </header>        
@@ -67,12 +64,12 @@
             return localStorage.getItem('jwtToken') !== null;
         }
         window.onload = function() {
+            checkAndRemoveExpiredToken();
+
             if (!checkIfLoggedIn()) {
-                // 로그인하지 않은 경우 숨기고 싶은 요소를 숨깁니다.
                 document.querySelector('.edit-button').style.display = 'none';
                 document.querySelector('.logout-button').style.display = 'none';
             } else {
-                // 로그인한 경우 보이고 싶은 요소를 표시합니다.
                 document.querySelector('.edit-button').style.display = 'block';
                 document.querySelector('.logout-button').style.display = 'block';
             }
@@ -80,5 +77,33 @@
         function logout() {
             localStorage.removeItem('jwtToken'); 
             location.reload(); // 현재 페이지를 새로고침하여 UI 변경 반영
+        }
+
+
+        function isTokenExpired(token) {
+            try {
+                const [, payload,] = token.split('.');
+                
+                // Base64에서 JSON 문자열로 디코딩
+                const decodedPayload = atob(payload);
+                
+                // JSON 문자열을 JavaScript 객체로 변환
+                const { exp } = JSON.parse(decodedPayload);
+
+                // 현재 시간을 가져와 JWT의 exp와 비교
+                const currentUnixTime = Math.floor(Date.now() / 1000);
+                return currentUnixTime > exp;
+            } catch (e) {
+                console.error("Error decoding JWT:", e);
+                return false;
+            }
+        }
+
+        // 토큰이 만료되었는지 확인하고 만료되면 삭제
+        function checkAndRemoveExpiredToken() {
+            const token = localStorage.getItem('jwtToken');
+            if (token && isTokenExpired(token)) {
+                localStorage.removeItem('jwtToken');
+            }
         }
     </script>
