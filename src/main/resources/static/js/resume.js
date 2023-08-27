@@ -82,22 +82,31 @@ function initEditMode() {
     }
 }
 
+function createDateInput() {
+    return '<input type="date" class="form-control" style="width: 135px; display: inline-block;">';
+}
+
 // 단순히 onclick 속성은 onclick 속성은 HTML 요소가 브라우저에 로드될 때에 해당 요소에 바인딩되며,
 // HTML 페이지가 처음 로딩될 때 HTML 소스 코드에 정의된 onclick 속성을 가진 요소만 해당 자바스크립트 함수에 바인딩 됨
 // -> 따라서, 추가한 Row에도 여러 이벤트를 적용하기 위해 이벤트 위임 개념과 ready와 .on() 활용 (해당 과정 추가 블로깅)
 $(document).ready(function() {
 
     // + 버튼 클릭 시, 입력 Form 출력
-    $(".add-btn").on('click', function() {
+    $(".add-btn, .edu-add-btn").on('click', function() {
         addCnt += 1
         if (addCnt >= 2) {
             return;
         }
 
         let tableBody = $(this).closest('tbody');
+        let isSchoolEdu = $(this).hasClass('edu-add-btn');
+        let dateInputs = isSchoolEdu ? createDateInput() + '&nbsp ~ &nbsp' + createDateInput() : createDateInput();
+
         let newRow = `
             <tr class="add-form toggleMode">
-                <td><input type="text" class="form-control"></td>
+                <td>
+                    ${dateInputs}
+                </td>
                 <td><input type="text" class="form-control"></td>
                 <td><input type="text" class="form-control"></td>
                 <td><input type="text" class="form-control"></td>
@@ -166,6 +175,9 @@ function enroll(event) {
     let currentRow = $(clickedButton).closest('tr').prev();
 
     let values = [];
+    currentRow.find("input[type='date']").each(function() {
+        values.push($(this).val());
+    });
     currentRow.find("input[type='text']").each(function() {
         values.push($(this).val());
     });
@@ -178,22 +190,46 @@ function enroll(event) {
     // ☆★☆★ tableID파싱한 값과 입력 값들로 Ajax-POST 통신코드 추가
 
     // 통신에서 받은 값으로 대체 
-    testPK1 = 3
-    testContent0 = values[0]
-    testContent1 = values[1]
-    testContent2 = values[2]
-    testContent3 = values[3]
-    testContent4 = values[4]
-    let enrollContent = `
-        <tr id="etcedu-${testPK1}"> 
-            <td class="drag-handle ">${testContent0}</td>
-            <td>${testContent1}</td>
+    let enrollContent = ''
+    if (tableID == 'schooledu' || tableID == 'academyedu'){
+        testPK1 = 3
+        testContent0 = values[0]
+        testContent1 = values[1]
+        testContent2 = values[2]
+        testContent3 = values[3]
+        testContent4 = values[4]
+        testContent5 = values[5]
+        
+        enrollContent = `
+        <tr id="${tableID}-${testPK1}"> 
+            <td class="drag-handle ">${testContent0} ~ ${testContent1}</td>
             <td>${testContent2}</td>
             <td>${testContent3}</td>
             <td>${testContent4}</td>
+            <td>${testContent5}</td>
             <td class="no-border"><span class="delete-btn">&#10006;</span></td>
         </tr>
-    `            
+    `     
+    } else {
+        testPK1 = 3
+        testContent0 = values[0]
+        testContent1 = values[1]
+        testContent2 = values[2]
+        testContent3 = values[3]
+        testContent4 = values[4]
+
+        enrollContent = `
+            <tr id="${tableID}-${testPK1}"> 
+                <td class="drag-handle ">${testContent0}</td>
+                <td>${testContent1}</td>
+                <td>${testContent2}</td>
+                <td>${testContent3}</td>
+                <td>${testContent4}</td>
+                <td class="no-border"><span class="delete-btn">&#10006;</span></td>
+            </tr>
+        `            
+
+    }
     currentRow.before(enrollContent); 
     currentRow.remove();
     tableBody.find('.add-cell').empty();
