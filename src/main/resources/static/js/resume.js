@@ -11,9 +11,10 @@ window.addEventListener('scroll', function() {
     }
 });
 
-
+// hedaer.jsp에서 편집모드 버튼 클릭 시, 호출되는 콜백 합수
 function toggleEditMode() {
     isEditMode = !isEditMode;
+    // toggleMode 클래스 태그 : +버튼 & 입력 Form
     let elements = document.querySelectorAll('.toggleMode');
 
     for (let element of elements) {
@@ -23,6 +24,8 @@ function toggleEditMode() {
             element.style.display = '';  
         }
     }
+    // 편집 모드 버튼 토클에서, layout을 확인하는 상황에서는 row이동을 하지 못하게 진행
+    // 기존 Sortable를 파괴하고 if문을 타지 않음
     initEditMode();
 }
 
@@ -34,6 +37,7 @@ function initEditMode() {
     }
     sortables = [];
 
+    // 편집 모드에서 기능을 명시하여 Sortable 생성 
     if (isEditMode) {
         document.querySelectorAll('.sortableTable tbody').forEach(function(tbody) {
             let sortable = new Sortable(tbody, {
@@ -78,8 +82,12 @@ function initEditMode() {
     }
 }
 
-
+// 단순히 onclick 속성은 onclick 속성은 HTML 요소가 브라우저에 로드될 때에 해당 요소에 바인딩되며,
+// HTML 페이지가 처음 로딩될 때 HTML 소스 코드에 정의된 onclick 속성을 가진 요소만 해당 자바스크립트 함수에 바인딩 됨
+// -> 따라서, 추가한 Row에도 여러 이벤트를 적용하기 위해 이벤트 위임 개념과 ready와 .on() 활용 (해당 과정 추가 블로깅)
 $(document).ready(function() {
+
+    // + 버튼 클릭 시, 입력 Form 출력
     $(".add-btn").on('click', function() {
         addCnt += 1
         if (addCnt >= 2) {
@@ -88,7 +96,7 @@ $(document).ready(function() {
 
         let tableBody = $(this).closest('tbody');
         let newRow = `
-            <tr class="add-form">
+            <tr class="add-form toggleMode">
                 <td><input type="text" class="form-control"></td>
                 <td><input type="text" class="form-control"></td>
                 <td><input type="text" class="form-control"></td>
@@ -107,6 +115,7 @@ $(document).ready(function() {
         $(newBtn).appendTo(tableBody.find('.add-cell'));
     });
 
+    // 각 Row 마우스 올리면 css 효과 & 삭제 버튼 show
     $(".sortableTable tbody").on('mouseenter', 'tr:not(.table-secondary, .no-border, .add-row, .add-form)', function() {
         if (isEditMode){
             $(this).addClass('highlighted-row');
@@ -119,6 +128,7 @@ $(document).ready(function() {
         }
     });
 
+    // x 버튼 클릭 시 삭제 진행
     $(".sortableTable").on('click', 'tbody tr .delete-btn', function() {
         let tr = $(this).closest('tr');
         let trID = tr.attr('id');  // 예: "edu-1"
@@ -136,6 +146,7 @@ $(document).ready(function() {
     
 });
 
+// 값 입력 후 등록 버튼 클릭 시, 입력 Form & 등록 버튼 & 취소 버튼 없애기
 function add_cancle(event) {
     let clickedButton = event.target;
     let tableBody = $(clickedButton).closest('tbody');
@@ -148,6 +159,7 @@ function add_cancle(event) {
     addCnt = 0;
 }
 
+// 등록 버튼 클릭 시, AJAX 통신 후, 등록 값 랜더링
 function enroll(event) {
     let clickedButton = event.target;
     let tableBody = $(clickedButton).closest('tbody');
