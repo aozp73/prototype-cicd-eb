@@ -170,10 +170,11 @@ function add_cancle(event) {
 
 // 등록 버튼 클릭 시, AJAX 통신 후, 등록 값 랜더링
 function enroll(event) {
+    const jwtToken = localStorage.getItem('jwtToken'); 
+
     let clickedButton = event.target;
     let tableBody = $(clickedButton).closest('tbody');
     let currentRow = $(clickedButton).closest('tr').prev();
-
     let values = [];
     currentRow.find("input[type='date']").each(function() {
         values.push($(this).val());
@@ -181,13 +182,30 @@ function enroll(event) {
     currentRow.find("input[type='text']").each(function() {
         values.push($(this).val());
     });
-
     let tableID = currentRow.closest('tbody').attr('id'); // 예: "edu-table"
 
-    console.log("Input values:", values);
-    console.log("Table ID:", tableID);
+    let payload = {
+        values: values 
+    };
 
-    // ☆★☆★ tableID파싱한 값과 입력 값들로 Ajax-POST 통신코드 추가
+    $.ajax({
+        type: "POST",
+        url: `/auth/resume/${tableID}`,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            'Authorization': jwtToken 
+        },
+        data: JSON.stringify(payload),
+        
+        success: function(response) {
+            console.log(response)
+        },
+        error: function(error) {
+            console.log(error)
+            
+        }
+    });
 
     // 통신에서 받은 값으로 대체 
     let enrollContent = ''
