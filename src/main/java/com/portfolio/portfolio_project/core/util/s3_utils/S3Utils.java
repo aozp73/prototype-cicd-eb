@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -13,11 +15,38 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.portfolio.portfolio_project.core.exception.Exception400;
+import com.portfolio.portfolio_project.core.exception.Exception500;
 
 import lombok.RequiredArgsConstructor;
 
+@Service
 @RequiredArgsConstructor
 public class S3Utils {
+
+    private final AmazonS3Client amazonS3Client;
+
+    @Value("${bucket}")
+    private String bucket;
+    @Value("${static}")
+    private String staticRegion;
+
+    public List<String> uploadImageToS3(String imageData, String imageName, String contentType) throws Exception500 {
+        MultipartFile img_multipartFile;
+        try {
+            img_multipartFile = BASE64DecodedMultipartFile
+                .convertBase64ToMultipartFile(imageData, imageName, contentType);
+        } catch (Exception e) {
+            throw new Exception500("MultiPartFIle 변환에 실패하였습니다. :" + e.getStackTrace());
+        }
+
+        List<String> nameAndUrl = new ArrayList<>();
+        try {
+            nameAndUrl = S3Utils.uploadFile(img_multipartFile, "main_introduce", bucket, amazonS3Client);
+        } catch (IOException e) {
+            throw new Exception500("S3 File 업로드에 실패하였습니다.");
+        }
+        return nameAndUrl;
+    }
 
     public static List<String> uploadFile(MultipartFile multipartFile, String keyword, String bucket,
             AmazonS3Client amazonS3Client) throws IOException {
