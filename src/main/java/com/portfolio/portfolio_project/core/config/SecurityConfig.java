@@ -3,6 +3,7 @@ package com.portfolio.portfolio_project.core.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -75,15 +76,17 @@ public class SecurityConfig {
         // 7. 인증 실패 처리
         http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
             log.error("에러 : 인증 실패 : " + authException.getMessage());
-
-            response.sendRedirect("/main");
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setContentType("application/json");
+            response.getWriter().write("{\"data\":\"인증이 필요합니다.\"}");
         });
 
         // 8. 권한 실패 처리
         http.exceptionHandling().accessDeniedHandler((request, response, accessDeniedException) -> {
             log.error("에러 : 권한 실패 : " + accessDeniedException.getMessage());
-            
-            response.sendRedirect("/main");
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+            response.setContentType("application/json");
+            response.getWriter().write("{\"data\":\"권한이 없습니다.\"}");
         });
 
         // 9. 인증, 권한 필터 설정

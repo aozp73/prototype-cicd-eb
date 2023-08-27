@@ -48,5 +48,15 @@ public class MyJwtProvider {
                 .build().verify(jwt);
         return decodedJWT;
     }
+
+    public boolean validateToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC512(SECRET);
+            JWT.require(algorithm).build().verify(token);
+            return true; 
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
 

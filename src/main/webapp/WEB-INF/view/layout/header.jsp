@@ -66,19 +66,56 @@
         window.onload = function() {
             checkAndRemoveExpiredToken();
 
-            if (!checkIfLoggedIn()) {
-                document.querySelector('.edit-button').style.display = 'none';
-                document.querySelector('.logout-button').style.display = 'none';
+            const jwtToken = localStorage.getItem('jwtToken'); 
+            if (jwtToken) {
+                $.ajax({
+                    url: '/validateToken',
+                    type: 'GET',
+                    headers: {
+                        'Authorization': jwtToken  
+                    },
+                    success: function(response) {
+                        if (response === true) {
+                            showEditControls();
+                        } else {
+                            hideEditControls();
+                        }
+                    },
+                    error: function(error) {
+                        console.log("통신실패통신실패")
+                        // Handle error
+                        console.log(error);
+                        hideEditControls();
+                    }
+                });
             } else {
-                document.querySelector('.edit-button').style.display = 'block';
-                document.querySelector('.logout-button').style.display = 'block';
+                hideEditControls();
             }
         };
+
+        // Show edit controls if logged in
+        function showEditControls() {
+            document.querySelector('.edit-button').style.display = 'block';
+            document.querySelector('.logout-button').style.display = 'block';
+            const controls = document.querySelectorAll('.edit-controls');
+            controls.forEach(control => {
+                control.style.display = 'block';
+            });
+        }
+
+        // Hide edit controls if not logged in
+        function hideEditControls() {
+            document.querySelector('.edit-button').style.display = 'none';
+            document.querySelector('.logout-button').style.display = 'none';
+            const controls = document.querySelectorAll('.edit-controls');
+            controls.forEach(control => {
+                control.style.display = 'none';
+            });
+        }
         function logout() {
             localStorage.removeItem('jwtToken'); 
             location.reload(); // 현재 페이지를 새로고침하여 UI 변경 반영
         }
-
 
         function isTokenExpired(token) {
             try {
