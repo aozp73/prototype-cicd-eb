@@ -1,4 +1,4 @@
-let modeCnt = 0
+// 스크롤 시 navbar 출렁이는 효과
 window.addEventListener('scroll', function() {
     let navbar = document.querySelector('.navbar');
     if (window.scrollY > 50) { 
@@ -8,8 +8,8 @@ window.addEventListener('scroll', function() {
     }
 });
 
+// 삭제 시 block 속성 버튼 그대로 출력하기 위함 (최초 로드 시에도 버튼 보임) 
 document.addEventListener('DOMContentLoaded', (event) => {
-
         const controls = document.querySelectorAll('.edit-controls');
         controls.forEach(control => {
             control.style.display = 'block';
@@ -17,13 +17,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 });
 
-// 편집 모드 (toggle)
+// 편집 모드 (toggle), (버튼 보이지 않게 하여 layout 느낌 확인)
 function toggleEditMode() {
-    modeCnt += 1
-    if (modeCnt >= 2) {
-        location.reload();
-    }
-
     const controls = document.querySelectorAll('.edit-controls');
     controls.forEach(control => {
         if (control.style.display === 'none') {
@@ -34,8 +29,53 @@ function toggleEditMode() {
     });
 }
 
-function updateForm(event, pk, postIndex) {
+// 글 등록하기 버튼 클릭 시, Server 통신 후 appendNewPost() 호출하여 랜더링
+function addPost() {
+    const jwtToken = localStorage.getItem('jwtToken'); 
 
+    let input = document.getElementById('fileInput-new');
+    let file = input.files[0];
+    if (!file) {
+        alert("파일이 선택되지 않았습니다.");
+        return;
+    }
+
+    let postTitle = $('#postTitle-new').val();
+    let postContent = $('#postContent-new').val();
+    postContent = postContent.replace(/\n/g, "<br>");
+
+    readFileAsDataURL(input, function(dataURL) {
+        let payload = {
+            postTitle: postTitle,
+            postContent: postContent,
+            imageName: file.name,
+            contentType: file.type,
+            imageData: JSON.stringify(dataURL)
+        };
+
+        $.ajax({
+            url: '/auth/main',
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            headers: {
+                'Authorization': jwtToken 
+            },
+            data: JSON.stringify(payload),  
+
+            success: function(response, textStatus, jqXHR) {
+                console.log(response);
+                appendNewPost(response.data);
+            },
+            error: function(error) {
+                alert(error.responseJSON.data);
+            }
+        });
+    });
+}  
+
+// 수정하기 버튼 클릭 시, Form 랜더링
+function updateForm(event, pk, postIndex) {
     event.preventDefault();
     let postTitle = $("#postTitle-" + pk).text();
     let postContent = $("#postContent-" + pk).html();
@@ -96,180 +136,10 @@ function updateForm(event, pk, postIndex) {
                     <button class="btn btn-outline-secondary" onclick="updatePost(${pk}, ${postIndex})">수정완료</button>
                 </div>
             `;
-
         }                
 }
 
-function deletePost(pk) {
-    const jwtToken = localStorage.getItem('jwtToken'); 
-
-    $.ajax({
-        url: '/auth/main?postPK=' + pk, 
-        type: 'DELETE', 
-        headers: {
-            'Authorization': jwtToken  
-        },
-        success: function(response) {
-            console.log(response);
-            location.reload(true);
-            
-        },
-        error: function(error) {
-            console.error(error);
-        }
-    });
-}
-
-function addPost() {
-    const jwtToken = localStorage.getItem('jwtToken'); 
-
-    let input = document.getElementById('fileInput-new');
-    let file = input.files[0];
-    if (!file) {
-        alert("파일이 선택되지 않았습니다.");
-        return;
-    }
-
-    let postTitle = $('#postTitle-new').val();
-    let postContent = $('#postContent-new').val();
-    postContent = postContent.replace(/\n/g, "<br>");
-
-    readFileAsDataURL(input, function(dataURL) {
-        let payload = {
-            postTitle: postTitle,
-            postContent: postContent,
-            imageName: file.name,
-            contentType: file.type,
-            imageData: JSON.stringify(dataURL)
-        };
-
-        $.ajax({
-            url: '/auth/main',
-            type: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            headers: {
-                'Authorization': jwtToken 
-            },
-            data: JSON.stringify(payload),  
-
-            success: function(response, textStatus, jqXHR) {
-                console.log(response);
-                appendNewPost(response.data);
-            },
-            error: function(error) {
-                console.error(error);
-            }
-        });
-    });
-}  
-
-function appendNewPost(postDTO) {
-    const index = document.querySelectorAll('.post-container').length + 1;
-    console.log(postDTO)
-    let newPostHTML = "";
-    if (index % 2 !== 0) {
-        newPostHTML = `
-        <div class="container post-container ps-5" style="height:450px" data-index="${index}" id="content-${postDTO.id}">
-            <div class="row">
-            <div class="col-5 me-5">
-                <img src="${postDTO.imgURL}" alt="Description of Image" id="postImage-${postDTO.id}" class="img-fluid responsive-image">
-            </div>
-            <div class="col-5 pt-3">
-                <h2 id="postTitle-${postDTO.id}">${postDTO.postTitle}</h2><hr>
-                <div id="postContent-${postDTO.id}">${postDTO.postContent}</div>
-            </div>
-            <div class="col-2"></div>
-            </div>
-            <div class="edit-controls" style="display: none;">
-            <div class="my-3 me-5 d-flex justify-content-end">
-                <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${postDTO.id}, ${index})">수정하기</button>
-                <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${postDTO.id})">삭제하기</button>
-            </div>
-            </div>
-        </div>`;
-    } else {
-        // Use the second template
-        newPostHTML = `
-        <div class="container post-container pe-5" style="height:450px" data-index="${index}" id="content-${postDTO.id}">
-            <div class="row">
-            <div class="col-1"></div>
-            <div class="col-5 pt-3">
-                <h2 id="postTitle-${postDTO.id}">${postDTO.postTitle}</h2><hr>
-                <div id="postContent-${postDTO.id}">${postDTO.postContent}</div>
-            </div>
-            <div class="col-5 ms-5">
-                <img src="${postDTO.imgURL}" alt="Description of Image" id="postImage-${postDTO.id}" class="img-fluid responsive-image">
-            </div>
-            </div>
-            <div class="edit-controls" style="display: none;">
-            <div class="my-3 me-1 d-flex justify-content-end">
-                <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${postDTO.id}, ${index})">수정하기</button>
-                <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${postDTO.id})">삭제하기</button>
-            </div>
-            </div>
-        </div>`;
-    }
-
-    $("#postBox").append(newPostHTML);
-    const controls = document.querySelectorAll('.edit-controls');
-    controls.forEach(control => {
-        if (control.style.display === 'none') {
-            control.style.display = 'block';
-        } 
-    });
-
-    resetForm();
-}
-
-function resetForm() {
-    // 제목, 내용 필드 초기화
-    $('#postTitle-new').val('');
-    $('#postContent-new').val('');
-  
-    // 파일 입력 및 이미지 미리보기 초기화
-    $('#fileInput-new').val('');
-    $('#imagePreview').empty();
-}
-
-function previewImage(event) {
-    const reader = new FileReader();
-    const file = event.target.files[0];
-
-    reader.onloadend = function() {
-        const imagePreview = document.querySelector('.blog-image-preview');
-        imagePreview.style.backgroundImage = 'url(' + reader.result + ')';
-        imagePreview.style.backgroundSize = '100% 100%';
-        imagePreview.style.backgroundPosition = 'center center';
-        document.querySelector('.plus-icon').style.display = 'none'; // + 모양 숨기기
-
-        imagePreview.classList.remove('blog-image-preview'); // 기존 클래스 제거
-        imagePreview.classList.add('blog-image-preview-change'); // 새로운 클래스 추가
-    }
-
-    if (file) {
-        reader.readAsDataURL(file);
-    } else {
-        resetPreview();
-    }
-}
-
-function checkImage(pk) {
-    const fileInput = document.getElementById('fileInput-'+pk);
-    const imageToChange = document.getElementById('postImage-'+pk);
-    const file = fileInput.files[0];
-
-    if (file) {
-        const reader = new FileReader();
-        // 이벤트 큐에 등록. CallBack 함수 작성
-        reader.onload = function(e) {
-            imageToChange.src = e.target.result;
-        }
-        // 다 읽고 난 뒤, 위 CallBack 함수 작동
-        reader.readAsDataURL(file);
-    }
-}
-
+// 수정완료 버튼 클릭 시, Server 통신 후 랜더링
 function updatePost(pk, index){   
     const jwtToken = localStorage.getItem('jwtToken'); 
     let input = document.getElementById('fileInput-'+pk);
@@ -294,7 +164,6 @@ function updatePost(pk, index){
     postContent = $(`#postContent-${pk}`).val()
     postContent = postContent.replace(/\n/g, "<br>");
 
-
     let payload = {
         id: pk,
         postTitle: postTitle,
@@ -316,8 +185,6 @@ function updatePost(pk, index){
         data: JSON.stringify(payload),  
 
         success: function(response, textStatus, jqXHR) {
-            console.log(response);
-
             const db_pk = response.data.id;
             const db_postTitle = response.data.postTitle;
             const db_postContent = response.data.postContent;
@@ -326,6 +193,7 @@ function updatePost(pk, index){
             const container = document.getElementById('content-' + pk);
 
             if (index % 2 !== 0) {
+
                 container.innerHTML = `
                     <div class="row">
                         <div class="col-5 me-5">
@@ -346,7 +214,9 @@ function updatePost(pk, index){
                     </div>
                 
                 `
+
             } else {
+
                 container.innerHTML = `
                     <div class="row">
                         <div class="col-1">
@@ -366,15 +236,39 @@ function updatePost(pk, index){
                         </div>
                     </div>
                 `
+
             }
         },
         error: function(error) {
-            console.error(error);
+            alert(error.responseJSON.data);
         }
     });
-
 }
 
+// 삭제하기 버튼 클릭 시 삭제 후, reload
+function deletePost(pk) {
+    const jwtToken = localStorage.getItem('jwtToken'); 
+
+    $.ajax({
+        url: '/auth/main?postPK=' + pk, 
+        type: 'DELETE', 
+        headers: {
+            'Authorization': jwtToken  
+        },
+        success: function(response) {
+            console.log(response);
+            location.reload(true);
+            
+        },
+        error: function(error) {
+            alert(error.responseJSON.data);
+        }
+    });
+}
+
+// ======= 내부 함수 =========================================================================
+
+// 등록 시, 등록 된 값 불러오는 함수 (main 페이지에서의 등록은 img태그를 사용하지 않음에 따라 해당 함수 사용)
 function readFileAsDataURL(input, callback) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -385,4 +279,95 @@ function readFileAsDataURL(input, callback) {
         
         reader.readAsDataURL(input.files[0]);
     }
+}
+
+// UpdateForm에서 사진 선택 시, 미리보기 제공
+function checkImage(pk) {
+    const fileInput = document.getElementById('fileInput-'+pk);
+    const imageToChange = document.getElementById('postImage-'+pk);
+    const file = fileInput.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        // 이벤트 큐에 등록. CallBack 함수 작성
+        reader.onload = function(e) {
+            imageToChange.src = e.target.result;
+        }
+        // 다 읽고 난 뒤, 위 CallBack 함수 작동
+        reader.readAsDataURL(file);
+    }
+}
+
+// 등록 시, Server 통신 후 랜더링하는 함수
+function appendNewPost(postDTO) {
+    const index = document.querySelectorAll('.post-container').length + 1;
+
+    let newPostHTML = "";
+    if (index % 2 !== 0) {
+
+        newPostHTML = `
+            <div class="container post-container ps-5" style="height:450px" data-index="${index}" id="content-${postDTO.id}">
+                <div class="row">
+                <div class="col-5 me-5">
+                    <img src="${postDTO.imgURL}" alt="Description of Image" id="postImage-${postDTO.id}" class="img-fluid responsive-image">
+                </div>
+                <div class="col-5 pt-3">
+                    <h2 id="postTitle-${postDTO.id}">${postDTO.postTitle}</h2><hr>
+                    <div id="postContent-${postDTO.id}">${postDTO.postContent}</div>
+                </div>
+                <div class="col-2"></div>
+                </div>
+                <div class="edit-controls" style="display: none;">
+                <div class="my-3 me-5 d-flex justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${postDTO.id}, ${index})">수정하기</button>
+                    <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${postDTO.id})">삭제하기</button>
+                </div>
+                </div>
+            </div>
+            `;
+            
+    } else {
+
+        newPostHTML = `
+            <div class="container post-container pe-5" style="height:450px" data-index="${index}" id="content-${postDTO.id}">
+                <div class="row">
+                <div class="col-1"></div>
+                <div class="col-5 pt-3">
+                    <h2 id="postTitle-${postDTO.id}">${postDTO.postTitle}</h2><hr>
+                    <div id="postContent-${postDTO.id}">${postDTO.postContent}</div>
+                </div>
+                <div class="col-5 ms-5">
+                    <img src="${postDTO.imgURL}" alt="Description of Image" id="postImage-${postDTO.id}" class="img-fluid responsive-image">
+                </div>
+                </div>
+                <div class="edit-controls" style="display: none;">
+                <div class="my-3 me-1 d-flex justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${postDTO.id}, ${index})">수정하기</button>
+                    <button type="button" class="btn btn-outline-danger me-5" onclick="deletePost(${postDTO.id})">삭제하기</button>
+                </div>
+                </div>
+            </div>
+            `;
+    }
+
+    $("#postBox").append(newPostHTML);
+    const controls = document.querySelectorAll('.edit-controls');
+    controls.forEach(control => {
+        if (control.style.display === 'none') {
+            control.style.display = 'block';
+        } 
+    });
+
+    resetForm();
+}
+
+// 등록 한 뒤, 등록 Form 초기화
+function resetForm() {
+    // 제목, 내용 필드 초기화
+    $('#postTitle-new').val('');
+    $('#postContent-new').val('');
+  
+    // 파일 입력 및 이미지 미리보기 초기화
+    $('#fileInput-new').val('');
+    $('#imagePreview').empty();
 }
