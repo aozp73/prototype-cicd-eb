@@ -25,23 +25,23 @@ public class ResumeSchoolEdu {
 
     @Comment("이력 페이지 - 학교 입학일")
     @Column(name = "school_admission_date")
-    private LocalDate SchoolAdmissionDate;
+    private LocalDate schoolAdmissionDate;
     @Comment("이력 페이지 - 학교 졸업일")
     @Column(name = "school_graduate_date")
-    private LocalDate SchoolGraduateDate;
+    private LocalDate schoolGraduateDate;
     @Comment("이력 페이지 - 졸업구분")
     @Column(name = "school_graduate_status")
-    private String SchoolGraduateStatus;
+    private String schoolGraduateStatus;
 
     @Comment("이력 페이지 - 학교명")
     @Column(name = "school_name")
-    private String SchoolName;
+    private String schoolName;
     @Comment("이력 페이지 - 전공명")
     @Column(name = "school_major")
-    private String SchoolMajor;
+    private String schoolMajor;
     @Comment("이력 페이지 - 학점")
     @Column(name = "school_credit")
-    private String SchoolCredit;
+    private String schoolCredit;
 
     @Comment("이력 페이지 - 등록 시간")
     @Column(name = "created_at")
