@@ -8,15 +8,6 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// 삭제 시 block 속성 버튼 그대로 출력하기 위함 (최초 로드 시에도 버튼 보임) 
-document.addEventListener('DOMContentLoaded', (event) => {
-        const controls = document.querySelectorAll('.edit-controls');
-        controls.forEach(control => {
-            control.style.display = 'block';
-        });
-
-});
-
 // 편집 모드 (toggle), (버튼 보이지 않게 하여 layout 느낌 확인)
 function toggleEditMode() {
     const controls = document.querySelectorAll('.edit-controls');
