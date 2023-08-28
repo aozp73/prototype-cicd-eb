@@ -87,4 +87,11 @@ public class ResumeDTO_In {
                     .build();
         }
     }
+
+    @Getter
+    @Setter
+    public static class OrderUpdateDto {
+        private String id;
+        private Integer order;
+    }
 }

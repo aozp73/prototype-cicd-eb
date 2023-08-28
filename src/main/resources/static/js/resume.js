@@ -69,12 +69,16 @@ function initEditMode() {
 
                     console.log(`Tbody ID: ${tbodyID}`);
                     console.log('arr:', rowPKs);
+                    const jwtToken = localStorage.getItem('jwtToken'); 
 
                     $.ajax({
-                        url: '/auth/resume/updateOrder',
+                        url: `/auth/resume/updateOrder/${tbodyID}`,
                         method: 'POST',
                         data: JSON.stringify(rowPKs),
                         contentType: 'application/json',
+                        headers: {
+                            'Authorization': jwtToken  
+                        },
                         
                         success: function(response) {
                             console.log(response);

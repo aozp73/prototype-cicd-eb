@@ -1,5 +1,7 @@
 package com.portfolio.portfolio_project.web.resume;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.portfolio.portfolio_project.core.dto.ResponseDTO;
 import com.portfolio.portfolio_project.service.ResumeService;
+import com.portfolio.portfolio_project.web.resume.ResumeDTO_In.OrderUpdateDto;
 import com.portfolio.portfolio_project.web.resume.ResumeDTO_Out.FindAllDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -78,6 +81,44 @@ public class ResumeController {
     @DeleteMapping("/auth/resume/selfstudy")
     public ResponseEntity<?> resume_selfstudy_delete(@RequestParam("resumeID") String resumeID){
         resumeService.resume_selfstudy_delete(resumeID);
+
+        return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
+    }
+
+    // Row Move
+    @PostMapping("/auth/resume/updateOrder/schooledu")
+    public ResponseEntity<?> resume_schooledu_updateOrder(@RequestBody List<ResumeDTO_In.OrderUpdateDto> updates){
+        for (OrderUpdateDto orderUpdateDto : updates) {
+            System.out.println("테스트 : " + orderUpdateDto.getId());
+            System.out.println("테스트 : " + orderUpdateDto.getOrder());
+        }
+
+        return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
+    }
+    @PostMapping("/auth/resume/updateOrder/academyedu")
+    public ResponseEntity<?> resume_academyedu_updateOrder(@RequestBody List<ResumeDTO_In.OrderUpdateDto> updates){
+        for (OrderUpdateDto orderUpdateDto : updates) {
+            System.out.println("테스트 : " + orderUpdateDto.getId());
+            System.out.println("테스트 : " + orderUpdateDto.getOrder());
+        }
+        
+        return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
+    }
+    @PostMapping("/auth/resume/updateOrder/certificate")
+    public ResponseEntity<?> resume_certificate_updateOrder(@RequestBody List<ResumeDTO_In.OrderUpdateDto> updates){
+        for (OrderUpdateDto orderUpdateDto : updates) {
+            System.out.println("테스트 : " + orderUpdateDto.getId());
+            System.out.println("테스트 : " + orderUpdateDto.getOrder());
+        }
+
+        return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
+    }
+    @PostMapping("/auth/resume/updateOrder/selfstudy")
+    public ResponseEntity<?> resume_selfstudy_updateOrder(@RequestBody List<ResumeDTO_In.OrderUpdateDto> updates){
+        for (OrderUpdateDto orderUpdateDto : updates) {
+            System.out.println("테스트 : " + orderUpdateDto.getId());
+            System.out.println("테스트 : " + orderUpdateDto.getOrder());
+        }
 
         return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
     }
