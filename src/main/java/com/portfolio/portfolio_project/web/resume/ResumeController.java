@@ -1,7 +1,5 @@
 package com.portfolio.portfolio_project.web.resume;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
