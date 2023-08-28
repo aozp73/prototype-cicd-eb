@@ -1,5 +1,8 @@
 package com.portfolio.portfolio_project.web.resume;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_academy_edu.ResumeAcademyEdu;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_certificate.ResumeCertificate;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_school_edu.ResumeSchoolEdu;
@@ -18,7 +21,46 @@ public class ResumeDTO_Out {
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class Schooledu_postDTO {
+    public static class FindAllDTO {
+        private List<AcademyEdu_postDTO> resumeAcademyEdus;
+        private List<Certificate_postDTO> resumeCertificates;
+        private List<SelfStudy_postDTO> resumeSelfStudies;
+        private List<SchoolEdu_postDTO> resumeSchoolEdus; 
+
+        public static FindAllDTO fromEntities( List<ResumeAcademyEdu> academyEdus, List<ResumeCertificate> certificates,
+                                                List<ResumeSelfStudy> selfStudies, List<ResumeSchoolEdu> schoolEdus) {
+           
+            List<AcademyEdu_postDTO> academyEduDtos = academyEdus.stream()
+                .map(AcademyEdu_postDTO::fromEntity)
+                .collect(Collectors.toList());
+
+            List<Certificate_postDTO> certificateDtos = certificates.stream()
+                .map(Certificate_postDTO::fromEntity)
+                .collect(Collectors.toList());
+
+            List<SelfStudy_postDTO> selfStudyDtos = selfStudies.stream()
+                .map(SelfStudy_postDTO::fromEntity)
+                .collect(Collectors.toList());
+
+            List<SchoolEdu_postDTO> schoolEduDtos = schoolEdus.stream()
+               .map(SchoolEdu_postDTO::fromEntity)
+               .collect(Collectors.toList()); 
+
+            return FindAllDTO.builder()
+                .resumeAcademyEdus(academyEduDtos)
+                .resumeCertificates(certificateDtos)
+                .resumeSelfStudies(selfStudyDtos)
+                .resumeSchoolEdus(schoolEduDtos) 
+                .build();
+        }
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class SchoolEdu_postDTO {
         private String id;
         private String schoolAdmissionDate;
         private String schoolGraduateDate;
@@ -28,8 +70,8 @@ public class ResumeDTO_Out {
         private String schoolMajor;
         private String schoolCredit;
 
-        public static Schooledu_postDTO fromEntity(ResumeSchoolEdu resumeSchoolEdu) {
-            return Schooledu_postDTO.builder()
+        public static SchoolEdu_postDTO fromEntity(ResumeSchoolEdu resumeSchoolEdu) {
+            return SchoolEdu_postDTO.builder()
                 .id(resumeSchoolEdu.getId())
                 .schoolAdmissionDate(resumeSchoolEdu.getSchoolAdmissionDate())
                 .schoolGraduateDate(resumeSchoolEdu.getSchoolGraduateDate())
@@ -99,7 +141,7 @@ public class ResumeDTO_Out {
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class Selfstudy_postDTO {
+    public static class SelfStudy_postDTO {
         private String id;
         private String selfStudyDate;
         private String selfStudytype;
@@ -107,8 +149,8 @@ public class ResumeDTO_Out {
         private String selfStudyPlatform;
         private String selfStudyBloggingLink;
 
-        public static Selfstudy_postDTO fromEntity(ResumeSelfStudy resumeSelfStudy) {
-            return Selfstudy_postDTO.builder()
+        public static SelfStudy_postDTO fromEntity(ResumeSelfStudy resumeSelfStudy) {
+            return SelfStudy_postDTO.builder()
                 .id(resumeSelfStudy.getId())
                 .selfStudyDate(resumeSelfStudy.getSelfStudyDate())
                 .selfStudytype(resumeSelfStudy.getSelfStudytype())

@@ -23,10 +23,10 @@ public class MainIntroduceService {
     private final S3Utils s3Utils;
 
     @Transactional(readOnly = true)
-    public List<MainIntroduceDTO_Out.PostDTO> main_findAll(){
+    public List<MainIntroduceDTO_Out.findAllDTO> main_findAll(){
         List<MainIntroduce> mainIntroduces = mainIntroduceRepository.findAll();
         
-        return MainIntroduceDTO_Out.PostDTO.fromEntityList(mainIntroduces);
+        return MainIntroduceDTO_Out.findAllDTO.fromEntityList(mainIntroduces);
     }
 
     @Transactional
