@@ -46,7 +46,7 @@ public class MainIntroduceService {
     @Transactional
     public MainIntroduceDTO_Out.PutDTO main_put(MainIntroduceDTO_In.putDTO putDTO_In){
         MainIntroduce mainIntroducePS = mainIntroduceRepository.findById(putDTO_In.getId()).orElseThrow(() -> {
-            throw new Exception400("업데이트 하려는 게시물이 존재하지 않습니다.");
+            throw new Exception400("업데이트하려는 게시물이 존재하지 않습니다.");
         });
 
         putDTO_In.putEntity(mainIntroducePS, putDTO_In);
@@ -63,7 +63,7 @@ public class MainIntroduceService {
     @Transactional
     public void main_delete(Long postPK){
         MainIntroduce mainIntroducePS = mainIntroduceRepository.findById(postPK).orElseThrow(() -> {
-            throw new Exception400("삭제 하려는 게시물이 존재하지 않습니다.");
+            throw new Exception400("삭제하려는 게시물이 존재하지 않습니다.");
         });
 
         try {

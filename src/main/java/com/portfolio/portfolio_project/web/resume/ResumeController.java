@@ -21,7 +21,7 @@ public class ResumeController {
 
     private final ResumeService resumeService;
 
-    // resume_findAll
+    // FindAll
     @GetMapping("/resume")
     public String resume_findAll(Model model){
         FindAllDTO resumeAllDTO = resumeService.resume_findAll();
@@ -30,7 +30,7 @@ public class ResumeController {
         return "/resume";
     }
 
-    //  resume_post
+    //  POST
     @PostMapping("/auth/resume/schooledu")
     public ResponseEntity<?> resume_schooledu_post(@RequestBody ResumeDTO_In.Schooledu_postDTO postDTO_In){
         ResumeDTO_Out.SchoolEdu_postDTO postDTO_Out = resumeService.resume_schooledu_post(postDTO_In);
@@ -56,29 +56,28 @@ public class ResumeController {
         return ResponseEntity.ok().body(new ResponseDTO<>().data(postDTO_Out));
     }
 
-
-    //  resume_delete
+    // DELETE
     @DeleteMapping("/auth/resume/schooledu")
-    public ResponseEntity<?> resume_schooledu_delete(@RequestParam("resumePK") String resumePK){
-        System.out.println("테스트 : " + resumePK);
+    public ResponseEntity<?> resume_schooledu_delete(@RequestParam("resumeID") String resumeID){
+        resumeService.resume_schooledu_delete(resumeID);
 
         return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
     }
     @DeleteMapping("/auth/resume/academyedu")
-    public ResponseEntity<?> resume_academyedu_delete(@RequestParam("resumePK") String resumePK){
-        System.out.println("테스트 : " + resumePK);
+    public ResponseEntity<?> resume_academyedu_delete(@RequestParam("resumeID") String resumeID){
+        resumeService.resume_academyedu_delete(resumeID);
 
         return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
     }
     @DeleteMapping("/auth/resume/certificate")
-    public ResponseEntity<?> resume_certificate_delete(@RequestParam("resumePK") String resumePK){
-        System.out.println("테스트 : " + resumePK);
+    public ResponseEntity<?> resume_certificate_delete(@RequestParam("resumeID") String resumeID){
+        resumeService.resume_certificate_delete(resumeID);
 
         return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
     }
     @DeleteMapping("/auth/resume/selfstudy")
-    public ResponseEntity<?> resume_selfstudy_delete(@RequestParam("resumePK") String resumePK){
-        System.out.println("테스트 : " + resumePK);
+    public ResponseEntity<?> resume_selfstudy_delete(@RequestParam("resumeID") String resumeID){
+        resumeService.resume_selfstudy_delete(resumeID);
 
         return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
     }

@@ -145,11 +145,11 @@ $(document).ready(function() {
         if(trID) {
             const jwtToken = localStorage.getItem('jwtToken'); 
             let parts = trID.split('-');  
-            let path = parts[0];          // "schooledu"
-            let resumePK = parts[1];       // "64ec3392bec6a72ecb9dd3fe"
+            let path = parts[0];      // "schooledu"
+            let resumeID = parts[1];  // "64ec3392bec6a72ecb9dd3fe"
 
             $.ajax({
-                url: `/auth/resume/${path}?resumePK=` + resumePK, 
+                url: `/auth/resume/${path}?resumeID=` + resumeID, 
                 type: 'DELETE', 
                 headers: {
                     'Authorization': jwtToken  

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.portfolio.portfolio_project.core.exception.Exception400;
+import com.portfolio.portfolio_project.core.exception.Exception500;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_academy_edu.ResumeAcademyEdu;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_academy_edu.ResumeAcademyEduRepository;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_certificate.ResumeCertificate;
@@ -27,6 +29,7 @@ public class ResumeService {
     private final ResumeCertificateRepository resumeCertificateRepository;
     private final ResumeSelfStudyRepository resumeSelfStudyRepository;
 
+    // FindAll
     @Transactional
     public ResumeDTO_Out.FindAllDTO resume_findAll() {
         List<ResumeSchoolEdu> schoolEdus = resumeSchoolEduRepository.findAll(); 
@@ -37,10 +40,10 @@ public class ResumeService {
         return ResumeDTO_Out.FindAllDTO.fromEntities(academyEdus, certificates, selfStudies, schoolEdus);
     }
 
+    // POST
     @Transactional
     public ResumeDTO_Out.SchoolEdu_postDTO resume_schooledu_post(ResumeDTO_In.Schooledu_postDTO postDTO_In) {
         ResumeSchoolEdu resumeSchoolEdu = postDTO_In.toEntity();
-
         resumeSchoolEduRepository.save(resumeSchoolEdu);
 
         return ResumeDTO_Out.SchoolEdu_postDTO.fromEntity(resumeSchoolEdu);
@@ -48,7 +51,6 @@ public class ResumeService {
     @Transactional
     public ResumeDTO_Out.AcademyEdu_postDTO resume_academyedu_post(ResumeDTO_In.Academyedu_postDTO postDTO_In) {
         ResumeAcademyEdu resumeAcademyEdu = postDTO_In.toEntity();
-
         resumeAcademyEduRepository.save(resumeAcademyEdu);
 
         return ResumeDTO_Out.AcademyEdu_postDTO.fromEntity(resumeAcademyEdu);
@@ -56,7 +58,6 @@ public class ResumeService {
     @Transactional
     public ResumeDTO_Out.Certificate_postDTO resume_certificate_post(ResumeDTO_In.Certificate_postDTO postDTO_In) {
         ResumeCertificate resumeCertificate = postDTO_In.toEntity();
-
         resumeCertificateRepository.save(resumeCertificate);
 
         return ResumeDTO_Out.Certificate_postDTO.fromEntity(resumeCertificate);
@@ -64,9 +65,58 @@ public class ResumeService {
     @Transactional
     public ResumeDTO_Out.SelfStudy_postDTO resume_selfstudy_post(ResumeDTO_In.Selfstudy_postDTO postDTO_In) {
         ResumeSelfStudy resumeSelfStudy = postDTO_In.toEntity();
-
         resumeSelfStudyRepository.save(resumeSelfStudy);
 
         return ResumeDTO_Out.SelfStudy_postDTO.fromEntity(resumeSelfStudy);
+    }
+
+    // DELETE
+    @Transactional
+    public void resume_schooledu_delete(String resumeID){
+        ResumeSchoolEdu resumeSchoolEdu = resumeSchoolEduRepository.findById(resumeID).orElseThrow(() -> {
+            throw new Exception400("삭제하려는 게시물이 존재하지 않습니다.");
+        });
+
+        try {
+            resumeSchoolEduRepository.delete(resumeSchoolEdu);
+        } catch (Exception e) {
+            throw new Exception500("데이터 삭제에 실패하였습니다.");
+        }
+    }
+    @Transactional
+    public void resume_academyedu_delete(String resumeID){
+        ResumeAcademyEdu resumeAcademyEdu = resumeAcademyEduRepository.findById(resumeID).orElseThrow(() -> {
+            throw new Exception400("삭제하려는 데이터가 존재하지 않습니다.");
+        });
+
+        try {
+            resumeAcademyEduRepository.delete(resumeAcademyEdu);
+        } catch (Exception e) {
+            throw new Exception500("데이터 삭제에 실패하였습니다.");
+        }
+    }
+    @Transactional
+    public void resume_certificate_delete(String resumeID){
+        ResumeCertificate resumeCertificate = resumeCertificateRepository.findById(resumeID).orElseThrow(() -> {
+            throw new Exception400("삭제하려는 데이터가 존재하지 않습니다.");
+        });
+
+        try {
+            resumeCertificateRepository.delete(resumeCertificate);
+        } catch (Exception e) {
+            throw new Exception500("데이터 삭제에 실패하였습니다.");
+        }
+    }
+    @Transactional
+    public void resume_selfstudy_delete(String resumeID){
+        ResumeSelfStudy resumeSelfStudy = resumeSelfStudyRepository.findById(resumeID).orElseThrow(() -> {
+            throw new Exception400("삭제하려는 데이터가 존재하지 않습니다.");
+        });
+
+        try {
+            resumeSelfStudyRepository.delete(resumeSelfStudy);
+        } catch (Exception e) {
+            throw new Exception500("데이터 삭제에 실패하였습니다.");
+        }
     }
 }

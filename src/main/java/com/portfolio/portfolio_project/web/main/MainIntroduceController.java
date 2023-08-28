@@ -23,6 +23,7 @@ public class MainIntroduceController {
 
     private final MainIntroduceService mainIntroduceService;
 
+    // FindAll
     @GetMapping("/main")
     public String main_findAll(Model model){
         List<MainIntroduceDTO_Out.findAllDTO> mainIntroduceList = mainIntroduceService.main_findAll();
