@@ -19,13 +19,15 @@ function login() {
     $.ajax({
         url: '/login',
         type: 'POST',
-        dataType: 'json', // 서버에서 응답으로 오는 데이터 타입
+        dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify(loginDTO),
 
         success: function(data, textStatus, jqXHR) {
             const jwtToken = jqXHR.getResponseHeader('Authorization'); 
             if (jwtToken) {
+                // 올바른 로그인 정보를 입력하였다면, Service에서 DB 조회 후 토큰을 Header에 넣어서 응답함
+                // 해당 토큰 저장
                 localStorage.setItem('jwtToken', jwtToken);
                 window.location.href = '/main'; 
             } else {

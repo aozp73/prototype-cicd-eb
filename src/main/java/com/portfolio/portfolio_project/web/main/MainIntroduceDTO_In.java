@@ -48,6 +48,7 @@ public class MainIntroduceDTO_In {
         public void putEntity(MainIntroduce mainIntroduce, putDTO putDTO) {
             mainIntroduce.setTitle(putDTO.getPostTitle());
             mainIntroduce.setContent(putDTO.getPostContent());
+            mainIntroduce.setUpdatedAt(LocalDateTime.now());
         }   
     }
 }

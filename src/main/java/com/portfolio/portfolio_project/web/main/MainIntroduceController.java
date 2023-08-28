@@ -23,9 +23,10 @@ public class MainIntroduceController {
 
     private final MainIntroduceService mainIntroduceService;
 
+    // FindAll
     @GetMapping("/main")
-    public String main_getAll(Model model){
-        List<MainIntroduceDTO_Out.PostDTO> mainIntroduceList = mainIntroduceService.main_findAll();
+    public String main_findAll(Model model){
+        List<MainIntroduceDTO_Out.findAllDTO> mainIntroduceList = mainIntroduceService.main_findAll();
         model.addAttribute("mainIntroduceList", mainIntroduceList);
 
         return "/main";

@@ -1,6 +1,5 @@
 package com.portfolio.portfolio_project.repository_test.mongodb_repository_test;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -61,14 +60,14 @@ public class ResumeSchoolEduRepositoryTest {
     @Test
     void insertAndDeleteTest() {
         ResumeSchoolEdu edu3 = ResumeSchoolEdu.builder()
-            .SchoolAdmissionDate(LocalDate.of(2021, 7, 1))
-            .SchoolGraduateDate(LocalDate.of(2022, 2, 1))
-            .SchoolName("JPA 대학교")
-            .SchoolMajor("데이터베이스 학과")
-            .SchoolCredit("3.7")
-            .SchoolGraduateStatus("졸업")
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
+            .schoolAdmissionDate("2021-07-01")
+            .schoolGraduateDate("2022-02-01")
+            .schoolName("JPA 대학교")
+            .schoolMajor("데이터베이스 학과")
+            .schoolCredit("3.7")
+            .schoolGraduateStatus("졸업")
+            .createdAt(LocalDateTime.now().toString())
+            .updatedAt(LocalDateTime.now().toString())
             .build();
         
         ResumeSchoolEdu savedEdu = resumeSchoolEduRepository.save(edu3);
@@ -86,25 +85,25 @@ public class ResumeSchoolEduRepositoryTest {
 
     public void setUp() {
         ResumeSchoolEdu edu1 = ResumeSchoolEdu.builder()
-            .SchoolAdmissionDate(LocalDate.of(2018, 3, 1))
-            .SchoolGraduateDate(LocalDate.of(2022, 2, 25))
-            .SchoolName("자바 대학교")
-            .SchoolMajor("기계 공학과")
-            .SchoolCredit("3.7")
-            .SchoolGraduateStatus("졸업")
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
+            .schoolAdmissionDate("2018-03-01")
+            .schoolGraduateDate("2022-02-25")
+            .schoolName("자바 대학교")
+            .schoolMajor("기계 공학과")
+            .schoolCredit("3.7")
+            .schoolGraduateStatus("졸업")
+            .createdAt(LocalDateTime.now().toString())
+            .updatedAt(LocalDateTime.now().toString())
             .build();
 
         ResumeSchoolEdu edu2 = ResumeSchoolEdu.builder()
-            .SchoolAdmissionDate(LocalDate.of(2016, 3, 1))
-            .SchoolGraduateDate(LocalDate.of(2020, 2, 25))
-            .SchoolName("파이썬 대학교")
-            .SchoolMajor("컴퓨터 공학과")
-            .SchoolCredit("3.7")
-            .SchoolGraduateStatus("졸업")
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
+            .schoolAdmissionDate("2016-03-01")
+            .schoolGraduateDate("2020-05-03")
+            .schoolName("파이썬 대학교")
+            .schoolMajor("컴퓨터 공학과")
+            .schoolCredit("3.7")
+            .schoolGraduateStatus("졸업")
+            .createdAt(LocalDateTime.now().toString())
+            .updatedAt(LocalDateTime.now().toString())
             .build();
 
         resumeSchoolEduRepository.save(edu1);

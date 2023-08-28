@@ -1,7 +1,10 @@
 package com.portfolio.portfolio_project.domain.mongodb.resume.resume_academy_edu;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
-public interface ResumeAcademyEduRepository extends MongoRepository<ResumeAcademyEdu, String> {
+import com.portfolio.portfolio_project.core.util.order_utils.OrderableRepository;
 
+public interface ResumeAcademyEduRepository extends OrderableRepository<ResumeAcademyEdu, String> {
+    @Query(sort = "{'order' : -1}")
+    ResumeAcademyEdu findTopByOrderByOrderDesc();
 }

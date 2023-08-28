@@ -41,7 +41,7 @@
     opacity: 0.3;  /* 투명도 30% */
 }
 
-.add-btn {
+.add-btn, .edu-add-btn{
     cursor: pointer;
     opacity: 0.3;  /* 투명도 30% */
 }
@@ -50,7 +50,7 @@
     opacity: 1;  /* 마우스 호버시 투명도를 원래대로 복원 */
 }
 
-.add-btn:hover {
+.add-btn:hover, .edu-add-btn:hover{
     opacity: 1;  /* 마우스 호버시 투명도 원래대로 복원 */
 }
 

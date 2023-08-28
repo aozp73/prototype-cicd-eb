@@ -1,19 +1,12 @@
 package com.portfolio.portfolio_project.service;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.portfolio.portfolio_project.core.exception.Exception400;
 import com.portfolio.portfolio_project.core.exception.Exception500;
-import com.portfolio.portfolio_project.core.util.s3_utils.BASE64DecodedMultipartFile;
 import com.portfolio.portfolio_project.core.util.s3_utils.S3Utils;
 import com.portfolio.portfolio_project.domain.jpa.main.main_introduce.MainIntroduce;
 import com.portfolio.portfolio_project.domain.jpa.main.main_introduce.MainIntroduceRepository;
@@ -30,10 +23,10 @@ public class MainIntroduceService {
     private final S3Utils s3Utils;
 
     @Transactional(readOnly = true)
-    public List<MainIntroduceDTO_Out.PostDTO> main_findAll(){
+    public List<MainIntroduceDTO_Out.findAllDTO> main_findAll(){
         List<MainIntroduce> mainIntroduces = mainIntroduceRepository.findAll();
         
-        return MainIntroduceDTO_Out.PostDTO.fromEntityList(mainIntroduces);
+        return MainIntroduceDTO_Out.findAllDTO.fromEntityList(mainIntroduces);
     }
 
     @Transactional
@@ -53,7 +46,7 @@ public class MainIntroduceService {
     @Transactional
     public MainIntroduceDTO_Out.PutDTO main_put(MainIntroduceDTO_In.putDTO putDTO_In){
         MainIntroduce mainIntroducePS = mainIntroduceRepository.findById(putDTO_In.getId()).orElseThrow(() -> {
-            throw new Exception400("업데이트 하려는 게시물이 존재하지 않습니다.");
+            throw new Exception400("업데이트하려는 게시물이 존재하지 않습니다.");
         });
 
         putDTO_In.putEntity(mainIntroducePS, putDTO_In);
@@ -70,7 +63,7 @@ public class MainIntroduceService {
     @Transactional
     public void main_delete(Long postPK){
         MainIntroduce mainIntroducePS = mainIntroduceRepository.findById(postPK).orElseThrow(() -> {
-            throw new Exception400("삭제 하려는 게시물이 존재하지 않습니다.");
+            throw new Exception400("삭제하려는 게시물이 존재하지 않습니다.");
         });
 
         try {
