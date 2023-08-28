@@ -63,7 +63,7 @@ function initEditMode() {
                         const rowID = row.getAttribute('id');
                         rowPK = rowID.split('-')[1];
                         if (rowID) {
-                            rowPKs.push({id: rowPK, order: index});
+                            rowPKs.push({id: rowPK, order: index + 1});
                         }
                     });
 
@@ -79,7 +79,7 @@ function initEditMode() {
                         headers: {
                             'Authorization': jwtToken  
                         },
-                        
+
                         success: function(response) {
                             console.log(response);
                         },

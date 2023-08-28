@@ -17,6 +17,7 @@ import com.portfolio.portfolio_project.domain.mongodb.resume.resume_school_edu.R
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_self_study.ResumeSelfStudy;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_self_study.ResumeSelfStudyRepository;
 import com.portfolio.portfolio_project.web.resume.ResumeDTO_In;
+import com.portfolio.portfolio_project.web.resume.ResumeDTO_In.OrderUpdateDto;
 import com.portfolio.portfolio_project.web.resume.ResumeDTO_Out;
 
 import lombok.RequiredArgsConstructor;
@@ -130,5 +131,17 @@ public class ResumeService {
     }
 
     // Row Move
-    
+    @Transactional
+    public void resume_academyedu_updateOrder(List<ResumeDTO_In.OrderUpdateDto> updates){
+        try {
+            for (OrderUpdateDto update : updates) {
+                ResumeAcademyEdu record = resumeAcademyEduRepository.findById(update.getId()).orElseThrow(() -> new Exception400("데이터가 존재하지 않습니다."));
+                record.setOrder(update.getOrder());
+                resumeAcademyEduRepository.save(record);
+            }
+        } catch (Exception e) {
+            throw new Exception500("문서를 찾고, 순서를 갱신하는데 실패하였습니다.");
+        }
+    }
+
 }

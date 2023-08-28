@@ -97,10 +97,7 @@ public class ResumeController {
     }
     @PostMapping("/auth/resume/updateOrder/academyedu")
     public ResponseEntity<?> resume_academyedu_updateOrder(@RequestBody List<ResumeDTO_In.OrderUpdateDto> updates){
-        for (OrderUpdateDto orderUpdateDto : updates) {
-            System.out.println("테스트 : " + orderUpdateDto.getId());
-            System.out.println("테스트 : " + orderUpdateDto.getOrder());
-        }
+        resumeService.resume_academyedu_updateOrder(updates);
         
         return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
     }
