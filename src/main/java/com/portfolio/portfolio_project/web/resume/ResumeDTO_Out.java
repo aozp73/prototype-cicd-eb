@@ -84,7 +84,8 @@ public class ResumeDTO_Out {
 
         public static Certificate_postDTO fromEntity(ResumeCertificate resumeCertificate) {
             return Certificate_postDTO.builder()
-                .acquisitionDate(resumeCertificate.getId())
+                .id(resumeCertificate.getId())
+                .acquisitionDate(resumeCertificate.getAcquisitionDate())
                 .certificateType(resumeCertificate.getCertificateType())
                 .certificateName(resumeCertificate.getCertificateName())
                 .certificateIssuingAgency(resumeCertificate.getCertificateIssuingAgency())
@@ -108,7 +109,8 @@ public class ResumeDTO_Out {
 
         public static Selfstudy_postDTO fromEntity(ResumeSelfStudy resumeSelfStudy) {
             return Selfstudy_postDTO.builder()
-                .selfStudyDate(resumeSelfStudy.getId())
+                .id(resumeSelfStudy.getId())
+                .selfStudyDate(resumeSelfStudy.getSelfStudyDate())
                 .selfStudytype(resumeSelfStudy.getSelfStudytype())
                 .selfStudyTheme(resumeSelfStudy.getSelfStudyTheme())
                 .selfStudyPlatform(resumeSelfStudy.getSelfStudyPlatform())

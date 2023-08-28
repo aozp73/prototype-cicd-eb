@@ -182,7 +182,7 @@ function enroll(event) {
     currentRow.find("input[type='text']").each(function() {
         values.push($(this).val());
     });
-    let tableID = currentRow.closest('tbody').attr('id'); // 예: "edu-table"
+    let tableID = currentRow.closest('tbody').attr('id'); // schooledu, academyedu, certificate, selfstudy
 
     let payload = {
         values: values 
@@ -226,19 +226,37 @@ function enroll(event) {
             </tr>
           `;
         } else if (tableID === 'academyedu') {
-          return `
-            
-
+            return `
+            <tr id="${tableID}-${data.id}"> 
+                <td class="drag-handle ">${data.academyEnrollDate} ~ ${data.academyCompletionDate}</td>
+                <td>${data.academyCompletionStatus}</td>
+                <td>${data.academyName}</td>
+                <td>${data.academyCourse}</td>
+                <td>${data.academyEtc}</td>
+                <td class="no-border"><span class="delete-btn">&#10006;</span></td>
+            </tr>
           `;
         } else if (tableID === 'certificate') {
-          return `
-            
-
+            return `
+            <tr id="${tableID}-${data.id}"> 
+                <td class="drag-handle ">${data.acquisitionDate}</td>
+                <td>${data.certificateType}</td>
+                <td>${data.certificateName}</td>
+                <td>${data.certificateIssuingAgency}</td>
+                <td>${data.certificateStatus}</td>
+                <td class="no-border"><span class="delete-btn">&#10006;</span></td>
+            </tr>
           `;
         } else if (tableID === 'selfstudy') {
-          return `
-            
-
+            return `
+            <tr id="${tableID}-${data.id}"> 
+                <td class="drag-handle ">${data.selfStudyDate}</td>
+                <td>${data.selfStudytype}</td>
+                <td>${data.selfStudyTheme}</td>
+                <td>${data.selfStudyPlatform}</td>
+                <td>${data.selfStudyBloggingLink}</td>
+                <td class="no-border"><span class="delete-btn">&#10006;</span></td>
+            </tr>
           `;
         }
    
