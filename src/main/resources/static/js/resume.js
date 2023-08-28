@@ -140,15 +140,29 @@ $(document).ready(function() {
     // x 버튼 클릭 시 삭제 진행
     $(".sortableTable").on('click', 'tbody tr .delete-btn', function() {
         let tr = $(this).closest('tr');
-        let trID = tr.attr('id');  // 예: "edu-1"
+        let trID = tr.attr('id');  // 예시 : schooledu-64ec3392bec6a72ecb9dd3fe
     
         if(trID) {
-            let parts = trID.split('-');  // ["edu", "1"]
-            let path = parts[0];          // "edu"
-            let pkValue = parts[1];       // "1"
-            
-            // ☆★☆★ path, pkValue로 Ajax-DELETE 통신코드 추가
-    
+            const jwtToken = localStorage.getItem('jwtToken'); 
+            let parts = trID.split('-');  
+            let path = parts[0];          // "schooledu"
+            let resumePK = parts[1];       // "64ec3392bec6a72ecb9dd3fe"
+
+            $.ajax({
+                url: `/auth/resume/${path}?resumePK=` + resumePK, 
+                type: 'DELETE', 
+                headers: {
+                    'Authorization': jwtToken  
+                },
+                success: function(response) {
+                    console.log(response);
+                    
+                },
+                error: function(error) {
+                    alert(error.responseJSON.data);
+                }
+            });
+
             tr.remove();
         }
     });
@@ -208,8 +222,7 @@ function enroll(event) {
             addCnt = 0;
         },
         error: function(error) {
-            console.log(error)
-            
+            alert(error.responseJSON.data);
         }
     });
 
