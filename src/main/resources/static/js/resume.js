@@ -169,6 +169,39 @@ $(document).ready(function() {
                 },
                 success: function(response) {
                     console.log(response);
+
+                    // 삭제 후, 남은 row 순서 갱신
+                    const tbody = tr.closest("tbody")[0];
+                    const tbodyID = tbody.getAttribute('id');
+
+                    tr.remove();
+                    const rows = tbody.querySelectorAll('tr:not(:nth-child(1)):not(:nth-child(2)):not(:last-child):not(.add-form)');
+                    
+                    let rowPKs = [];
+                    rows.forEach((row, index) => {
+                        const rowID = row.getAttribute('id');
+                        let rowPK = rowID.split('-')[1];
+                        if (rowID) {
+                            rowPKs.push({id: rowPK, order: index + 1});
+                        }
+                    });
+    
+                    $.ajax({
+                        url: `/auth/resume/updateOrder/${tbodyID}`,
+                        method: 'POST',
+                        data: JSON.stringify(rowPKs),
+                        contentType: 'application/json',
+                        headers: {
+                            'Authorization': jwtToken  
+                        },
+                        success: function(response) {
+                            console.log(response);
+                        },
+                        error: function(error) {
+                            alert(error.responseJSON.data);
+                        }
+                    });
+
                     
                 },
                 error: function(error) {
@@ -176,7 +209,7 @@ $(document).ready(function() {
                 }
             });
 
-            tr.remove();
+
         }
     });
     
