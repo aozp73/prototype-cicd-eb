@@ -2,6 +2,7 @@ let addCnt = 0
 let isEditMode = false;
 let sortables = [];
 
+// 스크롤 시 navbar 출렁이는 효과
 window.addEventListener('scroll', function() {
     let navbar = document.querySelector('.navbar');
     if (window.scrollY > 50) { 
@@ -11,10 +12,10 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// hedaer.jsp에서 편집모드 버튼 클릭 시, 호출되는 콜백 합수
+// hedaer.jsp의 편집모드 버튼 클릭 시, 호출되는 콜백 합수
 function toggleEditMode() {
     isEditMode = !isEditMode;
-    // toggleMode 클래스 태그 : +버튼 & 입력 Form
+    // toggleMode 클래스 : '+' 버튼 & 입력 Form
     let elements = document.querySelectorAll('.toggleMode');
 
     for (let element of elements) {
@@ -24,8 +25,9 @@ function toggleEditMode() {
             element.style.display = '';  
         }
     }
-    // 편집 모드 버튼 토클에서, layout을 확인하는 상황에서는 row이동을 하지 못하게 진행
-    // 기존 Sortable를 파괴하고 if문을 타지 않음
+
+    // layout을 확인하는 모드에서는 row이동을 하지 못하게 진행
+    // 기존 Sortable를 파괴하고 'if (isEditMode)' if문을 타지 않음
     initEditMode();
 }
 
@@ -37,7 +39,7 @@ function initEditMode() {
     }
     sortables = [];
 
-    // 편집 모드에서 기능을 명시하여 Sortable 생성 
+    // 편집 모드이면, 어떤 row이동이 가능할지 명시하면서 Sortable 생성 
     if (isEditMode) {
         document.querySelectorAll('.sortableTable tbody').forEach(function(tbody) {
             let sortable = new Sortable(tbody, {
@@ -45,6 +47,7 @@ function initEditMode() {
                 animation: 500,
                 filter: '.no-drag', 
                 
+                // '+'버튼 row, 각 표의 제목 row, 입력 form이 생기는 row에는 이동할 수 없게하는 코드
                 onMove: function (evt, originalEvent) {
                     var nextItem = evt.related; 
                     if ($(nextItem).hasClass('no-border') || $(nextItem).hasClass('table-secondary') || $(nextItem).hasClass('add-row') || $(nextItem).hasClass('add-form')) {
@@ -58,6 +61,7 @@ function initEditMode() {
                     const tbodyID = tbody.getAttribute('id');
                     const rows = tbody.querySelectorAll('tr:not(:nth-child(1)):not(:nth-child(2)):not(:last-child):not(.add-form)');
                     
+                    // 해당 테이블의 '현재 row 순서'와 'Document id값'을 리스트에 저장
                     let rowPKs = [];
                     rows.forEach((row, index) => {
                         const rowID = row.getAttribute('id');
@@ -71,6 +75,7 @@ function initEditMode() {
                     console.log('arr:', rowPKs);
                     const jwtToken = localStorage.getItem('jwtToken'); 
 
+                    // ajax 통신으로 Row 드래그 후, 순서를 갱신하여 기록 (페이지 요청 시 그대로 적용)
                     $.ajax({
                         url: `/auth/resume/updateOrder/${tbodyID}`,
                         method: 'POST',
@@ -95,6 +100,7 @@ function initEditMode() {
     }
 }
 
+// 시작날짜 ~ 종료날짜란이 있는 테이블 (교육관련) 에서 사용하는 함수
 function createDateInput() {
     return '<input type="date" class="form-control" style="width: 135px; display: inline-block;">';
 }
@@ -170,7 +176,7 @@ $(document).ready(function() {
                 success: function(response) {
                     console.log(response);
 
-                    // 삭제 후, 남은 row 순서 갱신
+                    // 삭제 후, 남은 row 순서 Ajax 통신으로 갱신
                     const tbody = tr.closest("tbody")[0];
                     const tbodyID = tbody.getAttribute('id');
 
@@ -215,7 +221,7 @@ $(document).ready(function() {
     
 });
 
-// 값 입력 후 등록 버튼 클릭 시, 입력 Form & 등록 버튼 & 취소 버튼 없애기
+// 값 입력 후 등록 버튼 클릭 시 -> 입력 Form & 등록 버튼 & 취소 버튼 없애기
 function add_cancle(event) {
     let clickedButton = event.target;
     let tableBody = $(clickedButton).closest('tbody');
@@ -242,7 +248,9 @@ function enroll(event) {
     currentRow.find("input[type='text']").each(function() {
         values.push($(this).val());
     });
-    let tableID = currentRow.closest('tbody').attr('id'); // schooledu, academyedu, certificate, selfstudy
+
+    // tableID : schooledu, academyedu, certificate, selfstudy
+    let tableID = currentRow.closest('tbody').attr('id'); 
 
     let payload = {
         values: values 
@@ -272,6 +280,8 @@ function enroll(event) {
         }
     });
 
+    // 각 table column 개수가 동일하게 되어있어서 List 0 ~ 4인덱스에 저장하고 뿌려도 되지만,
+    // 확장성을 위해 랜더링을 테이블마다 구분하여 진행
     function renderRow(tableID, data) {
         if (tableID === 'schooledu') {
           return `

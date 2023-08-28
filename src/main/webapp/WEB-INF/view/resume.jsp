@@ -4,14 +4,13 @@
 
     <div class="py-5" style="background-color: #F9F9F9" id="main-container">
 
+        <%-- 학교 교육 이력 --%>
         <div class="ps-5 pe-1 container">
             <table class="sortableTable" style="width: 80%; margin-left: auto; margin-right: auto;">
                 <tbody id="schooledu">
-
                     <tr class="no-border">
                         <th style="width: 25%"><h4>교육사항</h4></th>
                     </tr>
-
                     <tr class="table-secondary">
                         <td style="width: 33%">재학기간</td>
                         <td style="width: 13%">졸업여부</td>
@@ -40,6 +39,8 @@
         </div>
         <br>
 
+
+        <%-- 학원 수강 이력 --%>
         <div class="ps-5 pe-1 container">
             <table class="sortableTable" style="width: 80%; margin-left: auto; margin-right: auto;">
                 <tbody id="academyedu">
@@ -75,14 +76,14 @@
         </div>
         <br><br><br>
 
+
+        <%-- 자격증 현황 --%>
         <div class="ps-5 pe-1 container">
             <table class="sortableTable" style="width: 80%; margin-left: auto; margin-right: auto;">
                 <tbody id="certificate">
-
                     <tr class="no-border">
                         <th style="width: 25%"><h4>자격증 / 어학</h4></th>
                     </tr>
-
                     <tr class="table-secondary">
                         <td style="width: 25%">취득일</td>
                         <td style="width: 13%">종류</td>
@@ -91,6 +92,7 @@
                         <td style="width: 13%">합격여부</td>
                         <td class="no-border non-secondary" style="width: 4.2%"></td>
                     </tr>
+
                     <c:forEach var="certificate" items="${resumeAllDTO.resumeCertificates}">
                         <tr id="certificate-${certificate.id}">
                             <td class="drag-handle">${certificate.acquisitionDate}</td>
@@ -112,14 +114,13 @@
         <br><br><br>
 
 
+        <%-- 자기주도적 학습 내용 --%>
         <div class="ps-5 pe-1 container">
             <table class="sortableTable" style="width: 80%; margin-left: auto; margin-right: auto;">
                 <tbody id="selfstudy">
-
                     <tr class="no-border">
                         <th style="width: 25%"><h4>추가 학습</h4></th>
                     </tr>
-
                     <tr class="table-secondary">
                         <td style="width: 25%">수강일</td>
                         <td style="width: 13%">종류</td>
@@ -128,6 +129,7 @@
                         <td style="width: 13%">블로깅</td>
                         <td class="no-border non-secondary" style="width: 4.2%"></td>
                     </tr>
+
                     <c:forEach var="selfStudy" items="${resumeAllDTO.resumeSelfStudies}">
                         <tr id="selfstudy-${selfStudy.id}">
                             <td class="drag-handle">${selfStudy.selfStudyDate}</td>
