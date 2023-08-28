@@ -200,6 +200,12 @@ function enroll(event) {
         
         success: function(response) {
             console.log(response)
+            
+            const enrollContent = renderRow(tableID, response.data);
+            currentRow.before(enrollContent); 
+            currentRow.remove();
+            tableBody.find('.add-cell').empty();
+            addCnt = 0;
         },
         error: function(error) {
             console.log(error)
@@ -207,51 +213,36 @@ function enroll(event) {
         }
     });
 
-    // 통신에서 받은 값으로 대체 
-    let enrollContent = ''
-    if (tableID == 'schooledu' || tableID == 'academyedu'){
-        testPK1 = 3
-        testContent0 = values[0]
-        testContent1 = values[1]
-        testContent2 = values[2]
-        testContent3 = values[3]
-        testContent4 = values[4]
-        testContent5 = values[5]
-        
-        enrollContent = `
-        <tr id="${tableID}-${testPK1}"> 
-            <td class="drag-handle ">${testContent0} ~ ${testContent1}</td>
-            <td>${testContent2}</td>
-            <td>${testContent3}</td>
-            <td>${testContent4}</td>
-            <td>${testContent5}</td>
-            <td class="no-border"><span class="delete-btn">&#10006;</span></td>
-        </tr>
-    `     
-    } else {
-        testPK1 = 3
-        testContent0 = values[0]
-        testContent1 = values[1]
-        testContent2 = values[2]
-        testContent3 = values[3]
-        testContent4 = values[4]
-
-        enrollContent = `
-            <tr id="${tableID}-${testPK1}"> 
-                <td class="drag-handle ">${testContent0}</td>
-                <td>${testContent1}</td>
-                <td>${testContent2}</td>
-                <td>${testContent3}</td>
-                <td>${testContent4}</td>
+    function renderRow(tableID, data) {
+        if (tableID === 'schooledu') {
+          return `
+            <tr id="${tableID}-${data.id}"> 
+                <td class="drag-handle ">${data.schoolAdmissionDate} ~ ${data.schoolGraduateDate}</td>
+                <td>${data.schoolGraduateStatus}</td>
+                <td>${data.schoolName}</td>
+                <td>${data.schoolMajor}</td>
+                <td>${data.schoolCredit}</td>
                 <td class="no-border"><span class="delete-btn">&#10006;</span></td>
             </tr>
-        `            
+          `;
+        } else if (tableID === 'academyedu') {
+          return `
+            
 
-    }
-    currentRow.before(enrollContent); 
-    currentRow.remove();
-    tableBody.find('.add-cell').empty();
-    addCnt = 0;
+          `;
+        } else if (tableID === 'certificate') {
+          return `
+            
+
+          `;
+        } else if (tableID === 'selfstudy') {
+          return `
+            
+
+          `;
+        }
+   
+      }
 }
 
 $(document).ready(function() {
