@@ -6,6 +6,8 @@ import org.hibernate.annotations.Comment;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import com.portfolio.portfolio_project.core.util.order_utils.Orderable;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +16,7 @@ import lombok.Setter;
 @Setter
 @Builder
 @Document(collection = "resume_school_edu_tb")
-public class ResumeSchoolEdu {
+public class ResumeSchoolEdu implements Orderable {
     @Id
     private String id;
 
@@ -44,4 +46,18 @@ public class ResumeSchoolEdu {
     @Comment("이력 페이지 - 수정 시간")
     @Field("updated_at")
     private String updatedAt;
+
+    @Comment("이력 페이지 - View에서 Row이동 시 참고할 필드")
+    @Field("order")
+    private Integer order;
+
+    @Override
+    public int getOrder() {
+        return order;
+    }
+
+    @Override
+    public void setOrder(int order) {
+        this.order = order;
+    }
 }

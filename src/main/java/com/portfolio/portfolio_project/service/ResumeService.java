@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.portfolio.portfolio_project.core.exception.Exception400;
 import com.portfolio.portfolio_project.core.exception.Exception500;
+import com.portfolio.portfolio_project.core.util.order_utils.OrderUtils;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_academy_edu.ResumeAcademyEdu;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_academy_edu.ResumeAcademyEduRepository;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_certificate.ResumeCertificate;
@@ -44,6 +45,8 @@ public class ResumeService {
     @Transactional
     public ResumeDTO_Out.SchoolEdu_postDTO resume_schooledu_post(ResumeDTO_In.Schooledu_postDTO postDTO_In) {
         ResumeSchoolEdu resumeSchoolEdu = postDTO_In.toEntity();
+        OrderUtils.setOrder(resumeSchoolEdu, resumeSchoolEduRepository);
+
         resumeSchoolEduRepository.save(resumeSchoolEdu);
 
         return ResumeDTO_Out.SchoolEdu_postDTO.fromEntity(resumeSchoolEdu);
@@ -51,6 +54,8 @@ public class ResumeService {
     @Transactional
     public ResumeDTO_Out.AcademyEdu_postDTO resume_academyedu_post(ResumeDTO_In.Academyedu_postDTO postDTO_In) {
         ResumeAcademyEdu resumeAcademyEdu = postDTO_In.toEntity();
+        OrderUtils.setOrder(resumeAcademyEdu, resumeAcademyEduRepository);
+
         resumeAcademyEduRepository.save(resumeAcademyEdu);
 
         return ResumeDTO_Out.AcademyEdu_postDTO.fromEntity(resumeAcademyEdu);
@@ -58,6 +63,8 @@ public class ResumeService {
     @Transactional
     public ResumeDTO_Out.Certificate_postDTO resume_certificate_post(ResumeDTO_In.Certificate_postDTO postDTO_In) {
         ResumeCertificate resumeCertificate = postDTO_In.toEntity();
+        OrderUtils.setOrder(resumeCertificate, resumeCertificateRepository);
+
         resumeCertificateRepository.save(resumeCertificate);
 
         return ResumeDTO_Out.Certificate_postDTO.fromEntity(resumeCertificate);
@@ -65,6 +72,8 @@ public class ResumeService {
     @Transactional
     public ResumeDTO_Out.SelfStudy_postDTO resume_selfstudy_post(ResumeDTO_In.Selfstudy_postDTO postDTO_In) {
         ResumeSelfStudy resumeSelfStudy = postDTO_In.toEntity();
+        OrderUtils.setOrder(resumeSelfStudy, resumeSelfStudyRepository);
+
         resumeSelfStudyRepository.save(resumeSelfStudy);
 
         return ResumeDTO_Out.SelfStudy_postDTO.fromEntity(resumeSelfStudy);
