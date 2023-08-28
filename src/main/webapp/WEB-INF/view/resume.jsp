@@ -43,6 +43,9 @@
         <div class="ps-5 pe-1 container">
             <table class="sortableTable" style="width: 80%; margin-left: auto; margin-right: auto;">
                 <tbody id="academyedu">
+                    <tr class="no-border">
+                        <th style="width: 25%"><h4></h4></th>
+                    </tr>
                     <tr class="table-secondary">
                         <td style="width: 33%">수강기간</td>
                         <td style="width: 13%">수료여부</td>

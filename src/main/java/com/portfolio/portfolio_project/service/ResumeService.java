@@ -128,4 +128,7 @@ public class ResumeService {
             throw new Exception500("데이터 삭제에 실패하였습니다.");
         }
     }
+
+    // Row Move
+    
 }

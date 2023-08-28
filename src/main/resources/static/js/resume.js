@@ -59,25 +59,34 @@ function initEditMode() {
                     const rows = tbody.querySelectorAll('tr:not(:nth-child(1)):not(:nth-child(2)):not(:last-child):not(.add-form)');
                     
                     let rowPKs = [];
-                    rows.forEach(row => {
+                    rows.forEach((row, index) => {
                         const rowID = row.getAttribute('id');
-                        rowPK = rowID.split('-')[1]
+                        rowPK = rowID.split('-')[1];
                         if (rowID) {
-                            rowPKs.push(rowPK);
+                            rowPKs.push({id: rowPK, order: index});
                         }
                     });
 
                     console.log(`Tbody ID: ${tbodyID}`);
-                    console.log('Row IDs:', rowPKs);
+                    console.log('arr:', rowPKs);
 
-                    // ☆★☆★ PK의 순서를 리스트에 담고, Ajax-UPDATE 통신
-                    // - 순서 필드를 만들어서, 해당 필드 update
-                    // - 화면에 뿌릴 때는 순서 필드로 정렬
-                    // - 화면에 reload할 필요 없음
-                }
+                    $.ajax({
+                        url: '/auth/resume/updateOrder',
+                        method: 'POST',
+                        data: JSON.stringify(rowPKs),
+                        contentType: 'application/json',
+                        
+                        success: function(response) {
+                            console.log(response);
+                        },
+                        error: function(error) {
+                            alert(error.responseJSON.data);
+                        }
                     });
+                }
+            });
         
-                sortables.push(sortable);
+            sortables.push(sortable);
         });
     }
 }
@@ -267,7 +276,7 @@ function enroll(event) {
                 <td>${data.selfStudytype}</td>
                 <td>${data.selfStudyTheme}</td>
                 <td>${data.selfStudyPlatform}</td>
-                <td>${data.selfStudyBloggingLink}</td>
+                <td><a href="${data.selfStudyBloggingLink}" style="text-decoration: none">링크</a></td>
                 <td class="no-border"><span class="delete-btn">&#10006;</span></td>
             </tr>
           `;
