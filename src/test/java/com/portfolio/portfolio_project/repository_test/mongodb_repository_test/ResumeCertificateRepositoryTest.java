@@ -44,14 +44,14 @@ public class ResumeCertificateRepositoryTest {
         List<ResumeCertificate> allCertificates = resumeCertificateRepository.findAll();
         ResumeCertificate firstCert = allCertificates.get(0);
         
-        firstCert.setCertificate_type("update 테스트");
+        firstCert.setCertificateType("update 테스트");
         resumeCertificateRepository.save(firstCert);
 
         Optional<ResumeCertificate> updatedCertOpt = resumeCertificateRepository.findById(firstCert.getId());
         
         if (updatedCertOpt.isPresent()) {
             ResumeCertificate updatedCert = updatedCertOpt.get();
-            Assertions.assertEquals("update 테스트", updatedCert.getCertificate_type());
+            Assertions.assertEquals("update 테스트", updatedCert.getCertificateType());
         } else {
             Assertions.fail("Select 테스트 에러");
         }
@@ -61,8 +61,8 @@ public class ResumeCertificateRepositoryTest {
     void insertAndDeleteTest() {
         ResumeCertificate cert3 = ResumeCertificate.builder()
             .acquisitionDate("2021-07-01")
-            .certificate_type("IT 자격증")
-            .certificate_name("정보처리기사")
+            .certificateType("IT 자격증")
+            .certificateName("정보처리기사")
             .certificateIssuingAgency("한국산업인력공단")
             .certificateStatus("필기합격")
             .createdAt(LocalDateTime.now().toString())
@@ -85,8 +85,8 @@ public class ResumeCertificateRepositoryTest {
     public void setUp() {
         ResumeCertificate cert1 = ResumeCertificate.builder()
             .acquisitionDate("2022-01-01")
-            .certificate_type("IT 자격증")
-            .certificate_name("SQLD")
+            .certificateType("IT 자격증")
+            .certificateName("SQLD")
             .certificateIssuingAgency("데이터베이스진흥원")
             .certificateStatus("최종합격")
             .createdAt(LocalDateTime.now().toString())
@@ -95,8 +95,8 @@ public class ResumeCertificateRepositoryTest {
         
         ResumeCertificate cert2 = ResumeCertificate.builder()
             .acquisitionDate("2021-03-01")
-            .certificate_type("어학 자격증")
-            .certificate_name("TOEIC (830)")
+            .certificateType("어학 자격증")
+            .certificateName("TOEIC (830)")
             .certificateIssuingAgency("한국TOEIC위원회")
             .certificateStatus("최종합격")
             .createdAt(LocalDateTime.now().toString())

@@ -3,7 +3,10 @@ package com.portfolio.portfolio_project.web.resume;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.portfolio.portfolio_project.domain.mongodb.resume.resume_academy_edu.ResumeAcademyEdu;
+import com.portfolio.portfolio_project.domain.mongodb.resume.resume_certificate.ResumeCertificate;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_school_edu.ResumeSchoolEdu;
+import com.portfolio.portfolio_project.domain.mongodb.resume.resume_self_study.ResumeSelfStudy;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,15 +39,52 @@ public class ResumeDTO_In {
     @Setter
     public static class academyedu_postDTO {
         private List<String> values;
+
+        public ResumeAcademyEdu toEntity() {
+            return ResumeAcademyEdu.builder()
+                    .academyEnrollDate(values.get(0))
+                    .academyCompletionDate(values.get(1))
+                    .academyCompletionStatus(values.get(2))
+                    .academyName(values.get(3))
+                    .academyCourse(values.get(4))
+                    .academyEtc(values.get(5))
+                    .createdAt(LocalDateTime.now().toString())
+                    .updatedAt(LocalDateTime.now().toString())
+                    .build();
+        }
     }
     @Getter
     @Setter
     public static class certificate_postDTO {
         private List<String> values;
+
+        public ResumeCertificate toEntity() {
+            return ResumeCertificate.builder()
+                    .acquisitionDate(values.get(0))
+                    .certificateType(values.get(1))
+                    .certificateName(values.get(2))
+                    .certificateIssuingAgency(values.get(3))
+                    .certificateStatus(values.get(4))
+                    .createdAt(LocalDateTime.now().toString())
+                    .updatedAt(LocalDateTime.now().toString())
+                    .build();
+        }
     }
     @Getter
     @Setter
     public static class selfstudy_postDTO {
         private List<String> values;
+
+        public ResumeSelfStudy toEntity() {
+            return ResumeSelfStudy.builder()
+                    .selfStudyDate(values.get(0))
+                    .selfStudytype(values.get(1))
+                    .selfStudyTheme(values.get(2))
+                    .selfStudyPlatform(values.get(3))
+                    .selfStudyBloggingLink(values.get(4))
+                    .createdAt(LocalDateTime.now().toString())
+                    .updatedAt(LocalDateTime.now().toString())
+                    .build();
+        }
     }
 }

@@ -23,10 +23,10 @@ public class ResumeCertificate {
 
     @Comment("이력 페이지 - 자격증 종류")
     @Field("certificate_type")
-    private String certificate_type;
+    private String certificateType;
     @Comment("이력 페이지 - 자격증명")
     @Field("certificate_name")
-    private String certificate_name;
+    private String certificateName;
     @Comment("이력 페이지 - 자격증 발행처")
     @Field("certificate_issuing_agency")
     private String certificateIssuingAgency;
