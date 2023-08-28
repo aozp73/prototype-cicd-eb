@@ -1,6 +1,5 @@
 package com.portfolio.portfolio_project.repository_test.mongodb_repository_test;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -65,14 +64,14 @@ public class ResumeAcademyEduRepositoryTest {
     void insertAndDeleteTest() {
 
         ResumeAcademyEdu edu3 = ResumeAcademyEdu.builder()
-            .academyEnrollDate(LocalDate.of(2017, 9, 1))
-            .academyCompletionDate(LocalDate.of(2018, 9, 1))
+            .academyEnrollDate("2017-09-01")
+            .academyCompletionDate("2018-09-01")
             .academyCompletionStatus("수료")
             .academyName("JPA 교육원")
             .academyCourse("풀스택 과정")
             .academyEtc("-")
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
+            .createdAt(LocalDateTime.now().toString())
+            .updatedAt(LocalDateTime.now().toString())
             .build();
         
         ResumeAcademyEdu savedEdu = resumeAcademyEduRepository.save(edu3);
@@ -90,24 +89,24 @@ public class ResumeAcademyEduRepositoryTest {
 
     public void setUp() {
         ResumeAcademyEdu edu1 = ResumeAcademyEdu.builder()
-            .academyEnrollDate(LocalDate.of(2015, 9, 1))
-            .academyCompletionDate(LocalDate.of(2016, 9, 1))
+            .academyEnrollDate("2015-09-01")
+            .academyCompletionDate("2016-09-01")
             .academyCompletionStatus("수료")
             .academyName("자바 교육원")
             .academyCourse("풀스택 과정")
             .academyEtc("-")
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
+            .createdAt(LocalDateTime.now().toString())
+            .updatedAt(LocalDateTime.now().toString())
             .build();
         ResumeAcademyEdu edu2 = ResumeAcademyEdu.builder()
-            .academyEnrollDate(LocalDate.of(2017, 9, 1))
-            .academyCompletionDate(LocalDate.of(2018, 9, 1))
+            .academyEnrollDate("2017-09-01")
+            .academyCompletionDate("2018-09-01")
             .academyCompletionStatus("수료")
             .academyName("파이썬 교육원")
             .academyCourse("풀스택 과정")
             .academyEtc("-")
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
+            .createdAt(LocalDateTime.now().toString())
+            .updatedAt(LocalDateTime.now().toString())
             .build();
 
         resumeAcademyEduRepository.save(edu1);

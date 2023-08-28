@@ -1,6 +1,5 @@
 package com.portfolio.portfolio_project.repository_test.mongodb_repository_test;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -61,13 +60,13 @@ public class ResumeSelfStudyRepositoryTest {
     @Test
     void insertAndDeleteTest() {
         ResumeSelfStudy study3 = ResumeSelfStudy.builder()
-            .selfStudyDate(LocalDate.of(2023, 7, 16))
+            .selfStudyDate("2023-07-16")
             .selfStudytype("OS")
             .selfStudyTheme("Linux")
             .selfStudyPlatform("Inflearn")
             .selfStudyBloggingLink("https:/blog.com/study3")
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
+            .createdAt(LocalDateTime.now().toString())
+            .updatedAt(LocalDateTime.now().toString())
             .build();
         
         ResumeSelfStudy savedStudy = resumeSelfStudyRepository.save(study3);
@@ -85,23 +84,23 @@ public class ResumeSelfStudyRepositoryTest {
 
     public void setUp() {
         ResumeSelfStudy study1 = ResumeSelfStudy.builder()
-            .selfStudyDate(LocalDate.of(2023, 6, 1))
+            .selfStudyDate("2023-06-01")
             .selfStudytype("Backend")
             .selfStudyTheme("Java")
             .selfStudyPlatform("Inflearn")
             .selfStudyBloggingLink("https:/blog.com/study1")
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
+            .createdAt(LocalDateTime.now().toString())
+            .updatedAt(LocalDateTime.now().toString())
             .build();
 
         ResumeSelfStudy study2 = ResumeSelfStudy.builder()
-            .selfStudyDate(LocalDate.of(2023, 6, 15))
+            .selfStudyDate("2023-06-15")
             .selfStudytype("DevOps")
             .selfStudyTheme("Docker")
             .selfStudyPlatform("YouTube")
             .selfStudyBloggingLink("https:/blog.com/study2")
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
+            .createdAt(LocalDateTime.now().toString())
+            .updatedAt(LocalDateTime.now().toString())
             .build();
 
         resumeSelfStudyRepository.save(study1);

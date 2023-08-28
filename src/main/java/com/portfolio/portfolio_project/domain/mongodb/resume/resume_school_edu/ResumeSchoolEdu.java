@@ -15,8 +15,6 @@ import lombok.Setter;
 @Builder
 @Document(collection = "resume_school_edu_tb")
 public class ResumeSchoolEdu {
-// MongoDB는 @Comment, @Column 지원하지 않음
-// 가독성을 위해 작성
     @Id
     private String id;
 
