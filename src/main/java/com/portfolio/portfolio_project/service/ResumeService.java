@@ -132,12 +132,48 @@ public class ResumeService {
 
     // Row Move
     @Transactional
+    public void resume_schoolEdu_updateOrder(List<ResumeDTO_In.OrderUpdateDto> updates){
+        try {
+            for (OrderUpdateDto update : updates) {
+                ResumeSchoolEdu record = resumeSchoolEduRepository.findById(update.getId()).orElseThrow(() -> new Exception400("데이터가 존재하지 않습니다."));
+                record.setOrder(update.getOrder());
+                resumeSchoolEduRepository.save(record);
+            }
+        } catch (Exception e) {
+            throw new Exception500("문서를 찾고, 순서를 갱신하는데 실패하였습니다.");
+        }
+    }
+    @Transactional
     public void resume_academyedu_updateOrder(List<ResumeDTO_In.OrderUpdateDto> updates){
         try {
             for (OrderUpdateDto update : updates) {
                 ResumeAcademyEdu record = resumeAcademyEduRepository.findById(update.getId()).orElseThrow(() -> new Exception400("데이터가 존재하지 않습니다."));
                 record.setOrder(update.getOrder());
                 resumeAcademyEduRepository.save(record);
+            }
+        } catch (Exception e) {
+            throw new Exception500("문서를 찾고, 순서를 갱신하는데 실패하였습니다.");
+        }
+    }
+    @Transactional
+    public void resume_certificate_updateOrder(List<ResumeDTO_In.OrderUpdateDto> updates){
+        try {
+            for (OrderUpdateDto update : updates) {
+                ResumeCertificate record = resumeCertificateRepository.findById(update.getId()).orElseThrow(() -> new Exception400("데이터가 존재하지 않습니다."));
+                record.setOrder(update.getOrder());
+                resumeCertificateRepository.save(record);
+            }
+        } catch (Exception e) {
+            throw new Exception500("문서를 찾고, 순서를 갱신하는데 실패하였습니다.");
+        }
+    }
+    @Transactional
+    public void resume_selfstudy_updateOrder(List<ResumeDTO_In.OrderUpdateDto> updates){
+        try {
+            for (OrderUpdateDto update : updates) {
+                ResumeSelfStudy record = resumeSelfStudyRepository.findById(update.getId()).orElseThrow(() -> new Exception400("데이터가 존재하지 않습니다."));
+                record.setOrder(update.getOrder());
+                resumeSelfStudyRepository.save(record);
             }
         } catch (Exception e) {
             throw new Exception500("문서를 찾고, 순서를 갱신하는데 실패하였습니다.");
