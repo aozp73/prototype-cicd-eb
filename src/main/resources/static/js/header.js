@@ -79,5 +79,6 @@ function checkAndRemoveExpiredToken() {
     const token = localStorage.getItem('jwtToken');
     if (token && isTokenExpired(token)) {
         localStorage.removeItem('jwtToken');
+        alert("로그아웃")
     }
 }

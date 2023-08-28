@@ -1,6 +1,5 @@
 package com.portfolio.portfolio_project.web.resume;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,14 +21,14 @@ public class ResumeDTO_In {
 
         public ResumeSchoolEdu toEntity() {
             return ResumeSchoolEdu.builder()
-                    .schoolAdmissionDate(LocalDate.parse(values.get(0)))  // 학교 입학일
-                    .schoolGraduateDate(LocalDate.parse(values.get(1)))  // 학교 졸업일
-                    .schoolGraduateStatus(values.get(2))  // 졸업구분
-                    .schoolName(values.get(3))  // 학교명
-                    .schoolMajor(values.get(4))  // 전공명
-                    .schoolCredit(values.get(5))  // 학점
-                    .createdAt(LocalDateTime.now())  // 현재 시간
-                    .updatedAt(LocalDateTime.now())  // 현재 시간
+                    .schoolAdmissionDate(values.get(0))
+                    .schoolGraduateDate(values.get(1))
+                    .schoolGraduateStatus(values.get(2))
+                    .schoolName(values.get(3))
+                    .schoolMajor(values.get(4))
+                    .schoolCredit(values.get(5))
+                    .createdAt(LocalDateTime.now().toString())
+                    .updatedAt(LocalDateTime.now().toString())
                     .build();
         }
     }

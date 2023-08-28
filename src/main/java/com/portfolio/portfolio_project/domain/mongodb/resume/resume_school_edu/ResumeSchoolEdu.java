@@ -1,13 +1,10 @@
 package com.portfolio.portfolio_project.domain.mongodb.resume.resume_school_edu;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-import javax.persistence.Column;
 import org.springframework.data.annotation.Id;
 
 import org.hibernate.annotations.Comment;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -24,29 +21,29 @@ public class ResumeSchoolEdu {
     private String id;
 
     @Comment("이력 페이지 - 학교 입학일")
-    @Column(name = "school_admission_date")
-    private LocalDate schoolAdmissionDate;
+    @Field("school_admission_date")
+    private String schoolAdmissionDate;
     @Comment("이력 페이지 - 학교 졸업일")
-    @Column(name = "school_graduate_date")
-    private LocalDate schoolGraduateDate;
+    @Field("school_graduate_date")
+    private String schoolGraduateDate;
     @Comment("이력 페이지 - 졸업구분")
-    @Column(name = "school_graduate_status")
+    @Field("school_graduate_status")
     private String schoolGraduateStatus;
 
     @Comment("이력 페이지 - 학교명")
-    @Column(name = "school_name")
+    @Field("school_name")
     private String schoolName;
     @Comment("이력 페이지 - 전공명")
-    @Column(name = "school_major")
+    @Field("school_major")
     private String schoolMajor;
     @Comment("이력 페이지 - 학점")
-    @Column(name = "school_credit")
+    @Field("school_credit")
     private String schoolCredit;
 
     @Comment("이력 페이지 - 등록 시간")
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Field("created_at")
+    private String createdAt;
     @Comment("이력 페이지 - 수정 시간")
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    @Field("updated_at")
+    private String updatedAt;
 }

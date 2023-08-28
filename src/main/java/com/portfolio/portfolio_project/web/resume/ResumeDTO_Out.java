@@ -1,12 +1,5 @@
 package com.portfolio.portfolio_project.web.resume;
 
-import java.time.LocalDate;
-import java.util.List;
-
-import javax.persistence.Column;
-
-import org.hibernate.annotations.Comment;
-
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_school_edu.ResumeSchoolEdu;
 
 import lombok.AllArgsConstructor;
@@ -24,8 +17,8 @@ public class ResumeDTO_Out {
     @NoArgsConstructor
     public static class schooledu_postDTO {
         private String id;
-        private LocalDate schoolAdmissionDate;
-        private LocalDate schoolGraduateDate;
+        private String schoolAdmissionDate;
+        private String schoolGraduateDate;
         private String schoolGraduateStatus;
 
         private String schoolName;

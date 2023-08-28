@@ -22,6 +22,8 @@ public class ResumeController {
         return "/resume";
     }
 
+
+
     @PostMapping("/auth/resume/schooledu")
     public ResponseEntity<?> resume_schooledu_post(@RequestBody ResumeDTO_In.schooledu_postDTO postDTO_In){
         ResumeDTO_Out.schooledu_postDTO postDTO_Out = resumeService.resume_schooledu_post(postDTO_In);
