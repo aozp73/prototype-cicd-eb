@@ -25,21 +25,27 @@ public class ResumeController {
 
 
     @PostMapping("/auth/resume/schooledu")
-    public ResponseEntity<?> resume_schooledu_post(@RequestBody ResumeDTO_In.schooledu_postDTO postDTO_In){
-        ResumeDTO_Out.schooledu_postDTO postDTO_Out = resumeService.resume_schooledu_post(postDTO_In);
+    public ResponseEntity<?> resume_schooledu_post(@RequestBody ResumeDTO_In.Schooledu_postDTO postDTO_In){
+        ResumeDTO_Out.Schooledu_postDTO postDTO_Out = resumeService.resume_schooledu_post(postDTO_In);
 
         return ResponseEntity.ok().body(new ResponseDTO<>().data(postDTO_Out));
     }
     @PostMapping("/auth/resume/academyedu")
-    public void resume_academyedu_post(@RequestBody ResumeDTO_In.academyedu_postDTO postDTO){
+    public ResponseEntity<?> resume_academyedu_post(@RequestBody ResumeDTO_In.Academyedu_postDTO postDTO_In){
+        ResumeDTO_Out.AcademyEdu_postDTO postDTO_Out = resumeService.resume_academyedu_post(postDTO_In);
 
+        return ResponseEntity.ok().body(new ResponseDTO<>().data(postDTO_Out));
     }
     @PostMapping("/auth/resume/certificate")
-    public void resume_certificate_post(@RequestBody ResumeDTO_In.certificate_postDTO postDTO){
+    public ResponseEntity<?> resume_certificate_post(@RequestBody ResumeDTO_In.Certificate_postDTO postDTO_In){
+        ResumeDTO_Out.Certificate_postDTO postDTO_Out = resumeService.resume_certificate_post(postDTO_In);
 
+        return ResponseEntity.ok().body(new ResponseDTO<>().data(postDTO_Out));
     }
     @PostMapping("/auth/resume/selfstudy")
-    public void resume_selfstudy_post(@RequestBody ResumeDTO_In.selfstudy_postDTO postDTO){
+    public ResponseEntity<?> resume_selfstudy_post(@RequestBody ResumeDTO_In.Selfstudy_postDTO postDTO_In){
+        ResumeDTO_Out.Selfstudy_postDTO postDTO_Out = resumeService.resume_selfstudy_post(postDTO_In);
 
+        return ResponseEntity.ok().body(new ResponseDTO<>().data(postDTO_Out));
     }
 }

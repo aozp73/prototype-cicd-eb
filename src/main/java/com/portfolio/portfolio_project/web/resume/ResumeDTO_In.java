@@ -19,7 +19,7 @@ public class ResumeDTO_In {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class schooledu_postDTO {
+    public static class Schooledu_postDTO {
         private List<String> values;
 
         public ResumeSchoolEdu toEntity() {
@@ -37,7 +37,7 @@ public class ResumeDTO_In {
     }
     @Getter
     @Setter
-    public static class academyedu_postDTO {
+    public static class Academyedu_postDTO {
         private List<String> values;
 
         public ResumeAcademyEdu toEntity() {
@@ -55,7 +55,7 @@ public class ResumeDTO_In {
     }
     @Getter
     @Setter
-    public static class certificate_postDTO {
+    public static class Certificate_postDTO {
         private List<String> values;
 
         public ResumeCertificate toEntity() {
@@ -72,7 +72,7 @@ public class ResumeDTO_In {
     }
     @Getter
     @Setter
-    public static class selfstudy_postDTO {
+    public static class Selfstudy_postDTO {
         private List<String> values;
 
         public ResumeSelfStudy toEntity() {
