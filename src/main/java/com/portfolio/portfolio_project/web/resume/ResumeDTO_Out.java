@@ -1,5 +1,6 @@
 package com.portfolio.portfolio_project.web.resume;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,22 +28,26 @@ public class ResumeDTO_Out {
         private List<SelfStudy_postDTO> resumeSelfStudies;
         private List<SchoolEdu_postDTO> resumeSchoolEdus; 
 
-        public static FindAllDTO fromEntities( List<ResumeAcademyEdu> academyEdus, List<ResumeCertificate> certificates,
+        public static FindAllDTO fromEntities(List<ResumeAcademyEdu> academyEdus, List<ResumeCertificate> certificates,
                                                 List<ResumeSelfStudy> selfStudies, List<ResumeSchoolEdu> schoolEdus) {
            
             List<AcademyEdu_postDTO> academyEduDtos = academyEdus.stream()
+                .sorted(Comparator.comparingInt(ResumeAcademyEdu::getOrder))
                 .map(AcademyEdu_postDTO::fromEntity)
                 .collect(Collectors.toList());
 
             List<Certificate_postDTO> certificateDtos = certificates.stream()
+                .sorted(Comparator.comparingInt(ResumeCertificate::getOrder))
                 .map(Certificate_postDTO::fromEntity)
                 .collect(Collectors.toList());
 
             List<SelfStudy_postDTO> selfStudyDtos = selfStudies.stream()
+                .sorted(Comparator.comparingInt(ResumeSelfStudy::getOrder))
                 .map(SelfStudy_postDTO::fromEntity)
                 .collect(Collectors.toList());
 
             List<SchoolEdu_postDTO> schoolEduDtos = schoolEdus.stream()
+               .sorted(Comparator.comparingInt(ResumeSchoolEdu::getOrder))
                .map(SchoolEdu_postDTO::fromEntity)
                .collect(Collectors.toList()); 
 

@@ -31,6 +31,7 @@ public class ResumeService {
     private final ResumeCertificateRepository resumeCertificateRepository;
     private final ResumeSelfStudyRepository resumeSelfStudyRepository;
 
+    
     // FindAll
     @Transactional
     public ResumeDTO_Out.FindAllDTO resume_findAll() {
@@ -41,6 +42,8 @@ public class ResumeService {
 
         return ResumeDTO_Out.FindAllDTO.fromEntities(academyEdus, certificates, selfStudies, schoolEdus);
     }
+
+
 
     // POST
     @Transactional
@@ -79,6 +82,8 @@ public class ResumeService {
 
         return ResumeDTO_Out.SelfStudy_postDTO.fromEntity(resumeSelfStudy);
     }
+
+
 
     // DELETE
     @Transactional
@@ -129,6 +134,8 @@ public class ResumeService {
             throw new Exception500("데이터 삭제에 실패하였습니다.");
         }
     }
+
+
 
     // Row Move
     @Transactional
