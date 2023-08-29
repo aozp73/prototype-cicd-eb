@@ -19,7 +19,7 @@ function toggleEditMode() {
 }
 
 // 상세정보 ~
-$('.card').on('click', function() {
+$('#main-container .row').on('click', '.card', function() {
     const cardId = $(this).data('card-id');
     showModalWithDetails(cardId);
 });
@@ -136,7 +136,54 @@ function postProject() {
             resetModalForm();
             // 모달 닫기
             $('#projectAddForm').modal('hide');
-            // location.reload(true);
+
+            let selectedRoles = response.data.selectedRoles;
+            let roleString = selectedRoles ? selectedRoles.map((role, index, array) => 
+                `${index === 0 ? '&nbsp;' : ''}${role}${index < array.length - 1 ? ' / ' : ''}`
+            ).join('') : '';
+
+            let newProjectHTML = `
+            <div class="col-lg-3 col-md-6 mb-4" id="project-${response.data.id}" 
+                data-readme-url="${response.data.readmeUrl}" 
+                data-github-url="${response.data.githubUrl}"
+                data-individual-performance-img="${response.data.individualPerformanceImageNameURL}">
+                <div class="card card-hover-effect" data-card-id="${response.data.id}" data-members="${response.data.member}" style="height: 380px; overflow: hidden;">
+                    <div class="card-body px-4">
+                        <div class="text-center mt-2">
+                            <span style="font-size: 1.6em;">${response.data.projectName}</span>
+                        </div>
+                        <div class="mt-2 mb-3 p-2" style="max-height: 33%; height: 243px; overflow: hidden;">
+                            <img src="${response.data.projectImgURL}" alt="프로젝트 이미지" style="width: 100%; height: 100%; object-fit: fill; ">
+                        </div>
+                        <div class="card-inner" style="height: 127px;">
+                            <div class="ps-3">
+                                <div class="mt-3 mb-2">
+                                    <span class="member-icons" style="font-size: 1.3em;"></span>
+                                </div>
+                                <div class="mb-2 ps-1">
+                                    &nbsp${response.data.startDate} ~ ${response.data.endDate}
+                                </div>
+                                <div class="mb-2 ps-1" style="font-size: 15px">
+                                ${roleString}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="edit-controls" style="position: absolute; right: 10px; bottom: 10px; display: block;">
+                            <button class="btn btn-secondary btn-sm" onclick="getUpdateForm(event)">수정</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteProject(event, 'project-${response.data.id}')">삭제</button>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+
+            $('#main-container .row').append(newProjectHTML);
+
+            const newCard = $(`#project-${response.data.id} .card`);
+            const membersCount = newCard.data('members');
+            console.log(membersCount);  
+            const iconsForMembers = getMembersIcons(membersCount);
+            newCard.find('.member-icons').html("&nbsp;" + iconsForMembers);
+
         },
         error: function(error) {
             alert(error.responseJSON.data);

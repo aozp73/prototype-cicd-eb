@@ -52,43 +52,6 @@
                 </div>
             </c:forEach>
 
-                <div class="col-lg-3 col-md-6 mb-4" id="project-1">
-                    <div class="card card-hover-effect" data-card-id="1" data-members="1" style="height: 380px; overflow: hidden;">
-                        <div class="card-body px-4">
-                            <div>
-                                <div class="text-center mt-2">
-                                    <span style="font-size: 1.6em;">포트폴리오 프로젝트</span>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-2 mb-3 p-2" style="max-height: 33%; height: 243px; overflow: hidden;">
-                                <img src="/image/포트폴리오.png" alt="프로젝트 이미지" style="width: 100%; height: 100%; object-fit: fill; ">
-                            </div>
-
-                            <div class="card-inner" style="height: 127px;">
-                                <div class="ps-3">
-                                    <div class="mt-3 mb-2">
-                                        <span class="member-icons" style="font-size: 1.3em;"></span>
-                                    </div>
-                                    <div class="mb-2 ps-1">
-                                        &nbsp2022-00-00 ~ 2022-00-00 
-                                    </div>
-                                    <div class="mb-2 ps-1" style="font-size: 15px">
-                                        &nbspBackEnd&nbsp/&nbspFrontEnd&nbsp/&nbspDevOps
-                                    </div>
-                                </div>
-                            </div>
-                                       
-                        </div>
-
-                        <div class="edit-controls" style="position: absolute; right: 10px; bottom: 10px; display: none;">
-                            <button class="btn btn-secondary btn-sm" onclick="getUpdateForm(event)">수정</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteProject(event, 'project-1')">삭제</button>
-                        </div>
-                        
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
