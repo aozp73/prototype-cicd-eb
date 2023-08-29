@@ -249,7 +249,6 @@ function deletePost(pk) {
         success: function(response) {
             console.log(response);
             location.reload(true);
-            
         },
         error: function(error) {
             alert(error.responseJSON.data);

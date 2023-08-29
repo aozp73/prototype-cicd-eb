@@ -2,6 +2,7 @@ package com.portfolio.portfolio_project.web.myproject;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,14 +18,18 @@ public class MyProjectController {
 
     private final MyProjectService myProjectService;
 
+    // FindAll
     @GetMapping("/project")
-    public String projectpage(){
+    public String projectpage(Model model){
+
+        model.addAttribute("myProjectList", "");
+
         return "/myproject";
     }
 
     @PostMapping("/auth/myproject")
     public ResponseEntity<?> myproject_post(@RequestBody MyProjectDTO_In.postDTO postDTO_In){
-        MyProjectDTO_Out.PostDTO postDTO_Out = myProjectService.main_post(postDTO_In);
+        MyProjectDTO_Out.PostDTO postDTO_Out = myProjectService.myProject_post(postDTO_In);
 
         return ResponseEntity.ok().body(new ResponseDTO<>().data(postDTO_Out));
     }

@@ -1,6 +1,8 @@
 package com.portfolio.portfolio_project.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +13,7 @@ import com.portfolio.portfolio_project.core.util.s3_utils.S3Utils;
 import com.portfolio.portfolio_project.domain.jpa.myproject.my_project.MyProject;
 import com.portfolio.portfolio_project.domain.jpa.myproject.my_project.MyProjectRepository;
 import com.portfolio.portfolio_project.domain.jpa.myproject.my_project_role.MyProjectRole;
+import com.portfolio.portfolio_project.domain.jpa.myproject.my_project_role.MyProjectRoleRepository;
 import com.portfolio.portfolio_project.web.myproject.MyProjectDTO_In;
 import com.portfolio.portfolio_project.web.myproject.MyProjectDTO_Out;
 
@@ -20,13 +23,31 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class MyProjectService {
     
+    private final MyProjectRoleRepository myProjectRoleRepository;
     private final MyProjectRepository myProjectRepository;
     private final S3Utils s3Utils;
     private final MyProjectUtils myProjectUtils;
 
+
+    // FindAll
+    @Transactional(readOnly = true)
+    public List<MyProjectDTO_Out.FindAllDTO> findAllProjectsAndRoles() {
+        // MyProject 엔터티 리스트 가져오기
+        List<MyProject> myProjects = myProjectRepository.findAll();
+
+        // 각 MyProject에 해당하는 MyProjectRole 리스트를 맵 형태에 저장
+        Map<Long, List<MyProjectRole>> roleMap = new HashMap<>();
+        for (MyProject myProject : myProjects) {
+            List<MyProjectRole> myProjectRoles = myProjectRoleRepository.findAllByProject(myProject);
+            roleMap.put(myProject.getId(), myProjectRoles);
+        }
+
+        return MyProjectDTO_Out.FindAllDTO.fromEntityList(myProjects, roleMap);
+    }
+
     // POST
     @Transactional
-    public MyProjectDTO_Out.PostDTO main_post(MyProjectDTO_In.postDTO postDTO_In){
+    public MyProjectDTO_Out.PostDTO myProject_post(MyProjectDTO_In.postDTO postDTO_In){
         // 프로젝트 이미지, 개인수행 이미지 S3 업로드
         List<String> projectImg_nameAndUrl = s3Utils.uploadImageToS3(postDTO_In.getProjectImgBase64(), 
                                                                      postDTO_In.getProjectImageName(), 

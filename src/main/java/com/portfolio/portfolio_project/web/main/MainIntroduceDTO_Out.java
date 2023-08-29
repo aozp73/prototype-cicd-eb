@@ -16,20 +16,20 @@ public class MainIntroduceDTO_Out {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class findAllDTO {
+    public static class FindAllDTO {
         private Long id;
         private String postTitle;
         private String postContent;
         private String imgURL;
 
-        public static findAllDTO fromEntity(MainIntroduce entity) {
-            return new findAllDTO(entity.getId(), entity.getTitle(), entity.getContent(), entity.getIntroduceImgUrl());
+        public static FindAllDTO fromEntity(MainIntroduce entity) {
+            return new FindAllDTO(entity.getId(), entity.getTitle(), entity.getContent(), entity.getIntroduceImgUrl());
         }
 
-        public static List<findAllDTO> fromEntityList(List<MainIntroduce> entityList) {
-            List<findAllDTO> dtoList = new ArrayList<>();
+        public static List<FindAllDTO> fromEntityList(List<MainIntroduce> entityList) {
+            List<FindAllDTO> dtoList = new ArrayList<>();
             for (MainIntroduce entity : entityList) {
-                dtoList.add(findAllDTO.fromEntity(entity));
+                dtoList.add(FindAllDTO.fromEntity(entity));
             }
              return dtoList;
         }

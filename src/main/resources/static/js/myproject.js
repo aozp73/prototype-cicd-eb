@@ -136,6 +136,7 @@ function postProject() {
             resetModalForm();
             // 모달 닫기
             $('#projectAddForm').modal('hide');
+            // location.reload(true);
         },
         error: function(error) {
             alert(error.responseJSON.data);

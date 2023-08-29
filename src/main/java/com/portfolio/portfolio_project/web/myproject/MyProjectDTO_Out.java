@@ -1,6 +1,8 @@
 package com.portfolio.portfolio_project.web.myproject;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.portfolio.portfolio_project.domain.jpa.myproject.my_project.MyProject;
@@ -14,6 +16,51 @@ import lombok.Setter;
 
 public class MyProjectDTO_Out {
     
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class FindAllDTO {
+        private Long id;
+        private String projectName;
+        private Integer member;
+        private String startDate;
+        private String endDate;
+        private List<String> roleCodes;
+        private String readmeUrl;
+        private String githubUrl;
+        private String projectImgURL;
+        private String individualPerformanceImageNameURL;
+
+        public static FindAllDTO fromEntity(MyProject myProject, List<MyProjectRole> myProjectRoles) {
+            List<String> roleCodes = myProjectRoles.stream()
+                .map(myProjectRole -> myProjectRole.getRoleCode().getId().toString())
+                .collect(Collectors.toList());
+
+            return new FindAllDTO(
+                myProject.getId(),
+                myProject.getProjectName(),
+                myProject.getMember(),
+                myProject.getStartDate().toString(),
+                myProject.getEndDate().toString(),
+                roleCodes,
+                myProject.getReadmeUrl(),
+                myProject.getGithubUrl(),
+                myProject.getProjectImgUrl(),
+                myProject.getIndividualPerformanceImgUrl()
+            );
+        }
+
+        public static List<FindAllDTO> fromEntityList(List<MyProject> myProjects, Map<Long, List<MyProjectRole>> roleMap) {
+            List<FindAllDTO> dtoList = new ArrayList<>();
+            for (MyProject myProject : myProjects) {
+                List<MyProjectRole> myProjectRoles = roleMap.getOrDefault(myProject.getId(), new ArrayList<>());
+                dtoList.add(FindAllDTO.fromEntity(myProject, myProjectRoles));
+            }
+            return dtoList;
+        }
+    }
+
     @Getter
     @Setter
     @Builder
