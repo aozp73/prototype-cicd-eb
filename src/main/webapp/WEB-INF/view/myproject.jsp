@@ -8,6 +8,50 @@
         <div class="mb-4 container">
             <div class="row">    
 
+            <c:forEach var="project" items="${myProjectList}">
+                    <div class="col-lg-3 col-md-6 mb-4" id="project-${project.id}" 
+                                                        data-readme-url="${project.readmeUrl}" 
+                                                        data-github-url="${project.githubUrl}"
+                                                        data-individual-performance-img="${project.individualPerformanceImageNameURL}">
+                    <div class="card card-hover-effect" data-card-id="${project.id}" data-members="${project.member}" style="height: 380px; overflow: hidden;">
+                        <div class="card-body px-4">
+                            <div>
+                                <div class="text-center mt-2">
+                                    <span style="font-size: 1.6em;">${project.projectName}</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-2 mb-3 p-2" style="max-height: 33%; height: 243px; overflow: hidden;">
+                                <img src="${project.projectImgURL}" alt="프로젝트 이미지" style="width: 100%; height: 100%; object-fit: fill; ">
+                            </div>
+
+                            <div class="card-inner" style="height: 127px;">
+                                <div class="ps-3">
+                                    <div class="mt-3 mb-2">
+                                        <span class="member-icons" style="font-size: 1.3em;"></span>
+                                    </div>
+                                    <div class="mb-2 ps-1">
+                                        &nbsp${project.startDate} ~ ${project.endDate}
+                                    </div>
+                            <div class="mb-2 ps-1" style="font-size: 15px">
+                                <c:forEach var="roleCode" items="${project.roleCodes}" varStatus="status">
+                                    <c:if test="${status.first}">&nbsp;</c:if>${roleCode}
+                                    <c:if test="${!status.last}"> / </c:if>
+                                </c:forEach>
+                            </div>
+                                </div>
+                            </div>
+
+                            <div class="edit-controls" style="position: absolute; right: 10px; bottom: 10px; display: none;">
+                                <button class="btn btn-secondary btn-sm" onclick="getUpdateForm(event)">수정</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteProject(event, 'project-${project.id}')">삭제</button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+
                 <div class="col-lg-3 col-md-6 mb-4" id="project-1">
                     <div class="card card-hover-effect" data-card-id="1" data-members="1" style="height: 380px; overflow: hidden;">
                         <div class="card-body px-4">
@@ -44,188 +88,6 @@
                         
                     </div>
                 </div>
-
-
-                <div class="col-lg-3 col-md-6 mb-4" id="project-2">
-                    <div class="card card-hover-effect" data-card-id="2" data-members="5" style="height: 380px; overflow: hidden;">
-                        <div class="card-body px-4">
-                            <div>
-                                <div class="text-center mt-2">
-                                    <span style="font-size: 1.6em;">공간대여 프로젝트</span>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-2 mb-3 p-2" style="max-height: 33%; height: 243px; overflow: hidden;">
-                                <img src="/image/project2.png" alt="프로젝트 이미지" style="width: 100%; height: 100%; object-fit: fill; ">
-                            </div>
-
-                            <div class="card-inner" style="height: 127px;">
-                                <div class="ps-3">
-                                    <div class="mt-3 mb-2">
-                                        <span class="member-icons" style="font-size: 1.3em;"></span>
-                                    </div>
-                                    <div class="mb-2 ps-1">
-                                        &nbsp2022-00-00 ~ 2022-00-00 
-                                    </div>
-                                    <div class="mb-2 ps-1">
-                                        &nbspBackEnd
-                                    </div>
-                                </div>
-                            </div>
-                                       
-                        </div>
-                        <div class="edit-controls" style="position: absolute; right: 10px; bottom: 10px; display: none;">
-                            <button class="btn btn-secondary btn-sm" onclick="getUpdateForm(event)">수정</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteProject(event, 'project-2')">삭제</button>
-                        </div>
-                    </div>
-                </div>
-
-                
-                <div class="col-lg-3 col-md-6 mb-4" id="project-3">
-                    <div class="card card-hover-effect" data-card-id="3" data-members="3" style="height: 380px; overflow: hidden;">
-                        <div class="card-body px-4">
-                            <div>
-                                <div class="text-center mt-2">
-                                    <span style="font-size: 1.6em;">RestFul 프로젝트</span>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-2 mb-3 p-2" style="max-height: 33%; height: 243px; overflow: hidden;">
-                                <img src="/image/RestFul.png" alt="프로젝트 이미지" style="width: 100%; height: 100%; object-fit: fill; ">
-                            </div>
-
-                            <div class="card-inner" style="height: 127px;">
-                                <div class="ps-3">
-                                    <div class="mt-3 mb-2">
-                                        <span class="member-icons" style="font-size: 1.3em;">&nbsp</span>
-                                    </div>
-                                    <div class="mb-2 ps-1">
-                                        &nbsp2022-00-00 ~ 2022-00-00 
-                                    </div>
-                                    <div class="mb-2 ps-1">
-                                        &nbspBackEnd
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="edit-controls" style="position: absolute; right: 10px; bottom: 10px; display: none;">
-                                <button class="btn btn-secondary btn-sm" onclick="getUpdateForm(event)">수정</button>
-                                <button class="btn btn-danger btn-sm" onclick="deleteProject(event, 'project-3')">삭제</button>
-                            </div>
-                                       
-                        </div>
-                    </div>
-                </div>
-
-                
-                <div class="col-lg-3 col-md-6 mb-4" id="project-4">
-                    <div class="card card-hover-effect" data-card-id="4" data-members="3" style="height: 380px; overflow: hidden;">
-                        <div class="card-body px-4">
-                            <div>
-                                <div class="text-center mt-2">
-                                    <span style="font-size: 1.6em;">구인공고 프로젝트</span>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-2 mb-3 p-2" style="max-height: 33%; height: 243px; overflow: hidden;">
-                                <img src="/image/구인공고.png" alt="프로젝트 이미지" style="width: 100%; height: 100%; object-fit: fill; ">
-                            </div>
-
-                            <div class="card-inner" style="height: 127px;">
-                                <div class="ps-3">
-                                    <div class="mt-3 mb-2">
-                                        <span class="member-icons" style="font-size: 1.3em;">&nbsp</span>
-                                    </div>
-                                    <div class="mb-2 ps-1">
-                                        &nbsp2022-00-00 ~ 2022-00-00 
-                                    </div>
-                                    <div class="mb-2 ps-1">
-                                        &nbspBackEnd & FrontEnd
-                                    </div>
-                                </div>
-                            </div> 
-
-                        </div>
-                        <div class="edit-controls" style="position: absolute; right: 10px; bottom: 10px; display: none;">
-                            <button class="btn btn-secondary btn-sm" onclick="getUpdateForm(event)">수정</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteProject(event, 'project-4')">삭제</button>
-                        </div>
-
-                    </div>
-                </div>
-
-                
-                <div class="col-lg-3 col-md-6 mb-4" id="project-5">
-                    <div class="card card-hover-effect" data-card-id="5" data-members="1" style="height: 380px; overflow: hidden;">
-                        <div class="card-body px-4">
-                            <div>
-                                <div class="text-center mt-2">
-                                    <span style="font-size: 1.6em;">포토그램 프로젝트</span>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-2 mb-3 p-2" style="max-height: 33%; height: 243px; overflow: hidden;">
-                                <img src="/image/포토그램.png" alt="프로젝트 이미지" style="width: 100%; height: 100%; object-fit: fill; ">
-                            </div>
-
-                            <div class="card-inner" style="height: 127px;">
-                                <div class="ps-3">
-                                    <div class="mt-3 mb-2">
-                                        <span class="member-icons" style="font-size: 1.3em;"></span>
-                                    </div>
-                                    <div class="mb-2 ps-1">
-                                        &nbsp2022-00-00 ~ 2022-00-00 
-                                    </div>
-                                    <div class="mb-2 ps-1">
-                                        &nbspBackEnd & FrontEnd
-                                    </div>
-                                </div>
-                            </div>
-                                       
-                        </div>
-                        <div class="edit-controls" style="position: absolute; right: 10px; bottom: 10px; display: none;">
-                            <button class="btn btn-secondary btn-sm" onclick="getUpdateForm(event)">수정</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteProject(event, 'project-5')">삭제</button>
-                        </div>
-                    </div>
-                </div>
-
-                
-                <div class="col-lg-3 col-md-6 mb-4" id="project-6">
-                    <div class="card card-hover-effect" data-card-id="6" data-members="1" style="height: 380px; overflow: hidden;">
-                        <div class="card-body px-4">
-                            <div>
-                                <div class="text-center mt-2">
-                                    <span style="font-size: 1.6em;">블로그 프로젝트</span>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-2 mb-3 p-2" style="max-height: 33%; height: 243px; overflow: hidden;">
-                                <img src="/image/블로그.png" alt="프로젝트 이미지" style="width: 100%; height: 100%; object-fit: fill; ">
-                            </div>
-
-                            <div class="card-inner" style="height: 127px;">
-                                <div class="ps-3">
-                                    <div class="mt-3 mb-2">
-                                        <span class="member-icons" style="font-size: 1.3em;"></span>
-                                    </div>
-                                    <div class="mb-2 ps-1">
-                                        &nbsp2022-00-00 ~ 2022-00-00 
-                                    </div>
-                                    <div class="mb-2 ps-1">
-                                        &nbspBackEnd & FrontEnd
-                                    </div>
-                                </div>
-                            </div>
-                                       
-                        </div>
-                        <div class="edit-controls" style="position: absolute; right: 10px; bottom: 10px; display: none;">
-                            <button class="btn btn-secondary btn-sm" onclick="getUpdateForm(event)">수정</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteProject(event, 'project-6')">삭제</button>
-                        </div>
-                    </div>
-                </div>
-
 
             </div>
         </div>

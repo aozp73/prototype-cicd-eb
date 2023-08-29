@@ -34,8 +34,21 @@ public class MyProjectDTO_Out {
 
         public static FindAllDTO fromEntity(MyProject myProject, List<MyProjectRole> myProjectRoles) {
             List<String> roleCodes = myProjectRoles.stream()
-                .map(myProjectRole -> myProjectRole.getRoleCode().getId().toString())
-                .collect(Collectors.toList());
+            .map(myProjectRole -> {
+                Long roleCodeLong = myProjectRole.getRoleCode().getId();
+                int roleCode = roleCodeLong.intValue();
+                switch (roleCode) {
+                    case 1:
+                        return "BackEnd";
+                    case 2:
+                        return "FrontEnd";
+                    case 3:
+                        return "DevOps";
+                    default:
+                        return "Unknown";
+                }
+            })
+            .collect(Collectors.toList());
 
             return new FindAllDTO(
                 myProject.getId(),

@@ -17,14 +17,18 @@ import org.hibernate.annotations.Comment;
 import com.portfolio.portfolio_project.domain.jpa.myproject.my_project.MyProject;
 import com.portfolio.portfolio_project.domain.jpa.myproject.my_project_role_code.MyProjectRoleCode;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Builder
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "my_project_role_tb")
 public class MyProjectRole {
     @Id

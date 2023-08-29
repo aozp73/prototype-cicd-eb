@@ -1,5 +1,7 @@
 package com.portfolio.portfolio_project.web.myproject;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +23,8 @@ public class MyProjectController {
     // FindAll
     @GetMapping("/project")
     public String projectpage(Model model){
-
-        model.addAttribute("myProjectList", "");
+        List<MyProjectDTO_Out.FindAllDTO> myProjectList = myProjectService.findAllProjectsAndRoles();
+        model.addAttribute("myProjectList", myProjectList);
 
         return "/myproject";
     }
