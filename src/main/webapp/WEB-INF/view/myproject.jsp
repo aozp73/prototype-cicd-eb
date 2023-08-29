@@ -294,7 +294,7 @@
                             <input type="text" class="form-control" id="addProjectName" name="projectName" placeholder="프로젝트명을 입력하세요">
                         </div>
                         <div class="form-group mb-3">
-                            <label class="mb-1" for="members">인원</label>
+                            <label class="mb-1" for="member">인원</label>
                             <input type="number" class="form-control" id="addMembers" name="members" placeholder="인원 수를 입력하세요">
                         </div>
                         <div class="form-group mb-3">

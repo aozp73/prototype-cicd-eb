@@ -26,12 +26,8 @@ public class MyProjectService {
                                                                                    postDTO_In.getIndividualPerformanceImageName(), 
                                                                                    postDTO_In.getIndividualPerformanceImageType(),
                                                                                    "my_project_performance");
-        System.out.println("테스트 1 : " + projectImg_nameAndUrl.get(0));
-        System.out.println("테스트 1 : " + projectImg_nameAndUrl.get(1));
-        System.out.println();
-        System.out.println("테스트 2 : " + individualPerformanceImg_nameAndUrl.get(0));
-        System.out.println("테스트 2 : " + individualPerformanceImg_nameAndUrl.get(1));
-        
+        postDTO_In.toEntity(projectImg_nameAndUrl, individualPerformanceImg_nameAndUrl);
+
         return "";
     }
 }

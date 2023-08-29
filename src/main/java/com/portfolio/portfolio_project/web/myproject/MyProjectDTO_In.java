@@ -1,5 +1,11 @@
 package com.portfolio.portfolio_project.web.myproject;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.portfolio.portfolio_project.domain.jpa.myproject.my_project.MyProject;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +20,7 @@ public class MyProjectDTO_In {
     public static class postDTO {
         // 프로젝트명, 인원, 날짜 정보
         private String projectName;
-        private Integer members;
+        private Integer member;
         private String startDate;
         private String endDate;
 
@@ -32,5 +38,23 @@ public class MyProjectDTO_In {
         private String projectImageType;
         private String individualPerformanceImageName;
         private String individualPerformanceImageType;
+
+        public MyProject toEntity(List<String> projectImg_nameAndUrl, List<String> individualPerformanceImg_nameAndUrl) {
+
+            return MyProject.builder()
+                    .title(this.projectName)
+                    .member(this.member)
+                    .startDate(LocalDate.parse(this.startDate))
+                    .endDate(LocalDate.parse(this.endDate))
+                    .readmeLink(this.readmeUrl)
+                    .githubLink(this.githubUrl)
+                    .projectImgName(projectImg_nameAndUrl.get(0))
+                    .projectImgUrl(projectImg_nameAndUrl.get(1))
+                    .individualPerformanceImgName(individualPerformanceImg_nameAndUrl.get(0))
+                    .individualPerformanceImgUrl(individualPerformanceImg_nameAndUrl.get(1)) 
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .build();
+        }
     }
 }
