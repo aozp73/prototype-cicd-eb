@@ -324,12 +324,12 @@
                         </div>
                         <div class="form-group mb-5">
                             <label for="image">사진</label>
-                            <input type="file" class="form-control-file mb-3" id="image" name="image" onchange="previewImage(this, 'addImagePreview')">
+                            <input type="file" class="form-control-file mb-3" id="postProjectImage" name="postProjectImage" onchange="previewImage(this, 'addImagePreview')">
                             <img id="addImagePreview" src="#" alt="Image Preview" style="width: 100%; height: auto; display: none;">
                         </div>
                         <div class="form-group">
                             <label for="featureImage">담당 기능</label>
-                            <input type="file" class="form-control-file mb-3" id="featureImage" name="featureImage" onchange="previewImage(this, 'addFeatureImagePreview')">
+                            <input type="file" class="form-control-file mb-3" id="postIndividualPerformanceImage" name="postIndividualPerformanceImage" onchange="previewImage(this, 'addFeatureImagePreview')">
                             <img id="addFeatureImagePreview" src="#" alt="Feature Image Preview" style="width: 100%; height: auto; display: none;">
                         </div>
                     </form>
@@ -389,12 +389,12 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="image">사진</label>
-                            <input type="file" class="form-control-file mb-3" id="image" name="image" onchange="previewImage(this, 'updateImagePreview')">
+                            <input type="file" class="form-control-file mb-3" id="updateImage" name="image" onchange="previewImage(this, 'updateImagePreview')">
                             <img id="updateImagePreview" src="#" alt="Image Preview" style="width: 100%; height: auto; display: none;">
                         </div>
                         <div class="form-group">
                             <label for="featureImage">담당 기능</label>
-                            <input type="file" class="form-control-file mb-3" id="featureImage" name="featureImage" onchange="previewImage(this, 'updateFeatureImagePreview')">
+                            <input type="file" class="form-control-file mb-3" id="updateFeatureImage" name="featureImage" onchange="previewImage(this, 'updateFeatureImagePreview')">
                             <img id="updateFeatureImagePreview" src="#" alt="Feature Image Preview" style="width: 100%; height: auto; display: none;">
                         </div>
                     </form>

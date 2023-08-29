@@ -72,18 +72,75 @@ function getUpdateForm(event){
 
 // add, update, delete ~
 function postProject() {
+    const jwtToken = localStorage.getItem('jwtToken'); 
+
+    // 입력 값 (프로젝트명 / 인원 / 시작날짜 / 종료날짜 / 참여역할 / README 주소 / GitHub주소)
     let formData = new FormData(document.getElementById('addForm'));
+    formData.delete("postProjectImage");
+    formData.delete("postIndividualPerformanceImage");
+
+    // 프로젝트 이미지, 개인 수행 각 Base64 문자열 저장 
+    let imageElement = document.getElementById('addImagePreview');
+    let projectImgBase64 = imageElement.src;
+    let featureImageElement = document.getElementById('addFeatureImagePreview');
+    let individualPerformanceBase64 = featureImageElement.src;
+
+    // 이미지 파일 이름과 타입 저장 (S3 전송에 사용)
+    let projectImage_Input = document.getElementById('postProjectImage');
+    let individualPerformanceImage_Input = document.getElementById('postIndividualPerformanceImage');
+
+    let projectImageName = '';
+    let projectImageType = '';
+    let individualPerformanceImageName = '';
+    let individualPerformanceImageType = '';
+
+    if (projectImage_Input.files && projectImage_Input.files[0]) {
+        projectImageName = projectImage_Input.files[0].name;
+        projectImageType = projectImage_Input.files[0].type;
+    }
+    if (individualPerformanceImage_Input.files && individualPerformanceImage_Input.files[0]) {
+        individualPerformanceImageName = individualPerformanceImage_Input.files[0].name;
+        individualPerformanceImageType = individualPerformanceImage_Input.files[0].type;
+    }
+
+    // 이미지 파일인지 체크 후, formData에 Base64 / 이미지 이름 / 이미지 타입 추가 저장
+    if (projectImgBase64.startsWith('data:image/') && individualPerformanceBase64.startsWith('data:image/')) {
+        formData.append("projectImgBase64", projectImgBase64);
+        formData.append("individualPerformanceBase64", individualPerformanceBase64);
+        formData.append("projectImageName", projectImageName);
+        formData.append("projectImageType", projectImageType);
+        formData.append("individualPerformanceImageName", individualPerformanceImageName);
+        formData.append("individualPerformanceImageType", individualPerformanceImageType);
+    } else {
+        alert("이미지 파일을 등록해야 합니다.")
+        return
+    }
+    
     for (let [key, value] of formData.entries()) {
         console.log(key, value);
     }
-    console.log($('#selectedRoles').val())
-    
-    // ☆★☆★ Ajax-POST 통신
+    let data = {};
+    formData.forEach((value, key) => {data[key] = value});
 
-    // 폼 초기화
-    resetModalForm();
-    // 모달 닫기
-    $('#projectAddForm').modal('hide');
+    $.ajax({
+        url: "/auth/myproject",
+        type: "POST",
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        headers: {
+            'Authorization': jwtToken  
+        },
+        success: function(response) {
+            console.log(response);
+            // 폼 초기화
+            resetModalForm();
+            // 모달 닫기
+            $('#projectAddForm').modal('hide');
+        },
+        error: function(error) {
+            alert(error.responseJSON.data);
+        }
+    });
 }
 
 function updateProject() {
