@@ -17,7 +17,7 @@
                         <div class="card-body px-4">
                             <div>
                                 <div class="text-center mt-2">
-                                    <span style="font-size: 1.6em;">${project.projectName}</span>
+                                    <span class="project-name" style="font-size: 1.6em;">${project.projectName}</span>
                                 </div>
                             </div>
 
@@ -61,40 +61,39 @@
         <div class="modal-dialog modal-dialog-centered" style ="max-width: 38%;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="projectModalLabel">Project Title</h5>
+                <h5 class="modal-title" id="projectModalLabel"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="mb-3 modal-body border-bottom-gray">
-                <img id="projectModalImage" src="" alt="Project Image" style="width: 100%; height: auto;">
+            <div class="mb-5 modal-body border-bottom-gray">
+                <img id="projectModalImage" src="" alt="Project Image" style="width: 100%; height: auto; cursor: pointer;" onclick="openImageInNewWindow(this.src)">
             </div>
-            <div class="ms-4">
-                <div>
-                    <div class="mb-1">
+            <div>
+                <div class="mb-4">
+                    <div class="ms-4 mb-1">
                         <strong>1. 담당기능</strong>
                     </div>
-                    <div class="ms-3">
-                        <p id="projectModalResponsibilities">
-                        </p>
+                    <div class="modal-body">
+                        <img id="performanceModalImage" src="" alt="Performance Image" style="width: 100%; height: auto; cursor: pointer;" onclick="openImageInNewWindow(this.src)">
                     </div>
+
                 </div>
-                <div class="mb-4">
+                <div class="ms-4 mb-4">
                     <div class="mb-1">
-                        <strong>2. README (아키텍처, 느낀점, 시연영상 등)</strong>
+                        <strong>2. README (시연영상, 아키텍처, 느낀점 등)</strong>
                     </div>
                     <div class="ms-3">
-                        <p id="projectModalREADMELink"><a href="" target="_blank" style="text-decoration: none;">README 링크</a></p>
+                        <p id="projectModalREADMELink"></p>
                     </div>
                 </div>
-                <div class="mb-4">
+                <div class="ms-4 mb-5">
                     <div class="mb-1">
                         <strong>3. Github 소스코드</strong>
                     </div>
                     <div class="ms-3">
-                        <p id="projectModalGithubLink"><a href="" target="_blank" style="text-decoration: none;">Github 링크</a></p>
+                        <p id="projectModalGithubLink"></p>
                     </div>
                 </div>
             </div>
-
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>

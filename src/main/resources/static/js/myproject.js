@@ -25,15 +25,26 @@ $('#main-container .row').on('click', '.card', function() {
 });
 
 function showModalWithDetails(cardId) {
-    const title = '테스트 제목';
-    const description = '테스트 내용';
-    const imageSrc = getImageSrcByCardId(cardId)
-    const textFromDB = "기능1\n기능2\n기능3"; 
-    const convertedText = textFromDB.replace(/\n/g, '<br>');
-    // ☆★☆★ Ajax-GET 통신
-    document.getElementById("projectModalResponsibilities").innerHTML = convertedText;
+    // const cardElement = $(`div[data-card-id='${cardId}']`);
+    const cardElement = $(`#project-${cardId} .card`);
+    const parentElement = cardElement.closest(`#project-${cardId}`);
+    
+    // 상세보기 필요한 정보 가져오기
+    const title = parentElement.find('span.project-name').text();
+    const project_ImageSrc = parentElement.find('img').attr('src');
+    console.log(title)
+    const performance_ImageSrc = parentElement.data('individual-performance-img');
+    const readmeUrl = parentElement.data('readme-url');
+    const githubUrl = parentElement.data('github-url'); 
+    
+    // 모달에 정보를 랜더링합니다.
     document.getElementById("projectModalLabel").innerText = title;
-    document.getElementById("projectModalImage").setAttribute("src", imageSrc);
+    document.getElementById("projectModalImage").setAttribute("src", project_ImageSrc);
+    document.getElementById("performanceModalImage").setAttribute("src", performance_ImageSrc);
+    document.getElementById("projectModalREADMELink").innerHTML = `<a href="${readmeUrl}" target="_blank" style="text-decoration: none;">README 링크</a>`;
+    document.getElementById("projectModalGithubLink").innerHTML = `<a href="${githubUrl}" target="_blank" style="text-decoration: none;">Github 링크</a>`;
+    
+    // 모달을 띄웁니다.
     var modal = new bootstrap.Modal(document.getElementById("projectModal"));
     modal.show();
 }
@@ -150,7 +161,7 @@ function postProject() {
                 <div class="card card-hover-effect" data-card-id="${response.data.id}" data-members="${response.data.member}" style="height: 380px; overflow: hidden;">
                     <div class="card-body px-4">
                         <div class="text-center mt-2">
-                            <span style="font-size: 1.6em;">${response.data.projectName}</span>
+                            <span class="project-name" style="font-size: 1.6em;">${response.data.projectName}</span>
                         </div>
                         <div class="mt-2 mb-3 p-2" style="max-height: 33%; height: 243px; overflow: hidden;">
                             <img src="${response.data.projectImgURL}" alt="프로젝트 이미지" style="width: 100%; height: 100%; object-fit: fill; ">
@@ -293,3 +304,8 @@ $(document).ready(function() {
     });
 });
 // ~ 이모지
+
+// 상세정보 모달창 url, 이미지 새창 열기 (★☆★☆★☆코드 정리할 때 상세정보 기능끼리 묶어서 정리)
+function openImageInNewWindow(src) {
+    window.open(src, 'Image', 'width=800,height=600,left=600,top=50');
+}
