@@ -24,8 +24,8 @@ public class MyProjectController {
 
     @PostMapping("/auth/myproject")
     public ResponseEntity<?> myproject_post(@RequestBody MyProjectDTO_In.postDTO postDTO_In){
-        myProjectService.main_post(postDTO_In);
+        MyProjectDTO_Out.PostDTO postDTO_Out = myProjectService.main_post(postDTO_In);
 
-        return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
+        return ResponseEntity.ok().body(new ResponseDTO<>().data(postDTO_Out));
     }
 }
