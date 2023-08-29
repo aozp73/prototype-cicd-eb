@@ -42,7 +42,10 @@ public class DatabaseInitializer implements CommandLineRunner {
             MyProjectRoleCode myProjectRoleCode = MyProjectRoleCode.builder()
                 .projectRole(role)
                 .build();
-            myProjectRoleCodeRepository.save(myProjectRoleCode);
+            Optional<MyProjectRoleCode> myProjectRoleCodeCheck = myProjectRoleCodeRepository.findByProjectRole(role);
+            if (!myProjectRoleCodeCheck.isPresent()) {
+                myProjectRoleCodeRepository.save(myProjectRoleCode);
+            }
         }
     }   
 }
