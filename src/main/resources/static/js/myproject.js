@@ -202,19 +202,62 @@ function postProject() {
     });
 }
 
-function updateProject() {
-    let formData = new FormData(document.getElementById('updateForm'));
-    for (let [key, value] of formData.entries()) {
-        console.log(key, value);
-    }
-    console.log($('#selectedRoles').val())
+function getUpdateForm(event){
+    event.stopPropagation();
 
-    // ☆★☆★ Ajax-PUT 통신
+    const buttonClicked = event.target;
+    const cardElement = buttonClicked.closest('.card');
+    const cardId = cardElement.getAttribute('data-card-id');
+    const parentDiv = cardElement.parentElement;
 
-    // 폼 초기화
-    resetModalForm();
-    // 모달 닫기
-    $('#projectUpdateForm').modal('hide');
+    // 해당 카드 정보 가져오기
+    const projectName = document.getElementById(`projectName-${cardId}`).textContent; 
+    const readmeUrl = parentDiv.getAttribute('data-readme-url');
+    const githubUrl = parentDiv.getAttribute('data-github-url');
+    const members = cardElement.getAttribute('data-members');
+    const startDate = parentDiv.getAttribute('data-start-date');
+    const endDate = parentDiv.getAttribute('data-end-date');
+    
+    const individualPerformanceURL = parentDiv.getAttribute('data-individual-performance-img');
+    const projectImgURL = document.getElementById(`projectImg-${cardId}`).src;
+    
+    // 가져온 정보로 모달의 input 필드에 저장
+    document.getElementById('updateProjectName').value = projectName;
+    document.getElementById('updateMembers').value = members;
+    document.getElementById('updateStartDate').value = startDate;
+    document.getElementById('updateEndDate').value = endDate;
+    document.getElementById('updateReadmeUrl').value = readmeUrl;
+    document.getElementById('updateGithubUrl').value = githubUrl;
+    document.getElementById('updateFeatureImagePreview').value = individualPerformanceURL;
+    
+    
+    // 버튼 활성화
+    const roleCodes = parentDiv.getAttribute('data-role-codes');
+    const roleArray = roleCodes.replace(/[\[\]]/g, '').split(',').map(role => role.trim());
+    const roleButtons = document.querySelectorAll('.role-btn');
+    roleButtons.forEach(button => {
+      const role = button.getAttribute('data-role');
+      if (roleArray.includes(role)) {
+        button.classList.remove('btn-outline-primary');
+        button.classList.add('btn-primary');
+      } else {
+        button.classList.remove('btn-primary');
+        button.classList.add('btn-outline-primary');
+      }
+    });
+
+    // 이미지 미리보기
+    const imgPreview = document.getElementById('updateImagePreview');
+    imgPreview.src = projectImgURL;
+    imgPreview.style.display = 'block';
+
+    const featureImagePreview = document.getElementById('updateFeatureImagePreview');
+    featureImagePreview.src = individualPerformanceURL;
+    featureImagePreview.style.display = 'block';
+    
+    // 모달창 생성
+    var modal = new bootstrap.Modal(document.getElementById("projectUpdateForm"));
+    modal.show(); 
 }
 
 function deleteProject(event, id) {

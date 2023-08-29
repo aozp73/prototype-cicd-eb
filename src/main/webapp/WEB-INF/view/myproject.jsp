@@ -12,17 +12,21 @@
                     <div class="col-lg-3 col-md-6 mb-4" id="project-${project.id}" 
                                                         data-readme-url="${project.readmeUrl}" 
                                                         data-github-url="${project.githubUrl}"
-                                                        data-individual-performance-img="${project.individualPerformanceImageNameURL}">
+                                                        data-individual-performance-img="${project.individualPerformanceImageNameURL}"
+                                                        data-start-date="${project.startDate}"
+                                                        data-end-date="${project.endDate}"
+                                                        data-role-codes="${project.roleCodes}">
+
                     <div class="card card-hover-effect" data-card-id="${project.id}" data-members="${project.member}" style="height: 380px; overflow: hidden;">
                         <div class="card-body px-4">
                             <div>
                                 <div class="text-center mt-2">
-                                    <span class="project-name" style="font-size: 1.6em;">${project.projectName}</span>
+                                    <span id="projectName-${project.id}" class="project-name" style="font-size: 1.6em;">${project.projectName}</span>
                                 </div>
                             </div>
 
                             <div class="mt-2 mb-3 p-2" style="max-height: 33%; height: 243px; overflow: hidden;">
-                                <img src="${project.projectImgURL}" alt="프로젝트 이미지" style="width: 100%; height: 100%; object-fit: fill; ">
+                                <img id="projectImg-${project.id}" src="${project.projectImgURL}" alt="프로젝트 이미지" style="width: 100%; height: 100%; object-fit: fill; ">
                             </div>
 
                             <div class="card-inner" style="height: 127px;">
@@ -79,7 +83,7 @@
                 </div>
                 <div class="ms-4 mb-4">
                     <div class="mb-1">
-                        <strong>2. README (시연영상, 아키텍처, 느낀점 등)</strong>
+                        <strong>2. README (기술스택, 시연영상, 느낀점 등)</strong>
                     </div>
                     <div class="ms-3">
                         <p id="projectModalREADMELink"></p>
@@ -114,23 +118,23 @@
                 <div class="modal-body">
                     <form id="addForm">
                         <div class="form-group mb-3">
-                            <label class="mb-1" for="projectName">프로젝트명</label>
+                            <label class="mb-2" for="projectName">프로젝트명</label>
                             <input type="text" class="form-control" id="addProjectName" name="projectName" placeholder="프로젝트명을 입력하세요">
                         </div>
                         <div class="form-group mb-3">
-                            <label class="mb-1" for="member">인원</label>
+                            <label class="mb-2" for="member">인원</label>
                             <input type="number" class="form-control" id="addMember" name="member" placeholder="인원 수를 입력하세요">
                         </div>
                         <div class="form-group mb-3">
-                            <label class="mb-1" for="startDate">시작날짜</label>
+                            <label class="mb-2" for="startDate">시작날짜</label>
                             <input type="date" class="form-control" id="addStartDate" name="startDate" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
                         </div>
                         <div class="form-group mb-3">
-                            <label class="mb-1" for="endDate">종료날짜</label>
+                            <label class="mb-2" for="endDate">종료날짜</label>
                             <input type="date" class="form-control" id="addEndDate" name="endDate" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
                         </div>
                         <div class="form-group mb-3">
-                            <label class="mb-1" for="role">참여역할</label>
+                            <label class="mb-2" for="role">참여역할</label>
                             <div>
                                 <button type="button" class="btn btn-outline-primary btn-sm role-btn" data-role="BackEnd">BackEnd</button>
                                 <button type="button" class="btn btn-outline-primary btn-sm role-btn" data-role="FrontEnd">FrontEnd</button>
@@ -139,20 +143,20 @@
                             <input type="hidden" id="selectedRoles" name="selectedRoles">
                         </div>
                         <div class="form-group mb-3">
-                            <label class="mb-1" for="readmeUrl">README 주소</label>
+                            <label class="mb-2" for="readmeUrl">README 주소</label>
                             <input type="url" class="form-control" id="addReadmeUrl" name="readmeUrl" placeholder="README 주소를 입력하세요">
                         </div>
                         <div class="form-group mb-4">
-                            <label class="mb-1" for="githubUrl">GitHub 주소</label>
+                            <label class="mb-2" for="githubUrl">GitHub 주소</label>
                             <input type="url" class="form-control" id="addGithubUrl" name="githubUrl" placeholder="GitHub 주소를 입력하세요">
                         </div>
-                        <div class="form-group mb-5">
-                            <label for="image">사진</label>
+                        <div class="form-group mb-4">
+                            <label class="mb-3" for="image" style="display: block; font-weight: 550;">프로젝트 사진</label>
                             <input type="file" class="form-control-file mb-3" id="postProjectImage" name="postProjectImage" onchange="previewImage(this, 'addImagePreview')">
                             <img id="addImagePreview" src="#" alt="Image Preview" style="width: 100%; height: auto; display: none;">
                         </div>
                         <div class="form-group">
-                            <label for="featureImage">담당 기능</label>
+                            <label class="mb-3"  for="featureImage" style="display: block; font-weight: 550;">담당 기능</label>
                             <input type="file" class="form-control-file mb-3" id="postIndividualPerformanceImage" name="postIndividualPerformanceImage" onchange="previewImage(this, 'addFeatureImagePreview')">
                             <img id="addFeatureImagePreview" src="#" alt="Feature Image Preview" style="width: 100%; height: auto; display: none;">
                         </div>
@@ -179,23 +183,23 @@
                 <div class="modal-body">
                     <form id="updateForm">
                         <div class="form-group mb-3">
-                            <label for="projectName">프로젝트명</label>
+                            <label class="mb-2" for="projectName">프로젝트명</label>
                             <input type="text" class="form-control" id="updateProjectName" name="projectName">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="members">인원</label>
+                            <label class="mb-2" for="members">인원</label>
                             <input type="number" class="form-control" id="updateMembers" name="members">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="startDate">시작날짜</label>
+                            <label class="mb-2" for="startDate">시작날짜</label>
                             <input type="date" class="form-control" id="updateStartDate" name="startDate" pattern="\d{4}-\d{2}-\d{2}" >
                         </div>
                         <div class="form-group mb-3">
-                            <label for="endDate">종료날짜</label>
+                            <label class="mb-2" for="endDate">종료날짜</label>
                             <input type="date" class="form-control" id="updateEndDate" name="endDate" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
                         </div>
                         <div class="form-group mb-3">
-                            <label class="mb-1" for="role">참여역할</label>
+                            <label class="mb-2" for="role">참여역할</label>
                             <div>
                                 <button type="button" class="btn btn-outline-primary btn-sm role-btn" data-role="BackEnd">BackEnd</button>
                                 <button type="button" class="btn btn-outline-primary btn-sm role-btn" data-role="FrontEnd">FrontEnd</button>
@@ -204,21 +208,21 @@
                             <input type="hidden" id="selectedRoles" name="selectedRoles">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="readmeUrl">README 주소</label>
+                            <label class="mb-2" for="readmeUrl">README 주소</label>
                             <input type="url" class="form-control" id="updateReadmeUrl" name="readmeUrl">
                         </div>
                         <div class="form-group mb-4">
-                            <label for="githubUrl">GitHub 주소</label>
+                            <label class="mb-2"  for="githubUrl">GitHub 주소</label>
                             <input type="url" class="form-control" id="updateGithubUrl" name="githubUrl">
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="image">사진</label>
-                            <input type="file" class="form-control-file mb-3" id="updateImage" name="image" onchange="previewImage(this, 'updateImagePreview')">
+                        <div class="form-group mb-4">
+                            <label class="mb-3" for="image" style="display: block; font-weight: 550;">프로젝트 사진</label>
+                            <input type="file" class="form-control-file mb-3" id="updateProjectImg" name="image" onchange="previewImage(this, 'updateImagePreview')">
                             <img id="updateImagePreview" src="#" alt="Image Preview" style="width: 100%; height: auto; display: none;">
                         </div>
                         <div class="form-group">
-                            <label for="featureImage">담당 기능</label>
-                            <input type="file" class="form-control-file mb-3" id="updateFeatureImage" name="featureImage" onchange="previewImage(this, 'updateFeatureImagePreview')">
+                            <label class="mb-3"  for="featureImage" style="display: block; font-weight: 550;">담당 기능</label>
+                            <input type="file" class="form-control-file mb-3" id="updateIndividualPerformanceImg" name="featureImage" onchange="previewImage(this, 'updateFeatureImagePreview')">
                             <img id="updateFeatureImagePreview" src="#" alt="Feature Image Preview" style="width: 100%; height: auto; display: none;">
                         </div>
                     </form>
