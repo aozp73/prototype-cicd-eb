@@ -122,7 +122,7 @@ public class MyProjectRoleRepositoryTest {
 
     private void setUp_project() {
         MyProject myProject1 = MyProject.builder()
-            .title("Project Title 1")
+            .projectName("Project Title 1")
             .member(3)
             .startDate(LocalDate.now())
             .endDate(LocalDate.now().plusDays(10))
@@ -131,7 +131,7 @@ public class MyProjectRoleRepositoryTest {
             .build();
             
         MyProject myProject2 = MyProject.builder()
-            .title("Project Title 2")
+            .projectName("Project Title 2")
             .member(1)
             .startDate(LocalDate.now())
             .endDate(LocalDate.now().plusDays(20))

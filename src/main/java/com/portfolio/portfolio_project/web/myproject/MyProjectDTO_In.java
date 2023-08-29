@@ -27,7 +27,7 @@ public class MyProjectDTO_In {
         // 수행 역할 정보 (BackEnd,FrontEnd,DevOps 형식)
         private String selectedRoles;
 
-        // url
+        // readme, github 주소
         private String readmeUrl;
         private String githubUrl;
 
@@ -42,12 +42,12 @@ public class MyProjectDTO_In {
         public MyProject toEntity(List<String> projectImg_nameAndUrl, List<String> individualPerformanceImg_nameAndUrl) {
 
             return MyProject.builder()
-                    .title(this.projectName)
+                    .projectName(this.projectName)
                     .member(this.member)
                     .startDate(LocalDate.parse(this.startDate))
                     .endDate(LocalDate.parse(this.endDate))
-                    .readmeLink(this.readmeUrl)
-                    .githubLink(this.githubUrl)
+                    .readmeUrl(this.readmeUrl)
+                    .githubUrl(this.githubUrl)
                     .projectImgName(projectImg_nameAndUrl.get(0))
                     .projectImgUrl(projectImg_nameAndUrl.get(1))
                     .individualPerformanceImgName(individualPerformanceImg_nameAndUrl.get(0))

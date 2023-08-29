@@ -1,10 +1,13 @@
 package com.portfolio.portfolio_project.core.util.myproject_utils;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
 import com.portfolio.portfolio_project.core.exception.Exception400;
+import com.portfolio.portfolio_project.core.exception.Exception500;
 import com.portfolio.portfolio_project.domain.jpa.myproject.enums.ProjectRole;
 import com.portfolio.portfolio_project.domain.jpa.myproject.my_project.MyProject;
 import com.portfolio.portfolio_project.domain.jpa.myproject.my_project_role.MyProjectRole;
@@ -21,8 +24,8 @@ public class MyProjectUtils {
     private final MyProjectRoleCodeRepository myProjectRoleCodeRepository;
 
 
-    public void saveRolesForProject(String roles, MyProject myProject) {
-
+    public List<MyProjectRole> saveRolesForProject(String roles, MyProject myProject) {
+        List<MyProjectRole> myProjectRoles = new ArrayList<>();
         String[] parsedRoles = roles.split(",");
         
         for(String role : parsedRoles) {
@@ -37,8 +40,14 @@ public class MyProjectUtils {
                                                         .createdAt(LocalDateTime.now())
                                                         .updatedAt(LocalDateTime.now())
                                                         .build();
-            myProjectRoleRepository.save(myProjectRole);
-    
+            try {
+                myProjectRoleRepository.save(myProjectRole);
+            } catch (Exception e) {
+                throw new Exception500("ProjectRole DB 저장에 실패하였습니다.");
+            }
+            myProjectRoles.add(myProjectRole);
         }
+
+        return myProjectRoles;
     }
 }
