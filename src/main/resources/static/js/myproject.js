@@ -184,7 +184,7 @@ $(document).ready(function() {
         const membersCount = card.data('members');
         const iconsForMembers = getMembersIcons(membersCount);
 
-        card.find('.member-icons').text(iconsForMembers);
+        card.find('.member-icons').html("&nbsp;" + iconsForMembers);
     });
 });
 // ~ 이모지

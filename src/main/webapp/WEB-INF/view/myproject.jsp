@@ -24,13 +24,13 @@
                             <div class="card-inner" style="height: 127px;">
                                 <div class="ps-3">
                                     <div class="mt-3 mb-2">
-                                        <span class="member-icons" style="font-size: 1.3em;">&nbsp</span>
+                                        <span class="member-icons" style="font-size: 1.3em;"></span>
                                     </div>
                                     <div class="mb-2 ps-1">
                                         &nbsp2022-00-00 ~ 2022-00-00 
                                     </div>
-                                    <div class="mb-2 ps-1">
-                                        &nbspBackEnd & FrontEnd
+                                    <div class="mb-2 ps-1" style="font-size: 15px">
+                                        &nbspBackEnd&nbsp/&nbspFrontEnd&nbsp/&nbspDevOps
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                             <div class="card-inner" style="height: 127px;">
                                 <div class="ps-3">
                                     <div class="mt-3 mb-2">
-                                        <span class="member-icons" style="font-size: 1.3em;">&nbsp</span>
+                                        <span class="member-icons" style="font-size: 1.3em;"></span>
                                     </div>
                                     <div class="mb-2 ps-1">
                                         &nbsp2022-00-00 ~ 2022-00-00 
@@ -171,7 +171,7 @@
                             <div class="card-inner" style="height: 127px;">
                                 <div class="ps-3">
                                     <div class="mt-3 mb-2">
-                                        <span class="member-icons" style="font-size: 1.3em;">&nbsp</span>
+                                        <span class="member-icons" style="font-size: 1.3em;"></span>
                                     </div>
                                     <div class="mb-2 ps-1">
                                         &nbsp2022-00-00 ~ 2022-00-00 
@@ -207,7 +207,7 @@
                             <div class="card-inner" style="height: 127px;">
                                 <div class="ps-3">
                                     <div class="mt-3 mb-2">
-                                        <span style="font-size: 1.3em;">&nbsp🧔</span>
+                                        <span class="member-icons" style="font-size: 1.3em;"></span>
                                     </div>
                                     <div class="mb-2 ps-1">
                                         &nbsp2022-00-00 ~ 2022-00-00 
@@ -233,7 +233,7 @@
 
     <!-- 상세보기 Modal -->
     <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered" style ="max-width: 38%;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="projectModalLabel">Project Title</h5>
@@ -243,9 +243,18 @@
                 <img id="projectModalImage" src="" alt="Project Image" style="width: 100%; height: auto;">
             </div>
             <div class="ms-4">
+                <div>
+                    <div class="mb-1">
+                        <strong>1. 담당기능</strong>
+                    </div>
+                    <div class="ms-3">
+                        <p id="projectModalResponsibilities">
+                        </p>
+                    </div>
+                </div>
                 <div class="mb-4">
                     <div class="mb-1">
-                        <strong>1. README (아키텍처, 느낀점, 시연영상 등)</strong>
+                        <strong>2. README (아키텍처, 느낀점, 시연영상 등)</strong>
                     </div>
                     <div class="ms-3">
                         <p id="projectModalREADMELink"><a href="" target="_blank" style="text-decoration: none;">README 링크</a></p>
@@ -253,19 +262,10 @@
                 </div>
                 <div class="mb-4">
                     <div class="mb-1">
-                        <strong>2. Github 소스코드</strong>
+                        <strong>3. Github 소스코드</strong>
                     </div>
                     <div class="ms-3">
                         <p id="projectModalGithubLink"><a href="" target="_blank" style="text-decoration: none;">Github 링크</a></p>
-                    </div>
-                </div>
-                <div>
-                    <div class="mb-1">
-                        <strong>3. 담당기능</strong>
-                    </div>
-                    <div class="ms-3">
-                        <p id="projectModalResponsibilities">
-                        </p>
                     </div>
                 </div>
             </div>
@@ -280,7 +280,7 @@
 
     <!-- 등록 Form Modal -->
     <div class="modal fade" id="projectAddForm" tabindex="-1" role="dialog" aria-labelledby="projectModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style ="max-width: 38%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="projectModalLabel">프로젝트 정보 입력</h5>
@@ -290,19 +290,19 @@
                 <div class="modal-body">
                     <form id="addForm">
                         <div class="form-group mb-3">
-                            <label for="projectName">프로젝트명</label>
+                            <label class="mb-1" for="projectName">프로젝트명</label>
                             <input type="text" class="form-control" id="addProjectName" name="projectName" placeholder="프로젝트명을 입력하세요">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="members">인원</label>
+                            <label class="mb-1" for="members">인원</label>
                             <input type="number" class="form-control" id="addMembers" name="members" placeholder="인원 수를 입력하세요">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="startDate">시작날짜</label>
+                            <label class="mb-1" for="startDate">시작날짜</label>
                             <input type="date" class="form-control" id="addStartDate" name="startDate" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="endDate">종료날짜</label>
+                            <label class="mb-1" for="endDate">종료날짜</label>
                             <input type="date" class="form-control" id="addEndDate" name="endDate" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
                         </div>
                         <div class="form-group mb-3">
@@ -315,14 +315,14 @@
                             <input type="hidden" id="selectedRoles" name="selectedRoles">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="readmeUrl">README 주소</label>
+                            <label class="mb-1" for="readmeUrl">README 주소</label>
                             <input type="url" class="form-control" id="addReadmeUrl" name="readmeUrl" placeholder="README 주소를 입력하세요">
                         </div>
                         <div class="form-group mb-4">
-                            <label for="githubUrl">GitHub 주소</label>
+                            <label class="mb-1" for="githubUrl">GitHub 주소</label>
                             <input type="url" class="form-control" id="addGithubUrl" name="githubUrl" placeholder="GitHub 주소를 입력하세요">
                         </div>
-                        <div class="form-group mb-3">
+                        <div class="form-group mb-5">
                             <label for="image">사진</label>
                             <input type="file" class="form-control-file mb-3" id="image" name="image" onchange="previewImage(this, 'addImagePreview')">
                             <img id="addImagePreview" src="#" alt="Image Preview" style="width: 100%; height: auto; display: none;">
