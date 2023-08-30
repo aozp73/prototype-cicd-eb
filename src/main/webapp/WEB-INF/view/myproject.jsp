@@ -187,7 +187,7 @@
                             <input type="text" class="form-control" id="updateProjectName" name="projectName">
                         </div>
                         <div class="form-group mb-3">
-                            <label class="mb-2" for="members">인원</label>
+                            <label class="mb-2" for="members">참여인원</label>
                             <input type="number" class="form-control" id="updateMembers" name="members">
                         </div>
                         <div class="form-group mb-3">
@@ -201,9 +201,9 @@
                         <div class="form-group mb-3">
                             <label class="mb-2" for="role">참여역할</label>
                             <div>
-                                <button type="button" class="btn btn-outline-primary btn-sm role-btn" data-role="BackEnd">BackEnd</button>
-                                <button type="button" class="btn btn-outline-primary btn-sm role-btn" data-role="FrontEnd">FrontEnd</button>
-                                <button type="button" class="btn btn-outline-primary btn-sm role-btn" data-role="DevOps">DevOps</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm role-btn update-role" data-role="BackEnd">BackEnd</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm role-btn update-role" data-role="FrontEnd">FrontEnd</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm role-btn update-role" data-role="DevOps">DevOps</button>
                             </div>
                             <input type="hidden" id="selectedRoles" name="selectedRoles">
                         </div>

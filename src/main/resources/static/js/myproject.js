@@ -260,6 +260,30 @@ function getUpdateForm(event){
     modal.show(); 
 }
 
+function updateProject() {
+    const jwtToken = localStorage.getItem('jwtToken'); 
+
+    const payload = createPayload();
+    console.log(payload)
+    $.ajax({
+        url: '/auth/myproject',
+        type: 'PUT',
+        dataType: 'json',
+        contentType: 'application/json',
+        headers: {
+            'Authorization': jwtToken 
+        },
+        data: JSON.stringify(payload),
+
+        success: function(response, textStatus, jqXHR) {
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+        }
+    });
+}
+
 function deleteProject(event, id) {
     // id값을 Server에서 보내서 DB 삭제 후 reload or 부분 삭제
     event.stopPropagation();
@@ -351,4 +375,65 @@ $(document).ready(function() {
 // 상세정보 모달창 url, 이미지 새창 열기 (★☆★☆★☆코드 정리할 때 상세정보 기능끼리 묶어서 정리)
 function openImageInNewWindow(src) {
     window.open(src, 'Image', 'width=800,height=600,left=600,top=50');
+}
+
+// 수정하기 버튼 클릭 시 데이터 가져와서 Payload 생성 
+function createPayload() {
+    const projectName = document.getElementById('updateProjectName').value;
+    const members = document.getElementById('updateMembers').value;
+    const startDate = document.getElementById('updateStartDate').value;
+    const endDate = document.getElementById('updateEndDate').value;
+    const readmeUrl = document.getElementById('updateReadmeUrl').value;
+    const githubUrl = document.getElementById('updateGithubUrl').value;
+
+    const roleButtons = document.querySelectorAll('.btn-primary.update-role');
+    let selectedRoles = [];
+    roleButtons.forEach(button => {
+        selectedRoles.push(button.getAttribute('data-role'));
+    });
+
+    let projectImageDetails = getImageDetails('updateProjectImg', 'updateImagePreview');
+    let featureImageDetails = getImageDetails('updateIndividualPerformanceImg', 'updateFeatureImagePreview');
+
+    let payload = {
+        projectName: projectName,
+        members: members,
+        startDate: startDate,
+        endDate: endDate,
+        readmeUrl: readmeUrl,
+        githubUrl: githubUrl,
+        selectedRoles: selectedRoles,
+
+        projectImageDetails : projectImageDetails,
+        featureImageDetails : featureImageDetails
+    };
+    return payload;
+}
+
+function getImageDetails(inputId, imageId) {
+    let input = document.getElementById(inputId);
+    let file = input.files[0];
+    let imageName = '';
+    let contentType = '';
+    let imgChangeCheck = false;
+
+    let imageElement = document.getElementById(imageId);
+    let imageSrc = imageElement.src;
+
+    let isBase64Image = imageSrc.startsWith('data:image/');
+
+    if (isBase64Image) {
+        imageName = file.name;
+        contentType = file.type;
+        imgChangeCheck = true;
+    } else {
+        imageSrc = '';
+    }
+
+    return {
+        imageSrc,
+        imageName,
+        contentType,
+        imgChangeCheck
+    };
 }
