@@ -17,7 +17,7 @@ public class MyProjectDTO_In {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class postDTO {
+    public static class PostDTO {
         // 프로젝트명, 인원, 날짜 정보
         private String projectName;
         private Integer member;
@@ -62,16 +62,18 @@ public class MyProjectDTO_In {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class putDTO {
+    public static class PutDTO {
+        private Long projectId;
         private String projectName;
-        private String members; 
+        private Integer member; 
         private String startDate;
         private String endDate;
         private String readmeUrl;
         private String githubUrl;
+
         private List<String> selectedRoles; 
         private Boolean hasRolesChanged;
-        
+
         private ImageDetails projectImageDetails;
         private ImageDetails featureImageDetails;
 
@@ -84,6 +86,31 @@ public class MyProjectDTO_In {
             private String imageName;
             private String contentType;
             private Boolean imgChangeCheck;
+        }
+
+        public MyProject toEntity(MyProject myProjectPS, List<String> projectImg_nameAndUrl, List<String> individualPerformanceImg_nameAndUrl) {
+    
+            // 기본 정보 업데이트
+            myProjectPS.setProjectName(this.projectName);
+            myProjectPS.setMember(this.member);
+            myProjectPS.setStartDate(LocalDate.parse(this.startDate));
+            myProjectPS.setEndDate(LocalDate.parse(this.endDate));
+            myProjectPS.setReadmeUrl(this.readmeUrl);
+            myProjectPS.setGithubUrl(this.githubUrl);
+            myProjectPS.setUpdatedAt(LocalDateTime.now());
+        
+            // 이미지 변경 체크
+            if (projectImageDetails.getImgChangeCheck()) {
+                myProjectPS.setProjectImgName(projectImg_nameAndUrl.get(0));
+                myProjectPS.setProjectImgUrl(projectImg_nameAndUrl.get(1));
+            }
+            
+            if (featureImageDetails.getImgChangeCheck()) {
+                myProjectPS.setIndividualPerformanceImgName(individualPerformanceImg_nameAndUrl.get(0));
+                myProjectPS.setIndividualPerformanceImgUrl(individualPerformanceImg_nameAndUrl.get(1));
+            }
+        
+            return myProjectPS;
         }
     }
 }

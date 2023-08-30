@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.portfolio.portfolio_project.core.exception.Exception400;
 import com.portfolio.portfolio_project.core.exception.Exception500;
 import com.portfolio.portfolio_project.core.util.myproject_utils.MyProjectUtils;
 import com.portfolio.portfolio_project.core.util.s3_utils.S3Utils;
@@ -47,7 +48,7 @@ public class MyProjectService {
 
     // POST
     @Transactional
-    public MyProjectDTO_Out.PostDTO myProject_post(MyProjectDTO_In.postDTO postDTO_In){
+    public MyProjectDTO_Out.PostDTO myProject_post(MyProjectDTO_In.PostDTO postDTO_In){
         // 프로젝트 이미지, 개인수행 이미지 S3 업로드
         List<String> projectImg_nameAndUrl = s3Utils.uploadImageToS3(postDTO_In.getProjectImgBase64(), 
                                                                      postDTO_In.getProjectImageName(), 
@@ -70,5 +71,16 @@ public class MyProjectService {
         List<MyProjectRole> myProjectRoles = myProjectUtils.saveRolesForProject(postDTO_In.getSelectedRoles(), myProject);
 
         return MyProjectDTO_Out.PostDTO.fromEntity(myProject, myProjectRoles);
+    }
+
+    public String myProject_put(MyProjectDTO_In.PutDTO putDTO_In) {
+        
+        MyProject myProjectPS = myProjectRepository.findById(putDTO_In.getProjectId()).orElseThrow(() ->{
+            throw new Exception400("존재하지 않는 게시물 입니다.");
+        });
+
+
+        
+        return "";
     }
 }

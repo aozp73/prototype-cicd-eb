@@ -165,6 +165,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                     <button type="button" class="btn btn-primary" onclick="postProject()">등록하기</button>
+                    <input type="hidden" id="updateHiddenId" name="updateHiddenId" value=0>
                 </div>
             </div>
         </div>

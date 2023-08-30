@@ -212,7 +212,7 @@ function getUpdateForm(event){
     const cardElement = buttonClicked.closest('.card');
     const cardId = cardElement.getAttribute('data-card-id');
     const parentDiv = cardElement.parentElement;
-
+    console.log(cardId)
     // 해당 카드 정보 가져오기
     const projectName = document.getElementById(`projectName-${cardId}`).textContent; 
     const readmeUrl = parentDiv.getAttribute('data-readme-url');
@@ -232,7 +232,7 @@ function getUpdateForm(event){
     document.getElementById('updateReadmeUrl').value = readmeUrl;
     document.getElementById('updateGithubUrl').value = githubUrl;
     document.getElementById('updateFeatureImagePreview').value = individualPerformanceURL;
-    
+    document.getElementById('updateHiddenId').value = cardId;
     
     // 버튼 활성화
     const roleCodes = parentDiv.getAttribute('data-role-codes');
@@ -249,7 +249,7 @@ function getUpdateForm(event){
         button.classList.add('btn-outline-primary');
       }
     });
-    console.log(initialSelectedRoles)
+
     // 이미지 미리보기
     const imgPreview = document.getElementById('updateImagePreview');
     imgPreview.src = projectImgURL;
@@ -267,17 +267,13 @@ function getUpdateForm(event){
 function updateProject() {
     const jwtToken = localStorage.getItem('jwtToken'); 
     let payload = createPayload();
-    console.log("aa : " + initialSelectedRoles)
-    console.log("bb : " + payload.selectedRoles)
     let hasRolesChanged = false;
 
     if (!arraysEqual(initialSelectedRoles, payload.selectedRoles)) {
         hasRolesChanged = true;
     }
-
     payload["hasRolesChanged"] = hasRolesChanged;
     console.log(payload)
-    
     $.ajax({
         url: '/auth/myproject',
         type: 'PUT',
@@ -394,13 +390,13 @@ function openImageInNewWindow(src) {
 
 // 수정하기 버튼 클릭 시 데이터 가져와서 Payload 생성 
 function createPayload() {
+    const projectId = document.getElementById('updateHiddenId').value
     const projectName = document.getElementById('updateProjectName').value;
-    const members = document.getElementById('updateMembers').value;
+    const member = document.getElementById('updateMembers').value;
     const startDate = document.getElementById('updateStartDate').value;
     const endDate = document.getElementById('updateEndDate').value;
     const readmeUrl = document.getElementById('updateReadmeUrl').value;
     const githubUrl = document.getElementById('updateGithubUrl').value;
-
     const roleButtons = document.querySelectorAll('.btn-primary.update-role-btn');
     let selectedRoles = [];
     roleButtons.forEach(button => {
@@ -411,8 +407,9 @@ function createPayload() {
     let featureImageDetails = getImageDetails('updateIndividualPerformanceImg', 'updateFeatureImagePreview');
 
     let payload = {
+        projectId: projectId,
         projectName: projectName,
-        members: members,
+        member: member,
         startDate: startDate,
         endDate: endDate,
         readmeUrl: readmeUrl,
@@ -455,7 +452,6 @@ function getImageDetails(inputId, imageId) {
 
 // 수정하기 Form에서 role 값이 달라졌는지 체크
 function arraysEqual(a, b) {
-    console.log("테스트 : " + a.length === b.length)
-    console.log("테스트 : " + a.every((val, index) => val === b[index]))
+
     return a.length === b.length && a.every((val, index) => val === b[index]);
 }
