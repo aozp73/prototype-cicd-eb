@@ -2,16 +2,6 @@ let addCnt = 0
 let isEditMode = false;
 let sortables = [];
 
-// 스크롤 시 navbar 출렁이는 효과
-window.addEventListener('scroll', function() {
-    let navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) { 
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-});
-
 // hedaer.jsp의 편집모드 버튼 클릭 시, 호출되는 콜백 합수
 function toggleEditMode() {
     isEditMode = !isEditMode;

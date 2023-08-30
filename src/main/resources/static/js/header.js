@@ -1,3 +1,14 @@
+// 스크롤 시 navbar 출렁이는 효과
+window.addEventListener('scroll', function() {
+    let navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) { 
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
+
+
 function checkIfLoggedIn() {
     return localStorage.getItem('jwtToken') !== null;
 }

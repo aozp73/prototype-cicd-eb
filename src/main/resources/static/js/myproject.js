@@ -1,14 +1,5 @@
 let initialSelectedRoles = [];
 
-window.addEventListener('scroll', function() {
-    let navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) { 
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-});
-
 function toggleEditMode() {
     const controls = document.querySelectorAll('.edit-controls');
     controls.forEach(control => {
@@ -20,110 +11,59 @@ function toggleEditMode() {
     });
 }
 
-// 상세정보 ~
+// 프로젝트 상세정보 보기
 $('#main-container .row').on('click', '.card', function() {
     const cardId = $(this).data('card-id');
     showModalWithDetails(cardId);
 });
 
 function showModalWithDetails(cardId) {
-    // const cardElement = $(`div[data-card-id='${cardId}']`);
     const cardElement = $(`#project-${cardId} .card`);
     const parentElement = cardElement.closest(`#project-${cardId}`);
     
     // 상세보기 필요한 정보 가져오기
     const title = parentElement.find('span.project-name').text();
     const project_ImageSrc = parentElement.find('img').attr('src');
-    console.log(title)
     const performance_ImageSrc = parentElement.data('individual-performance-img');
     const readmeUrl = parentElement.data('readme-url');
     const githubUrl = parentElement.data('github-url'); 
     
-    // 모달에 정보를 랜더링합니다.
+    // 모달에 정보 랜더링
     document.getElementById("projectModalLabel").innerText = title;
     document.getElementById("projectModalImage").setAttribute("src", project_ImageSrc);
     document.getElementById("performanceModalImage").setAttribute("src", performance_ImageSrc);
     document.getElementById("projectModalREADMELink").innerHTML = `<a href="${readmeUrl}" target="_blank" style="text-decoration: none;">README 링크</a>`;
     document.getElementById("projectModalGithubLink").innerHTML = `<a href="${githubUrl}" target="_blank" style="text-decoration: none;">Github 링크</a>`;
 
-    // 모달을 띄웁니다.
+    // 모달을 띄우기
     var modal = new bootstrap.Modal(document.getElementById("projectModal"));
     modal.show();
 }
-// ~ 상세정보
 
-// 추후 삭제할 함수
-function getImageSrcByCardId(cardId) {
-    const cardElement = document.querySelector(`.card[data-card-id="${cardId}"]`);
-    if (cardElement) {
-        const imgElement = cardElement.querySelector('img');
-        if (imgElement) {
-            return imgElement.getAttribute('src');
-        }
-    }
-    return null;
-}
-
-// add, update Form ~
+// 등록하기 Modal Form
 function getAddForm(){
     var modal = new bootstrap.Modal(document.getElementById("projectAddForm"));
     modal.show(); 
 }
 
-function getUpdateForm(event){
+// 수정하기 Modal Form
+function getUpdateForm(event) {
     event.stopPropagation();
-    initialSelectedRoles = [];
+    initialSelectedRoles = []; // 서버에서 role이 변경되었는지 확인 후, 추가적인 DB 통신할지 결정하는데 활용
 
     const buttonClicked = event.target;
     const cardElement = buttonClicked.closest('.card');
     const cardId = cardElement.getAttribute('data-card-id');
     const parentDiv = cardElement.parentElement;
-
-    // 해당 카드 정보 가져오기
-    const projectName = document.getElementById(`projectName-${cardId}`).textContent; 
-    const readmeUrl = parentDiv.getAttribute('data-readme-url');
-    const githubUrl = parentDiv.getAttribute('data-github-url');
-    const members = cardElement.getAttribute('data-members');
-    const startDate = parentDiv.getAttribute('data-start-date');
-    const endDate = parentDiv.getAttribute('data-end-date');
-    
     const individualPerformanceURL = parentDiv.getAttribute('data-individual-performance-img');
     const projectImgURL = document.getElementById(`projectImg-${cardId}`).src;
-    
-    // 가져온 정보로 모달의 input 필드에 저장
-    document.getElementById('updateProjectName').value = projectName;
-    document.getElementById('updateMembers').value = members;
-    document.getElementById('updateStartDate').value = startDate;
-    document.getElementById('updateEndDate').value = endDate;
-    document.getElementById('updateReadmeUrl').value = readmeUrl;
-    document.getElementById('updateGithubUrl').value = githubUrl;
-    document.getElementById('updateFeatureImagePreview').value = individualPerformanceURL;
-    document.getElementById('updateHiddenId').value = cardId;
-    
-    // 버튼 활성화
-    const roleCodes = parentDiv.getAttribute('data-role-codes');
-    const roleArray = roleCodes.replace(/[\[\]]/g, '').split(',').map(role => role.trim());
-    const roleButtons = document.querySelectorAll('.update-role-btn');
-    roleButtons.forEach(button => {
-      const role = button.getAttribute('data-role');
-      if (roleArray.includes(role)) {
-        button.classList.remove('btn-outline-primary');
-        button.classList.add('btn-primary');
-        initialSelectedRoles.push(role);
-      } else {
-        button.classList.remove('btn-primary');
-        button.classList.add('btn-outline-primary');
-      }
-    });
 
+    // Card 정보 가져와서 Modal에 세팅하기
+    setModalFieldsFromCard(cardElement, parentDiv, cardId);
+    // 역할 버튼 설정
+    setRoleButtons(parentDiv);
     // 이미지 미리보기
-    const imgPreview = document.getElementById('updateImagePreview');
-    imgPreview.src = projectImgURL;
-    imgPreview.style.display = 'block';
-
-    const featureImagePreview = document.getElementById('updateFeatureImagePreview');
-    featureImagePreview.src = individualPerformanceURL;
-    featureImagePreview.style.display = 'block';
+    setImagePreviews(projectImgURL, individualPerformanceURL)
     
     // 모달창 생성
     var modal = new bootstrap.Modal(document.getElementById("projectUpdateForm"));
@@ -131,38 +71,19 @@ function getUpdateForm(event){
 }
 
 
-// add, update, delete ~
+// POST (서버 통신)
 function postProject() {
     const jwtToken = localStorage.getItem('jwtToken'); 
 
-    // 입력 값 (프로젝트명 / 인원 / 시작날짜 / 종료날짜 / 참여역할 / README 주소 / GitHub주소)
-    let formData = new FormData(document.getElementById('addForm'));
-    formData.delete("postProjectImage");
-    formData.delete("postIndividualPerformanceImage");
-
-    // 프로젝트 이미지, 개인 수행 각 Base64 문자열 저장 
-    let imageElement = document.getElementById('addImagePreview');
-    let projectImgBase64 = imageElement.src;
-    let featureImageElement = document.getElementById('addFeatureImagePreview');
-    let individualPerformanceBase64 = featureImageElement.src;
-
-    // 이미지 파일 이름과 타입 저장 (S3 전송에 사용)
-    let projectImage_Input = document.getElementById('postProjectImage');
-    let individualPerformanceImage_Input = document.getElementById('postIndividualPerformanceImage');
-
-    let projectImageName = '';
-    let projectImageType = '';
-    let individualPerformanceImageName = '';
-    let individualPerformanceImageType = '';
-
-    if (projectImage_Input.files && projectImage_Input.files[0]) {
-        projectImageName = projectImage_Input.files[0].name;
-        projectImageType = projectImage_Input.files[0].type;
-    }
-    if (individualPerformanceImage_Input.files && individualPerformanceImage_Input.files[0]) {
-        individualPerformanceImageName = individualPerformanceImage_Input.files[0].name;
-        individualPerformanceImageType = individualPerformanceImage_Input.files[0].type;
-    }
+    const {
+        formData,
+        projectImgBase64,
+        individualPerformanceBase64,
+        projectImageName,
+        projectImageType,
+        individualPerformanceImageName,
+        individualPerformanceImageType
+    } = getImageFormData();
 
     // 이미지 파일인지 체크 후, formData에 Base64 / 이미지 이름 / 이미지 타입 추가 저장
     if (projectImgBase64.startsWith('data:image/') && individualPerformanceBase64.startsWith('data:image/')) {
@@ -177,9 +98,6 @@ function postProject() {
         return
     }
     
-    for (let [key, value] of formData.entries()) {
-        console.log(key, value);
-    }
     let data = {};
     formData.forEach((value, key) => {data[key] = value});
 
@@ -203,7 +121,6 @@ function postProject() {
             const membersCount = newCard.data('members');
             const iconsForMembers = getMembersIcons(membersCount);
             newCard.find('.member-icons').html("&nbsp;" + iconsForMembers);
-
         },
         error: function(error) {
             alert(error.responseJSON.data);
@@ -211,6 +128,7 @@ function postProject() {
     });
 }
 
+// PUT (서버 통신)
 function updateProject() {
     const jwtToken = localStorage.getItem('jwtToken'); 
     let payload = createPayload();
@@ -250,8 +168,7 @@ function updateProject() {
     });
 }
 
-
-
+// DELETE (서버 통신)
 function deleteProject(event, pk) {
     event.stopPropagation();
 
@@ -277,9 +194,13 @@ function deleteProject(event, pk) {
 
 
 }
-// ~ add, update, delete
 
-// 이미지 미리보기 ~
+
+
+// ======= 내부 함수 =========================================================================
+
+// 1. 등록하기 관련 내부 함수
+// 수정하기, 등록하기 - modal창의 input 태그에서 onchage() 이벤트에 활용 (이미지 미리보기)
 function previewImage(input, previewElementId) {
     const file = input.files[0];
     if (file) {
@@ -292,143 +213,18 @@ function previewImage(input, previewElementId) {
         reader.readAsDataURL(file);
     }
 }
-// ~ 이미지 미리보기
 
-// 참여역할 버튼 ~
-$(document).ready(function() {
-    $('.role-btn').click(function() {
-        var $this = $(this);
-        if ($this.hasClass('btn-outline-primary')) {
-            $this.removeClass('btn-outline-primary').addClass('btn-primary');
-        } else {
-            $this.removeClass('btn-primary').addClass('btn-outline-primary');
-        }
-        updateSelectedRoles();
-    });
-});
-
-function updateSelectedRoles() {
+// 등록하기 - new FormData에서 hidden input 태그 가져갈 때 사용
+function updateSelectedRoles() { 
     var selectedRoles = [];
     $('.role-btn.btn-primary').each(function() {
         selectedRoles.push($(this).data('role'));
     });
-    $('#selectedRoles').val(selectedRoles.join(','));
-}
-// ~ 참여역할 버튼 
-
-// 모달 초기화 ~
-$('#projectAddForm').on('hidden.bs.modal', function () {
-    resetModalForm();
-});
-$('#projectUpdateForm').on('hidden.bs.modal', function () {
-    resetModalForm();
-});
-
-function resetModalForm() {
-    // 모든 input 필드 초기화
-    $('#projectAddForm').find('input').val('');
-    $('#projectUpdateForm').find('input').val('');
-
-    // 이미지 프리뷰 초기화
-    $('#addImagePreview').attr('src', '#').hide();
-    $('#updateImagePreview').attr('src', '#').hide();
-    $('#addFeatureImagePreview').attr('src', '#').hide();
-    $('#updateFeatureImagePreview').attr('src', '#').hide();
-
-    // 참여역할 버튼 초기화
-    $('.role-btn.btn-primary').removeClass('btn-primary').addClass('btn-outline-primary');
-}
-// ~ 모달 초기화
-
-// 이모지 ~
-function getMembersIcons(membersCount) {
-    const icons = ['🧔', '👦', '🧑', '👩', '👱'];
-    return icons.slice(0, membersCount).join('');
+    // 버튼 클릭 시, 버튼 아래 hidden input태그에 클릭 값 세팅
+    $('#selectedRoles').val(selectedRoles.join(',')); 
 }
 
-$(document).ready(function() {
-    $('.card').each(function() {
-        const card = $(this);
-        const membersCount = card.data('members');
-        const iconsForMembers = getMembersIcons(membersCount);
-
-        card.find('.member-icons').html("&nbsp;" + iconsForMembers);
-    });
-});
-// ~ 이모지
-
-// 상세정보 모달창 url, 이미지 새창 열기 (★☆★☆★☆코드 정리할 때 상세정보 기능끼리 묶어서 정리)
-function openImageInNewWindow(src) {
-    window.open(src, 'Image', 'width=800,height=600,left=600,top=50');
-}
-
-// 수정하기 버튼 클릭 시 데이터 가져와서 Payload 생성 
-function createPayload() {
-    const projectId = document.getElementById('updateHiddenId').value
-    const projectName = document.getElementById('updateProjectName').value;
-    const member = document.getElementById('updateMembers').value;
-    const startDate = document.getElementById('updateStartDate').value;
-    const endDate = document.getElementById('updateEndDate').value;
-    const readmeUrl = document.getElementById('updateReadmeUrl').value;
-    const githubUrl = document.getElementById('updateGithubUrl').value;
-    const roleButtons = document.querySelectorAll('.btn-primary.update-role-btn');
-    let selectedRoles = [];
-    roleButtons.forEach(button => {
-        selectedRoles.push(button.getAttribute('data-role'));
-    });
-
-    let projectImageDetails = getImageDetails('updateProjectImg', 'updateImagePreview');
-    let featureImageDetails = getImageDetails('updateIndividualPerformanceImg', 'updateFeatureImagePreview');
-
-    let payload = {
-        projectId: projectId,
-        projectName: projectName,
-        member: member,
-        startDate: startDate,
-        endDate: endDate,
-        readmeUrl: readmeUrl,
-        githubUrl: githubUrl,
-        selectedRoles: selectedRoles,
-
-        projectImageDetails : projectImageDetails,
-        featureImageDetails : featureImageDetails
-    };
-    return payload;
-}
-
-function getImageDetails(inputId, imageId) {
-    let input = document.getElementById(inputId);
-    let file = input.files[0];
-    let imageName = '';
-    let contentType = '';
-    let imgChangeCheck = false;
-
-    let imageElement = document.getElementById(imageId);
-    let imageSrc = imageElement.src;
-
-    let isBase64Image = imageSrc.startsWith('data:image/');
-
-    if (isBase64Image) {
-        imageName = file.name;
-        contentType = file.type;
-        imgChangeCheck = true;
-    } else {
-        imageSrc = '';
-    }
-
-    return {
-        imageSrc,
-        imageName,
-        contentType,
-        imgChangeCheck
-    };
-}
-
-// 수정하기 Form에서 role 값이 달라졌는지 체크
-function arraysEqual(a, b) {
-    return a.length === b.length && a.every((val, index) => val === b[index]);
-}
-
+// 등록하기, 수정하기 - 서버 통신 성공 후 -> 랜더링에 활용
 function createProjectHTML(responseData) {
     let selectedRoles = responseData.selectedRoles;
     let roleString = selectedRoles ? selectedRoles.map((role, index, array) =>
@@ -471,3 +267,229 @@ function createProjectHTML(responseData) {
                     </div>
                 </div>`;
 }
+
+// 등록하기 - 값 가져와서 반환
+function getImageFormData() {
+    // 입력 값 (프로젝트명 / 인원 / 시작날짜 / 종료날짜 / 참여역할 / README 주소 / GitHub주소)
+    let formData = new FormData(document.getElementById('addForm'));
+    formData.delete("postProjectImage");
+    formData.delete("postIndividualPerformanceImage");
+
+    // 프로젝트 이미지, 개인 수행 각 Base64 문자열 저장 
+    let projectImgElement = document.getElementById('addImagePreview');
+    let projectImgBase64 = projectImgElement.src;
+    let featureImgElement = document.getElementById('addFeatureImagePreview');
+    let individualPerformanceBase64 = featureImgElement.src;
+
+    // 이미지 파일 이름과 타입 저장 (S3 전송에 사용)
+    let projectImage_Input = document.getElementById('postProjectImage');
+    let individualPerformanceImage_Input = document.getElementById('postIndividualPerformanceImage');
+
+    let projectImageName = '';
+    let projectImageType = '';
+    let individualPerformanceImageName = '';
+    let individualPerformanceImageType = '';
+
+    if (projectImage_Input.files && projectImage_Input.files[0]) {
+        projectImageName = projectImage_Input.files[0].name;
+        projectImageType = projectImage_Input.files[0].type;
+    }
+    if (individualPerformanceImage_Input.files && individualPerformanceImage_Input.files[0]) {
+        individualPerformanceImageName = individualPerformanceImage_Input.files[0].name;
+        individualPerformanceImageType = individualPerformanceImage_Input.files[0].type;
+    }
+
+    return {
+        formData,
+        projectImgBase64,
+        individualPerformanceBase64,
+        projectImageName,
+        projectImageType,
+        individualPerformanceImageName,
+        individualPerformanceImageType
+    };
+}
+
+// 2. 수정 관련 내부 함수
+// 수정하기 -데이터 가져와서 Payload 생성 
+function createPayload() {
+    const projectId = document.getElementById('updateHiddenId').value
+    const projectName = document.getElementById('updateProjectName').value;
+    const member = document.getElementById('updateMembers').value;
+    const startDate = document.getElementById('updateStartDate').value;
+    const endDate = document.getElementById('updateEndDate').value;
+    const readmeUrl = document.getElementById('updateReadmeUrl').value;
+    const githubUrl = document.getElementById('updateGithubUrl').value;
+    const roleButtons = document.querySelectorAll('.btn-primary.update-role-btn');
+    let selectedRoles = [];
+    roleButtons.forEach(button => {
+        selectedRoles.push(button.getAttribute('data-role'));
+    });
+
+    let projectImageDetails = getImageDetails('updateProjectImg', 'updateImagePreview');
+    let featureImageDetails = getImageDetails('updateIndividualPerformanceImg', 'updateFeatureImagePreview');
+
+    let payload = {
+        projectId: projectId,
+        projectName: projectName,
+        member: member,
+        startDate: startDate,
+        endDate: endDate,
+        readmeUrl: readmeUrl,
+        githubUrl: githubUrl,
+        selectedRoles: selectedRoles,
+
+        projectImageDetails : projectImageDetails,
+        featureImageDetails : featureImageDetails
+    };
+    return payload;
+}
+
+// 수정하기 - 해당 이미지가 수정되었는지 여부를 확인 후 관련 리스트 값 세팅 
+// (이미지가 수정되지 않았다면 S3 Upload 하지 않음)
+function getImageDetails(inputId, imageId) {
+    let input = document.getElementById(inputId);
+    let file = input.files[0];
+    let imageName = '';
+    let contentType = '';
+    let imgChangeCheck = false;
+
+    let imageElement = document.getElementById(imageId);
+    let imageSrc = imageElement.src;
+
+    let isBase64Image = imageSrc.startsWith('data:image/');
+
+    if (isBase64Image) {
+        imageName = file.name;
+        contentType = file.type;
+        imgChangeCheck = true;
+    } else {
+        imageSrc = '';
+    }
+
+    return {
+        imageSrc,
+        imageName,
+        contentType,
+        imgChangeCheck
+    };
+}
+
+// 수정하기 Form - role 값이 달라졌는지 체크
+function arraysEqual(a, b) {
+    return a.length === b.length && a.every((val, index) => val === b[index]);
+}
+
+// 수정하기 Form - 모달 창 값 세팅
+function setModalFieldsFromCard(cardElement, parentDiv, cardId) {
+    // 해당 카드 정보 가져오기
+    const projectName = document.getElementById(`projectName-${cardId}`).textContent; 
+    const members = cardElement.getAttribute('data-members');
+    const readmeUrl = parentDiv.getAttribute('data-readme-url');
+    const githubUrl = parentDiv.getAttribute('data-github-url');
+    const startDate = parentDiv.getAttribute('data-start-date');
+    const endDate = parentDiv.getAttribute('data-end-date');
+    
+    // 가져온 정보를 모달의 input 필드에 저장
+    document.getElementById('updateProjectName').value = projectName;
+    document.getElementById('updateMembers').value = members;
+    document.getElementById('updateStartDate').value = startDate;
+    document.getElementById('updateEndDate').value = endDate;
+    document.getElementById('updateReadmeUrl').value = readmeUrl;
+    document.getElementById('updateGithubUrl').value = githubUrl;
+    document.getElementById('updateHiddenId').value = cardId;
+}
+
+// 수정하기 Form - roles 버튼 세팅 
+function setRoleButtons(parentDiv) {
+    // roles (BackEnd, FrontEnd DevOps) 버튼 활성화
+    const roleCodes = parentDiv.getAttribute('data-role-codes');
+    // 해당 게시물 역할 정보 가져오기 + [BackEnd, FrontEnd]에서 '[', ']'제거
+    const roleArray = roleCodes.replace(/[\[\]]/g, '').split(',').map(role => role.trim()); 
+    const roleButtons = document.querySelectorAll('.update-role-btn');
+    // 수정하기 Form에서 버튼 3개 태그를 불러와, 활성화 시작
+    roleButtons.forEach(button => {
+        const role = button.getAttribute('data-role');
+
+        if (roleArray.includes(role)) {
+            button.classList.remove('btn-outline-primary');
+            button.classList.add('btn-primary');
+            // 해당 Form 값 입력 후, updateProject() 시 변경여부 확인 (DB 통신 추가로 할 지 결정)
+            initialSelectedRoles.push(role); 
+        } else {
+            button.classList.remove('btn-primary');
+            button.classList.add('btn-outline-primary');
+        }
+    });
+}
+
+// 수정하기 Form - 이미지 미리보기 설정 함수
+function setImagePreviews(projectImgURL, individualPerformanceURL) {
+    const imgPreview = document.getElementById('updateImagePreview');
+    imgPreview.src = projectImgURL;
+    imgPreview.style.display = 'block';
+
+    const featureImagePreview = document.getElementById('updateFeatureImagePreview');
+    featureImagePreview.src = individualPerformanceURL;
+    featureImagePreview.style.display = 'block';
+}
+
+
+// 3. 기타 함수
+// 참여역할 버튼 (BackEnd FrontEnd DevOps 버튼 클릭시 toggle 기능)
+$(document).ready(function() {
+    $('.role-btn').click(function() {
+        var $this = $(this);
+        if ($this.hasClass('btn-outline-primary')) {
+            $this.removeClass('btn-outline-primary').addClass('btn-primary');
+        } else {
+            $this.removeClass('btn-primary').addClass('btn-outline-primary');
+        }
+        updateSelectedRoles();
+    });
+});
+
+// 모달 초기화 
+$('#projectAddForm').on('hidden.bs.modal', function () {
+    resetModalForm();
+});
+$('#projectUpdateForm').on('hidden.bs.modal', function () {
+    resetModalForm();
+});
+
+function resetModalForm() {
+    // 모든 input 필드 초기화
+    $('#projectAddForm').find('input').val('');
+    $('#projectUpdateForm').find('input').val('');
+
+    // 이미지 프리뷰 초기화
+    $('#addImagePreview').attr('src', '#').hide();
+    $('#updateImagePreview').attr('src', '#').hide();
+    $('#addFeatureImagePreview').attr('src', '#').hide();
+    $('#updateFeatureImagePreview').attr('src', '#').hide();
+
+    // 참여역할 버튼 초기화
+    $('.role-btn.btn-primary').removeClass('btn-primary').addClass('btn-outline-primary');
+}
+
+// 이모지 (숫자 값 -> 이모지로 세팅)
+function getMembersIcons(membersCount) {
+    const icons = ['🧔', '👦', '🧑', '👩', '👱'];
+    return icons.slice(0, membersCount).join('');
+}
+
+$(document).ready(function() {
+    $('.card').each(function() {
+        const card = $(this);
+        const membersCount = card.data('members');
+        const iconsForMembers = getMembersIcons(membersCount);
+
+        card.find('.member-icons').html("&nbsp;" + iconsForMembers);
+    });
+});
+
+// 상세정보 모달창 url, 이미지 새창 열기 
+function openImageInNewWindow(src) {
+    window.open(src, 'Image', 'width=800,height=600,left=600,top=50');
+}
+

@@ -1,13 +1,3 @@
-// 스크롤 시 navbar 출렁이는 효과
-window.addEventListener('scroll', function() {
-    let navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) { 
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-});
-
 // 편집 모드 (toggle), (버튼 보이지 않게 하여 layout 느낌 확인)
 function toggleEditMode() {
     const controls = document.querySelectorAll('.edit-controls');
