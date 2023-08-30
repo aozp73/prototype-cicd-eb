@@ -29,7 +29,7 @@ function login() {
                 // 올바른 로그인 정보를 입력하였다면, Service에서 DB 조회 후 토큰을 Header에 넣어서 응답함
                 // 해당 토큰 저장
                 localStorage.setItem('jwtToken', jwtToken);
-                window.location.href = '/main'; 
+                window.location.href = '/mainpage'; 
             } else {
                 alert("내부 서버에러 발생 (code 1)")
             }

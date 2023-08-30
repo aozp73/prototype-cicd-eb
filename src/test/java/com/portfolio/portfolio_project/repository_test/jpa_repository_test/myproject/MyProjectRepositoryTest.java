@@ -52,10 +52,10 @@ public class MyProjectRepositoryTest {
         if (optionalMyProject.isPresent()) {
             MyProject myProject = optionalMyProject.get();
             String updatedTitle = "update 테스트";
-            myProject.setTitle(updatedTitle);
+            myProject.setProjectName(updatedTitle);
 
             MyProject updatedMyProject = entityManager.merge(myProject);
-            Assertions.assertEquals(updatedTitle, updatedMyProject.getTitle());
+            Assertions.assertEquals(updatedTitle, updatedMyProject.getProjectName());
         } else {
             Assertions.fail("Select 테스트 에러");
         }
@@ -64,7 +64,7 @@ public class MyProjectRepositoryTest {
     @Test
     void insertAndDelete() {
         MyProject newMyProject = MyProject.builder()
-            .title("New Project Title")
+            .projectName("New Project Title")
             .member(3)
             .startDate(LocalDate.now())
             .endDate(LocalDate.now().plusDays(30))
@@ -86,7 +86,7 @@ public class MyProjectRepositoryTest {
 
     private void setUp(){
         MyProject myProject1 = MyProject.builder()
-            .title("Project Title 1")
+            .projectName("Project Title 1")
             .member(3)
             .startDate(LocalDate.now())
             .endDate(LocalDate.now().plusDays(10))
@@ -94,7 +94,7 @@ public class MyProjectRepositoryTest {
             .updatedAt(LocalDateTime.now())
             .build();
         MyProject myProject2 = MyProject.builder()
-            .title("Project Title 2")
+            .projectName("Project Title 2")
             .member(4)
             .startDate(LocalDate.now())
             .endDate(LocalDate.now().plusDays(20))

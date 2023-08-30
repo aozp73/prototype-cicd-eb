@@ -30,7 +30,7 @@ public class S3Utils {
     @Value("${static}")
     private String staticRegion;
 
-    public List<String> uploadImageToS3(String imageData, String imageName, String contentType) throws Exception500 {
+    public List<String> uploadImageToS3(String imageData, String imageName, String contentType, String keyword) throws Exception500 {
         MultipartFile img_multipartFile;
         try {
             img_multipartFile = BASE64DecodedMultipartFile
@@ -41,7 +41,7 @@ public class S3Utils {
 
         List<String> nameAndUrl = new ArrayList<>();
         try {
-            nameAndUrl = S3Utils.uploadFile(img_multipartFile, "main_introduce", bucket, amazonS3Client);
+            nameAndUrl = S3Utils.uploadFile(img_multipartFile, keyword, bucket, amazonS3Client);
         } catch (IOException e) {
             throw new Exception500("S3 File 업로드에 실패하였습니다.");
         }

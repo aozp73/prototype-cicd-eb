@@ -29,7 +29,7 @@
     
     <header class="navbar navbar-custom navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="/main">포트폴리오</a>
+            <a class="navbar-brand" href="/mainpage">포트폴리오</a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

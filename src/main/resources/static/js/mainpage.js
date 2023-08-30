@@ -1,13 +1,3 @@
-// 스크롤 시 navbar 출렁이는 효과
-window.addEventListener('scroll', function() {
-    let navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) { 
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-});
-
 // 편집 모드 (toggle), (버튼 보이지 않게 하여 layout 느낌 확인)
 function toggleEditMode() {
     const controls = document.querySelectorAll('.edit-controls');
@@ -131,40 +121,10 @@ function updateForm(event, pk, postIndex) {
 }
 
 // 수정완료 버튼 클릭 시, Server 통신 후 랜더링
-function updatePost(pk, index){   
-    const jwtToken = localStorage.getItem('jwtToken'); 
-    let input = document.getElementById('fileInput-'+pk);
-    let file = input.files[0];
-    let imageName = '';
-    let contentType = '';
-    let imgChangeCheck = false;
-
-    let postImageElement = document.getElementById('postImage-' + pk);
-    let postImageSrc = postImageElement.src;
-    let isBase64Image = postImageSrc.startsWith('data:image/');
-
-    if (isBase64Image) {
-        imageName = file.name;
-        contentType = file.type;
-        imgChangeCheck = true;
-    } else {
-        postImageSrc = '';
-    }
-
-    postTitle = $(`#postTitle-${pk}`).val()
-    postContent = $(`#postContent-${pk}`).val()
-    postContent = postContent.replace(/\n/g, "<br>");
-
-    let payload = {
-        id: pk,
-        postTitle: postTitle,
-        postContent: postContent,
-        imageName: imageName,
-        contentType: contentType,
-        imageData: postImageSrc,
-        imgChangeCheck: imgChangeCheck
-    };
-
+function updatePost(pk, index) {
+    const jwtToken = localStorage.getItem('jwtToken');
+    const payload = createPostPayload(pk, index);
+    
     $.ajax({
         url: '/auth/main',
         type: 'PUT',
@@ -249,7 +209,6 @@ function deletePost(pk) {
         success: function(response) {
             console.log(response);
             location.reload(true);
-            
         },
         error: function(error) {
             alert(error.responseJSON.data);
@@ -361,4 +320,41 @@ function resetForm() {
     // 파일 입력 및 이미지 미리보기 초기화
     $('#fileInput-new').val('');
     $('#imagePreview').empty();
+}
+
+// 수정하기 버튼 클릭 시, payload 생성 함수
+function createPostPayload(pk, index) {
+    let input = document.getElementById('fileInput-' + pk);
+    let file = input.files[0];
+    let imageName = '';
+    let contentType = '';
+    let imgChangeCheck = false;
+
+    let postImageElement = document.getElementById('postImage-' + pk);
+    let postImageSrc = postImageElement.src;
+    let isBase64Image = postImageSrc.startsWith('data:image/');
+
+    if (isBase64Image) {
+        imageName = file.name;
+        contentType = file.type;
+        imgChangeCheck = true;
+    } else {
+        postImageSrc = '';
+    }
+
+    let postTitle = $(`#postTitle-${pk}`).val();
+    let postContent = $(`#postContent-${pk}`).val();
+    postContent = postContent.replace(/\n/g, "<br>");
+
+    let payload = {
+        id: pk,
+        postTitle: postTitle,
+        postContent: postContent,
+        imageName: imageName,
+        contentType: contentType,
+        imageData: postImageSrc,
+        imgChangeCheck: imgChangeCheck
+    };
+
+    return payload;
 }

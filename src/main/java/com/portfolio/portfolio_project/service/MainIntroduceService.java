@@ -23,15 +23,15 @@ public class MainIntroduceService {
     private final S3Utils s3Utils;
 
     @Transactional(readOnly = true)
-    public List<MainIntroduceDTO_Out.findAllDTO> main_findAll(){
+    public List<MainIntroduceDTO_Out.FindAllDTO> main_findAll(){
         List<MainIntroduce> mainIntroduces = mainIntroduceRepository.findAll();
         
-        return MainIntroduceDTO_Out.findAllDTO.fromEntityList(mainIntroduces);
+        return MainIntroduceDTO_Out.FindAllDTO.fromEntityList(mainIntroduces);
     }
 
     @Transactional
     public MainIntroduceDTO_Out.PostDTO main_post(MainIntroduceDTO_In.postDTO postDTO_In){
-        List<String> nameAndUrl = s3Utils.uploadImageToS3(postDTO_In.getImageData(), postDTO_In.getImageName(), postDTO_In.getContentType());
+        List<String> nameAndUrl = s3Utils.uploadImageToS3(postDTO_In.getImageData(), postDTO_In.getImageName(), postDTO_In.getContentType(), "main_introduce");
 
         MainIntroduce mainIntroduce = postDTO_In.toEntity();
         mainIntroduce.setIntroduceImgName(nameAndUrl.get(0));
@@ -52,7 +52,10 @@ public class MainIntroduceService {
         putDTO_In.putEntity(mainIntroducePS, putDTO_In);
 
         if (putDTO_In.getImgChangeCheck()) {
-            List<String> nameAndUrl = s3Utils.uploadImageToS3(putDTO_In.getImageData(), putDTO_In.getImageName(), putDTO_In.getContentType());
+            List<String> nameAndUrl = s3Utils.uploadImageToS3(putDTO_In.getImageData(), 
+                                                              putDTO_In.getImageName(), 
+                                                              putDTO_In.getContentType(),
+                                                              "main_introduce");
             mainIntroducePS.setIntroduceImgName(nameAndUrl.get(0));
             mainIntroducePS.setIntroduceImgUrl(nameAndUrl.get(1));
         }

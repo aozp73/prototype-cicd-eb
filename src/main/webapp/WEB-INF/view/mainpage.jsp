@@ -86,6 +86,6 @@
 
 
 
-<script src="/js/main.js"></script>
+<script src="/js/mainpage.js"></script>
     
 <%@ include file="layout/footer.jsp" %>

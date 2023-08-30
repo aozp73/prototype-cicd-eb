@@ -12,14 +12,18 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Comment;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Builder
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "my_project_tb")
 public class MyProject {
     @Id
@@ -37,7 +41,7 @@ public class MyProject {
 
     @Comment("프로젝트 페이지 - 프로젝트 제목")
     @Column(name = "title")
-    private String title;
+    private String projectName;
 
     @Comment("프로젝트 페이지 - 프로젝트 참여인원")
     @Column(name = "member")
@@ -51,11 +55,11 @@ public class MyProject {
     private LocalDate endDate;
     
     @Comment("프로젝트 페이지 - README 링크")
-    @Column(name = "readme_link")
-    private String readmeLink;
+    @Column(name = "readme_Url")
+    private String readmeUrl;
     @Comment("프로젝트 페이지 - 프로젝트 Github 링크")
     @Column(name = "github_link")
-    private String githubLink;
+    private String githubUrl;
     
     @Comment("프로젝트 페이지 - 개인 수행 사진 이름")
     @Column(name = "individual_performance_img_name")

@@ -24,12 +24,13 @@ public class MainIntroduceController {
     private final MainIntroduceService mainIntroduceService;
 
     // FindAll
-    @GetMapping("/main")
+    @GetMapping("/mainpage")
     public String main_findAll(Model model){
-        List<MainIntroduceDTO_Out.findAllDTO> mainIntroduceList = mainIntroduceService.main_findAll();
+        System.out.println("테스트 : ");
+        List<MainIntroduceDTO_Out.FindAllDTO> mainIntroduceList = mainIntroduceService.main_findAll();
         model.addAttribute("mainIntroduceList", mainIntroduceList);
 
-        return "/main";
+        return "/mainpage";
     }
 
     @PostMapping("/auth/main")
