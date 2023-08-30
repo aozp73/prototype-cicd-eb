@@ -39,8 +39,8 @@ public class MyProjectController {
 
     @PutMapping("/auth/myproject")
     public ResponseEntity<?> myproject_put(@RequestBody MyProjectDTO_In.PutDTO putDTO_In){
-        myProjectService.myProject_put(putDTO_In);
+        MyProjectDTO_Out.PutDTO putDTO_Out = myProjectService.myProject_put(putDTO_In);
 
-        return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
+        return ResponseEntity.ok().body(new ResponseDTO<>().data(putDTO_Out));
     }
 }

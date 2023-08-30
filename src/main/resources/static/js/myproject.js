@@ -69,19 +69,67 @@ function getAddForm(){
     var modal = new bootstrap.Modal(document.getElementById("projectAddForm"));
     modal.show(); 
 }
-// function getUpdateForm(event){
-//     event.stopPropagation();
 
-//     const buttonClicked = event.target;
-//     const cardElement = buttonClicked.closest('.card');
-//     const cardId = cardElement.getAttribute('data-card-id');
+function getUpdateForm(event){
+    event.stopPropagation();
+    initialSelectedRoles = [];
 
-//     // ☆★☆★ cardID로 Ajax-GET 통신 후, Modal Form에 해당 값 미리 띄워놓기
+    const buttonClicked = event.target;
+    const cardElement = buttonClicked.closest('.card');
+    const cardId = cardElement.getAttribute('data-card-id');
+    const parentDiv = cardElement.parentElement;
 
-//     var modal = new bootstrap.Modal(document.getElementById("projectUpdateForm"));
-//     modal.show(); 
-// }
-// ~ add, update Form
+    // 해당 카드 정보 가져오기
+    const projectName = document.getElementById(`projectName-${cardId}`).textContent; 
+    const readmeUrl = parentDiv.getAttribute('data-readme-url');
+    const githubUrl = parentDiv.getAttribute('data-github-url');
+    const members = cardElement.getAttribute('data-members');
+    const startDate = parentDiv.getAttribute('data-start-date');
+    const endDate = parentDiv.getAttribute('data-end-date');
+    
+    const individualPerformanceURL = parentDiv.getAttribute('data-individual-performance-img');
+    const projectImgURL = document.getElementById(`projectImg-${cardId}`).src;
+    
+    // 가져온 정보로 모달의 input 필드에 저장
+    document.getElementById('updateProjectName').value = projectName;
+    document.getElementById('updateMembers').value = members;
+    document.getElementById('updateStartDate').value = startDate;
+    document.getElementById('updateEndDate').value = endDate;
+    document.getElementById('updateReadmeUrl').value = readmeUrl;
+    document.getElementById('updateGithubUrl').value = githubUrl;
+    document.getElementById('updateFeatureImagePreview').value = individualPerformanceURL;
+    document.getElementById('updateHiddenId').value = cardId;
+    
+    // 버튼 활성화
+    const roleCodes = parentDiv.getAttribute('data-role-codes');
+    const roleArray = roleCodes.replace(/[\[\]]/g, '').split(',').map(role => role.trim());
+    const roleButtons = document.querySelectorAll('.update-role-btn');
+    roleButtons.forEach(button => {
+      const role = button.getAttribute('data-role');
+      if (roleArray.includes(role)) {
+        button.classList.remove('btn-outline-primary');
+        button.classList.add('btn-primary');
+        initialSelectedRoles.push(role);
+      } else {
+        button.classList.remove('btn-primary');
+        button.classList.add('btn-outline-primary');
+      }
+    });
+
+    // 이미지 미리보기
+    const imgPreview = document.getElementById('updateImagePreview');
+    imgPreview.src = projectImgURL;
+    imgPreview.style.display = 'block';
+
+    const featureImagePreview = document.getElementById('updateFeatureImagePreview');
+    featureImagePreview.src = individualPerformanceURL;
+    featureImagePreview.style.display = 'block';
+    
+    // 모달창 생성
+    var modal = new bootstrap.Modal(document.getElementById("projectUpdateForm"));
+    modal.show(); 
+}
+
 
 // add, update, delete ~
 function postProject() {
@@ -145,58 +193,14 @@ function postProject() {
         },
         success: function(response) {
             console.log(response);
-            // 폼 초기화
             resetModalForm();
-            // 모달 닫기
             $('#projectAddForm').modal('hide');
 
-            let selectedRoles = response.data.selectedRoles;
-            let roleString = selectedRoles ? selectedRoles.map((role, index, array) => 
-                `${index === 0 ? '&nbsp;' : ''}${role}${index < array.length - 1 ? ' / ' : ''}`
-            ).join('') : '';
-
-            let newProjectHTML = `
-            <div class="col-lg-3 col-md-6 mb-4" id="project-${response.data.id}" 
-                data-readme-url="${response.data.readmeUrl}" 
-                data-github-url="${response.data.githubUrl}"
-                data-individual-performance-img="${response.data.individualPerformanceImageNameURL}"
-                data-start-date="${response.data.startDate}"
-                data-end-date="${response.data.endDate}"
-                data-role-codes="${response.data.selectedRoles}">
-                <div class="card card-hover-effect" data-card-id="${response.data.id}" data-members="${response.data.member}" style="height: 380px; overflow: hidden;">
-                    <div class="card-body px-4">
-                        <div class="text-center mt-2">
-                            <span id="projectName-${response.data.id}" class="project-name" style="font-size: 1.6em;">${response.data.projectName}</span>
-                        </div>
-                        <div class="mt-2 mb-3 p-2" style="max-height: 33%; height: 243px; overflow: hidden;">
-                            <img id="projectImg-${response.data.id}" src="${response.data.projectImgURL}" alt="프로젝트 이미지" style="width: 100%; height: 100%; object-fit: fill; ">
-                        </div>
-                        <div class="card-inner" style="height: 127px;">
-                            <div class="ps-3">
-                                <div class="mt-3 mb-2">
-                                    <span class="member-icons" style="font-size: 1.3em;"></span>
-                                </div>
-                                <div class="mb-2 ps-1">
-                                    &nbsp${response.data.startDate} ~ ${response.data.endDate}
-                                </div>
-                                <div class="mb-2 ps-1" style="font-size: 15px">
-                                ${roleString}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="edit-controls" style="position: absolute; right: 10px; bottom: 10px; display: block;">
-                            <button class="btn btn-secondary btn-sm" onclick="getUpdateForm(event)">수정</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteProject(event, 'project-${response.data.id}')">삭제</button>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
-
+            const newProjectHTML = createProjectHTML(response.data);
             $('#main-container .row').append(newProjectHTML);
 
             const newCard = $(`#project-${response.data.id} .card`);
             const membersCount = newCard.data('members');
-            console.log(membersCount);  
             const iconsForMembers = getMembersIcons(membersCount);
             newCard.find('.member-icons').html("&nbsp;" + iconsForMembers);
 
@@ -205,66 +209,6 @@ function postProject() {
             alert(error.responseJSON.data);
         }
     });
-}
-
-function getUpdateForm(event){
-    event.stopPropagation();
-    initialSelectedRoles = [];
-
-    const buttonClicked = event.target;
-    const cardElement = buttonClicked.closest('.card');
-    const cardId = cardElement.getAttribute('data-card-id');
-    const parentDiv = cardElement.parentElement;
-
-    // 해당 카드 정보 가져오기
-    const projectName = document.getElementById(`projectName-${cardId}`).textContent; 
-    const readmeUrl = parentDiv.getAttribute('data-readme-url');
-    const githubUrl = parentDiv.getAttribute('data-github-url');
-    const members = cardElement.getAttribute('data-members');
-    const startDate = parentDiv.getAttribute('data-start-date');
-    const endDate = parentDiv.getAttribute('data-end-date');
-    
-    const individualPerformanceURL = parentDiv.getAttribute('data-individual-performance-img');
-    const projectImgURL = document.getElementById(`projectImg-${cardId}`).src;
-    
-    // 가져온 정보로 모달의 input 필드에 저장
-    document.getElementById('updateProjectName').value = projectName;
-    document.getElementById('updateMembers').value = members;
-    document.getElementById('updateStartDate').value = startDate;
-    document.getElementById('updateEndDate').value = endDate;
-    document.getElementById('updateReadmeUrl').value = readmeUrl;
-    document.getElementById('updateGithubUrl').value = githubUrl;
-    document.getElementById('updateFeatureImagePreview').value = individualPerformanceURL;
-    document.getElementById('updateHiddenId').value = cardId;
-    
-    // 버튼 활성화
-    const roleCodes = parentDiv.getAttribute('data-role-codes');
-    const roleArray = roleCodes.replace(/[\[\]]/g, '').split(',').map(role => role.trim());
-    const roleButtons = document.querySelectorAll('.update-role-btn');
-    roleButtons.forEach(button => {
-      const role = button.getAttribute('data-role');
-      if (roleArray.includes(role)) {
-        button.classList.remove('btn-outline-primary');
-        button.classList.add('btn-primary');
-        initialSelectedRoles.push(role);
-      } else {
-        button.classList.remove('btn-primary');
-        button.classList.add('btn-outline-primary');
-      }
-    });
-
-    // 이미지 미리보기
-    const imgPreview = document.getElementById('updateImagePreview');
-    imgPreview.src = projectImgURL;
-    imgPreview.style.display = 'block';
-
-    const featureImagePreview = document.getElementById('updateFeatureImagePreview');
-    featureImagePreview.src = individualPerformanceURL;
-    featureImagePreview.style.display = 'block';
-    
-    // 모달창 생성
-    var modal = new bootstrap.Modal(document.getElementById("projectUpdateForm"));
-    modal.show(); 
 }
 
 function updateProject() {
@@ -288,7 +232,17 @@ function updateProject() {
         data: JSON.stringify(payload),
 
         success: function(response, textStatus, jqXHR) {
+            console.log(response);
+            resetModalForm();
+            $('#projectUpdateForm').modal('hide');
 
+            const newProjectHTML = createProjectHTML(response.data);
+            $(`#project-${response.data.id}`).replaceWith(newProjectHTML);
+
+            const newCard = $(`#project-${response.data.id} .card`);
+            const membersCount = newCard.data('members');
+            const iconsForMembers = getMembersIcons(membersCount);
+            newCard.find('.member-icons').html("&nbsp;" + iconsForMembers);
         },
         error: function(jqXHR, textStatus, errorThrown) {
 
@@ -455,6 +409,48 @@ function getImageDetails(inputId, imageId) {
 
 // 수정하기 Form에서 role 값이 달라졌는지 체크
 function arraysEqual(a, b) {
-
     return a.length === b.length && a.every((val, index) => val === b[index]);
+}
+
+function createProjectHTML(responseData) {
+    let selectedRoles = responseData.selectedRoles;
+    let roleString = selectedRoles ? selectedRoles.map((role, index, array) =>
+        `${index === 0 ? '&nbsp;' : ''}${role}${index < array.length - 1 ? ' / ' : ''}`
+    ).join('') : '';
+
+    return `<div class="col-lg-3 col-md-6 mb-4" id="project-${responseData.id}" 
+                    data-readme-url="${responseData.readmeUrl}" 
+                    data-github-url="${responseData.githubUrl}"
+                    data-individual-performance-img="${responseData.individualPerformanceImageNameURL}"
+                    data-start-date="${responseData.startDate}"
+                    data-end-date="${responseData.endDate}"
+                    data-role-codes="${responseData.selectedRoles}">
+                    <div class="card card-hover-effect" data-card-id="${responseData.id}" data-members="${responseData.member}" style="height: 380px; overflow: hidden;">
+                        <div class="card-body px-4">
+                            <div class="text-center mt-2">
+                                <span id="projectName-${responseData.id}" class="project-name" style="font-size: 1.6em;">${responseData.projectName}</span>
+                            </div>
+                            <div class="mt-2 mb-3 p-2" style="max-height: 33%; height: 243px; overflow: hidden;">
+                                <img id="projectImg-${responseData.id}" src="${responseData.projectImgURL}" alt="프로젝트 이미지" style="width: 100%; height: 100%; object-fit: fill; ">
+                            </div>
+                            <div class="card-inner" style="height: 127px;">
+                                <div class="ps-3">
+                                    <div class="mt-3 mb-2">
+                                        <span class="member-icons" style="font-size: 1.3em;"></span>
+                                    </div>
+                                    <div class="mb-2 ps-1">
+                                        &nbsp${responseData.startDate} ~ ${responseData.endDate}
+                                    </div>
+                                    <div class="mb-2 ps-1" style="font-size: 15px">
+                                    ${roleString}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="edit-controls" style="position: absolute; right: 10px; bottom: 10px; display: block;">
+                                <button class="btn btn-secondary btn-sm" onclick="getUpdateForm(event)">수정</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteProject(event, 'project-${responseData.id}')">삭제</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
 }
