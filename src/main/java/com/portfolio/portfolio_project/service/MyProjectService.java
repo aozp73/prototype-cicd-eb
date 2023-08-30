@@ -110,4 +110,22 @@ public class MyProjectService {
         
         return MyProjectDTO_Out.PutDTO.fromEntity(myProjectPS, myProjectRolesPS);
     }
+
+
+    public void myProject_delete(Long projectPK){
+        MyProject myProjectPS = myProjectRepository.findById(projectPK).orElseThrow(() ->{
+            throw new Exception400("존재하지 않는 게시물 입니다.");
+        });
+        
+        try {
+            myProjectRoleRepository.deleteAll(myProjectRoleRepository.findAllByProject(myProjectPS));
+        } catch (Exception e) {
+            throw new Exception500("Project role 삭제에 실패했습니다.");
+        }
+        try {
+            myProjectRepository.delete(myProjectPS);            
+        } catch (Exception e) {
+            throw new Exception500("Project 삭제에 실패했습니다.");
+        }
+    }
 }

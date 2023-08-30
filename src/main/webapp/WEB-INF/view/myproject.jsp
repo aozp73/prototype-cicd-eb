@@ -48,7 +48,7 @@
 
                             <div class="edit-controls" style="position: absolute; right: 10px; bottom: 10px; display: none;">
                                 <button class="btn btn-secondary btn-sm" onclick="getUpdateForm(event)">수정</button>
-                                <button class="btn btn-danger btn-sm" onclick="deleteProject(event, 'project-${project.id}')">삭제</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteProject(event, '${project.id}')">삭제</button>
                             </div>
                             
                         </div>

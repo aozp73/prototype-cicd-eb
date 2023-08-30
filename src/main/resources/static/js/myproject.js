@@ -252,13 +252,30 @@ function updateProject() {
 
 
 
-function deleteProject(event, id) {
-    // id값을 Server에서 보내서 DB 삭제 후 reload or 부분 삭제
+function deleteProject(event, pk) {
     event.stopPropagation();
 
-    $(`#${id}`).fadeOut(function() {
-        $(this).remove();
-    });
+    const jwtToken = localStorage.getItem('jwtToken'); 
+
+    $.ajax({
+        url: '/auth/myproject?projectPK=' + pk, 
+        type: 'DELETE', 
+        headers: {
+            'Authorization': jwtToken  
+        },
+        success: function(response) {
+            console.log(response);
+
+            $(`#project-${pk}`).fadeOut(function() {
+                $(this).remove();
+            });
+        },
+        error: function(error) {
+            alert(error.responseJSON.data);
+        }
+    })
+
+
 }
 // ~ add, update, delete
 
@@ -448,7 +465,7 @@ function createProjectHTML(responseData) {
                             </div>
                             <div class="edit-controls" style="position: absolute; right: 10px; bottom: 10px; display: block;">
                                 <button class="btn btn-secondary btn-sm" onclick="getUpdateForm(event)">수정</button>
-                                <button class="btn btn-danger btn-sm" onclick="deleteProject(event, 'project-${responseData.id}')">삭제</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteProject(event, '${responseData.id}')">삭제</button>
                             </div>
                         </div>
                     </div>
