@@ -131,4 +131,59 @@ public class MyProjectDTO_Out {
                 .build();
         }
     }
+
+    @Getter
+    @Setter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class PutDTO {
+        private Long id;
+
+        private String projectName;
+        private Integer member;
+        private String startDate;
+        private String endDate;
+
+        // BackEnd,FrontEnd,DevOps 형식
+        private List<String> selectedRoles;
+
+        private String readmeUrl;
+        private String githubUrl;
+
+        private String projectImgURL;
+        private String individualPerformanceImageNameURL;
+
+        public static MyProjectDTO_Out.PutDTO fromEntity(MyProject myProjectPS, List<MyProjectRole> myProjectRoles){
+            List<String> selectedRoles = myProjectRoles.stream()
+                .map(myProjectRole -> {
+                    Long roleCodeLong = myProjectRole.getRoleCode().getId();
+                    int roleCode = roleCodeLong.intValue();
+                    switch (roleCode) {
+                        case 1:
+                            return "BackEnd";
+                        case 2:
+                            return "FrontEnd";
+                        case 3:
+                            return "DevOps";
+                        default:
+                            return "Unknown";
+                    }
+                })
+                .collect(Collectors.toList());
+
+            return MyProjectDTO_Out.PutDTO.builder()
+                .id(myProjectPS.getId())
+                .projectName(myProjectPS.getProjectName())
+                .member(myProjectPS.getMember())
+                .startDate(myProjectPS.getStartDate().toString())
+                .endDate(myProjectPS.getEndDate().toString())
+                .selectedRoles(selectedRoles)
+                .readmeUrl(myProjectPS.getReadmeUrl())
+                .githubUrl(myProjectPS.getGithubUrl())
+                .projectImgURL(myProjectPS.getProjectImgUrl())
+                .individualPerformanceImageNameURL(myProjectPS.getIndividualPerformanceImgUrl())
+                .build();
+        }
+    }
 }

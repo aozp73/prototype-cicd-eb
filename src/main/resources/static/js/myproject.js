@@ -159,14 +159,17 @@ function postProject() {
             <div class="col-lg-3 col-md-6 mb-4" id="project-${response.data.id}" 
                 data-readme-url="${response.data.readmeUrl}" 
                 data-github-url="${response.data.githubUrl}"
-                data-individual-performance-img="${response.data.individualPerformanceImageNameURL}">
+                data-individual-performance-img="${response.data.individualPerformanceImageNameURL}"
+                data-start-date="${response.data.startDate}"
+                data-end-date="${response.data.endDate}"
+                data-role-codes="${response.data.selectedRoles}">
                 <div class="card card-hover-effect" data-card-id="${response.data.id}" data-members="${response.data.member}" style="height: 380px; overflow: hidden;">
                     <div class="card-body px-4">
                         <div class="text-center mt-2">
-                            <span class="project-name" style="font-size: 1.6em;">${response.data.projectName}</span>
+                            <span id="projectName-${response.data.id}" class="project-name" style="font-size: 1.6em;">${response.data.projectName}</span>
                         </div>
                         <div class="mt-2 mb-3 p-2" style="max-height: 33%; height: 243px; overflow: hidden;">
-                            <img src="${response.data.projectImgURL}" alt="프로젝트 이미지" style="width: 100%; height: 100%; object-fit: fill; ">
+                            <img id="projectImg-${response.data.id}" src="${response.data.projectImgURL}" alt="프로젝트 이미지" style="width: 100%; height: 100%; object-fit: fill; ">
                         </div>
                         <div class="card-inner" style="height: 127px;">
                             <div class="ps-3">
@@ -212,7 +215,7 @@ function getUpdateForm(event){
     const cardElement = buttonClicked.closest('.card');
     const cardId = cardElement.getAttribute('data-card-id');
     const parentDiv = cardElement.parentElement;
-    console.log(cardId)
+
     // 해당 카드 정보 가져오기
     const projectName = document.getElementById(`projectName-${cardId}`).textContent; 
     const readmeUrl = parentDiv.getAttribute('data-readme-url');

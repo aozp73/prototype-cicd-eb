@@ -1,5 +1,6 @@
 package com.portfolio.portfolio_project.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,6 @@ public class MyProjectService {
     private final MyProjectRepository myProjectRepository;
     private final S3Utils s3Utils;
     private final MyProjectUtils myProjectUtils;
-
 
     // FindAll
     @Transactional(readOnly = true)
@@ -73,14 +73,41 @@ public class MyProjectService {
         return MyProjectDTO_Out.PostDTO.fromEntity(myProject, myProjectRoles);
     }
 
-    public String myProject_put(MyProjectDTO_In.PutDTO putDTO_In) {
-        
+    @Transactional
+    public MyProjectDTO_Out.PutDTO myProject_put(MyProjectDTO_In.PutDTO putDTO_In) {
+        // MyProject 엔터티 저장
+        List<String> projectImg_nameAndUrl = new ArrayList<>();
+        List<String> individualPerformanceImg_nameAndUrl = new ArrayList<>();
+
+        if (putDTO_In.getProjectImageDetails().getImgChangeCheck()) {
+            projectImg_nameAndUrl = s3Utils.uploadImageToS3(putDTO_In.getProjectImageDetails().getImageSrc(), 
+                                                                     putDTO_In.getProjectImageDetails().getImageName(), 
+                                                                     putDTO_In.getProjectImageDetails().getContentType(),
+                                                                     "my_project");
+        }
+        if (putDTO_In.getFeatureImageDetails().getImgChangeCheck()) {
+            individualPerformanceImg_nameAndUrl = s3Utils.uploadImageToS3(putDTO_In.getFeatureImageDetails().getImageSrc(), 
+                                                                                   putDTO_In.getFeatureImageDetails().getImageName(), 
+                                                                                   putDTO_In.getFeatureImageDetails().getContentType(),
+                                                                                   "my_project_performance");
+        }
+
         MyProject myProjectPS = myProjectRepository.findById(putDTO_In.getProjectId()).orElseThrow(() ->{
             throw new Exception400("존재하지 않는 게시물 입니다.");
         });
+        putDTO_In.toEntity(myProjectPS, projectImg_nameAndUrl, individualPerformanceImg_nameAndUrl);
 
 
+        // MyProjectRole 체크 및 갱신
+        List<MyProjectRole> myProjectRolesPS = myProjectRoleRepository.findAllByProject(myProjectPS);
+
+        if (putDTO_In.getHasRolesChanged()) {
+            myProjectRoleRepository.deleteAll(myProjectRolesPS);
+
+            String rolesString = String.join(",", putDTO_In.getSelectedRoles());
+            myProjectRolesPS = myProjectUtils.saveRolesForProject(rolesString, myProjectPS);
+        }
         
-        return "";
+        return MyProjectDTO_Out.PutDTO.fromEntity(myProjectPS, myProjectRolesPS);
     }
 }
