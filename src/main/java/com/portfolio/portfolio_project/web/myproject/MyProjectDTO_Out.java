@@ -33,22 +33,23 @@ public class MyProjectDTO_Out {
         private String individualPerformanceImageNameURL;
 
         public static FindAllDTO fromEntity(MyProject myProject, List<MyProjectRole> myProjectRoles) {
+            // Server 측에서 변환하고 View에 넘기기
             List<String> roleCodes = myProjectRoles.stream()
-            .map(myProjectRole -> {
-                Long roleCodeLong = myProjectRole.getRoleCode().getId();
-                int roleCode = roleCodeLong.intValue();
-                switch (roleCode) {
-                    case 1:
-                        return "BackEnd";
-                    case 2:
-                        return "FrontEnd";
-                    case 3:
-                        return "DevOps";
-                    default:
-                        return "Unknown";
-                }
-            })
-            .collect(Collectors.toList());
+                .map(myProjectRole -> {
+                    Long roleCodeLong = myProjectRole.getRoleCode().getId();
+                    int roleCode = roleCodeLong.intValue();
+                    switch (roleCode) {
+                        case 1:
+                            return "BackEnd";
+                        case 2:
+                            return "FrontEnd";
+                        case 3:
+                            return "DevOps";
+                        default:
+                            return "Unknown";
+                    }
+                })
+                .collect(Collectors.toList());
 
             return new FindAllDTO(
                 myProject.getId(),
@@ -67,6 +68,7 @@ public class MyProjectDTO_Out {
         public static List<FindAllDTO> fromEntityList(List<MyProject> myProjects, Map<Long, List<MyProjectRole>> roleMap) {
             List<FindAllDTO> dtoList = new ArrayList<>();
             for (MyProject myProject : myProjects) {
+                // Service에서 MyProject id값을 key로 대응되는 role을 value로 저장하였음
                 List<MyProjectRole> myProjectRoles = roleMap.getOrDefault(myProject.getId(), new ArrayList<>());
                 dtoList.add(FindAllDTO.fromEntity(myProject, myProjectRoles));
             }
@@ -82,20 +84,17 @@ public class MyProjectDTO_Out {
     public static class PostDTO {
         private Long id;
 
-        // 프로젝트명, 인원, 날짜 정보
         private String projectName;
         private Integer member;
         private String startDate;
         private String endDate;
 
-        // 수행 역할 정보 (BackEnd,FrontEnd,DevOps 형식)
+        // BackEnd,FrontEnd,DevOps 형식
         private List<String> selectedRoles;
 
-        // readme, github 주소
         private String readmeUrl;
         private String githubUrl;
 
-        // 프로젝트, 개인수행 이미지 URL
         private String projectImgURL;
         private String individualPerformanceImageNameURL;
 

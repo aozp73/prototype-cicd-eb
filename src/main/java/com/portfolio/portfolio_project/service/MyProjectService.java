@@ -33,10 +33,10 @@ public class MyProjectService {
     // FindAll
     @Transactional(readOnly = true)
     public List<MyProjectDTO_Out.FindAllDTO> findAllProjectsAndRoles() {
-        // MyProject 엔터티 리스트 가져오기
+        // 1. MyProject 엔터티 리스트 가져오기
         List<MyProject> myProjects = myProjectRepository.findAll();
 
-        // 각 MyProject에 해당하는 MyProjectRole 리스트를 맵 형태에 저장
+        // 2. MyProject 각각에 해당하는 MyProjectRole 리스트를 맵 형태에 저장 (fromEntityList에서 활용)
         Map<Long, List<MyProjectRole>> roleMap = new HashMap<>();
         for (MyProject myProject : myProjects) {
             List<MyProjectRole> myProjectRoles = myProjectRoleRepository.findAllByProject(myProject);
@@ -49,7 +49,7 @@ public class MyProjectService {
     // POST
     @Transactional
     public MyProjectDTO_Out.PostDTO myProject_post(MyProjectDTO_In.PostDTO postDTO_In){
-        // 프로젝트 이미지, 개인수행 이미지 S3 업로드
+        // 1. 프로젝트 이미지, 개인수행 이미지 S3 업로드
         List<String> projectImg_nameAndUrl = s3Utils.uploadImageToS3(postDTO_In.getProjectImgBase64(), 
                                                                      postDTO_In.getProjectImageName(), 
                                                                      postDTO_In.getProjectImageType(),
@@ -59,7 +59,7 @@ public class MyProjectService {
                                                                                    postDTO_In.getIndividualPerformanceImageType(),
                                                                                    "my_project_performance");
 
-        // MyProject 엔터티 저장
+        // 2. MyProject 엔터티 저장
         MyProject myProject = postDTO_In.toEntity(projectImg_nameAndUrl, individualPerformanceImg_nameAndUrl);
         try {
             myProjectRepository.save(myProject);
@@ -67,7 +67,7 @@ public class MyProjectService {
             throw new Exception500("Project DB 저장에 실패하였습니다.");
         }
 
-        // 역할 파싱 및 MyProjectRole 엔터티 저장
+        // 3. 역할 파싱 및 MyProjectRole 엔터티 저장
         List<MyProjectRole> myProjectRoles = myProjectUtils.saveRolesForProject(postDTO_In.getSelectedRoles(), myProject);
 
         return MyProjectDTO_Out.PostDTO.fromEntity(myProject, myProjectRoles);
@@ -75,7 +75,7 @@ public class MyProjectService {
 
     @Transactional
     public MyProjectDTO_Out.PutDTO myProject_put(MyProjectDTO_In.PutDTO putDTO_In) {
-        // MyProject 엔터티 저장
+        // 1. MyProject 엔터티 저장
         List<String> projectImg_nameAndUrl = new ArrayList<>();
         List<String> individualPerformanceImg_nameAndUrl = new ArrayList<>();
 
@@ -98,7 +98,7 @@ public class MyProjectService {
         putDTO_In.toEntity(myProjectPS, projectImg_nameAndUrl, individualPerformanceImg_nameAndUrl);
 
 
-        // MyProjectRole 체크 및 갱신
+        // 2. MyProjectRole 체크 및 갱신
         List<MyProjectRole> myProjectRolesPS = myProjectRoleRepository.findAllByProject(myProjectPS);
 
         if (putDTO_In.getHasRolesChanged()) {
