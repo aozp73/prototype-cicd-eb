@@ -1,3 +1,5 @@
+let initialSelectedRoles = [];
+
 window.addEventListener('scroll', function() {
     let navbar = document.querySelector('.navbar');
     if (window.scrollY > 50) { 
@@ -43,7 +45,7 @@ function showModalWithDetails(cardId) {
     document.getElementById("performanceModalImage").setAttribute("src", performance_ImageSrc);
     document.getElementById("projectModalREADMELink").innerHTML = `<a href="${readmeUrl}" target="_blank" style="text-decoration: none;">README 링크</a>`;
     document.getElementById("projectModalGithubLink").innerHTML = `<a href="${githubUrl}" target="_blank" style="text-decoration: none;">Github 링크</a>`;
-    
+
     // 모달을 띄웁니다.
     var modal = new bootstrap.Modal(document.getElementById("projectModal"));
     modal.show();
@@ -67,18 +69,18 @@ function getAddForm(){
     var modal = new bootstrap.Modal(document.getElementById("projectAddForm"));
     modal.show(); 
 }
-function getUpdateForm(event){
-    event.stopPropagation();
+// function getUpdateForm(event){
+//     event.stopPropagation();
 
-    const buttonClicked = event.target;
-    const cardElement = buttonClicked.closest('.card');
-    const cardId = cardElement.getAttribute('data-card-id');
+//     const buttonClicked = event.target;
+//     const cardElement = buttonClicked.closest('.card');
+//     const cardId = cardElement.getAttribute('data-card-id');
 
-    // ☆★☆★ cardID로 Ajax-GET 통신 후, Modal Form에 해당 값 미리 띄워놓기
+//     // ☆★☆★ cardID로 Ajax-GET 통신 후, Modal Form에 해당 값 미리 띄워놓기
 
-    var modal = new bootstrap.Modal(document.getElementById("projectUpdateForm"));
-    modal.show(); 
-}
+//     var modal = new bootstrap.Modal(document.getElementById("projectUpdateForm"));
+//     modal.show(); 
+// }
 // ~ add, update Form
 
 // add, update, delete ~
@@ -204,6 +206,7 @@ function postProject() {
 
 function getUpdateForm(event){
     event.stopPropagation();
+    initialSelectedRoles = [];
 
     const buttonClicked = event.target;
     const cardElement = buttonClicked.closest('.card');
@@ -234,18 +237,19 @@ function getUpdateForm(event){
     // 버튼 활성화
     const roleCodes = parentDiv.getAttribute('data-role-codes');
     const roleArray = roleCodes.replace(/[\[\]]/g, '').split(',').map(role => role.trim());
-    const roleButtons = document.querySelectorAll('.role-btn');
+    const roleButtons = document.querySelectorAll('.update-role-btn');
     roleButtons.forEach(button => {
       const role = button.getAttribute('data-role');
       if (roleArray.includes(role)) {
         button.classList.remove('btn-outline-primary');
         button.classList.add('btn-primary');
+        initialSelectedRoles.push(role);
       } else {
         button.classList.remove('btn-primary');
         button.classList.add('btn-outline-primary');
       }
     });
-
+    console.log(initialSelectedRoles)
     // 이미지 미리보기
     const imgPreview = document.getElementById('updateImagePreview');
     imgPreview.src = projectImgURL;
@@ -262,9 +266,18 @@ function getUpdateForm(event){
 
 function updateProject() {
     const jwtToken = localStorage.getItem('jwtToken'); 
+    let payload = createPayload();
+    console.log("aa : " + initialSelectedRoles)
+    console.log("bb : " + payload.selectedRoles)
+    let hasRolesChanged = false;
 
-    const payload = createPayload();
+    if (!arraysEqual(initialSelectedRoles, payload.selectedRoles)) {
+        hasRolesChanged = true;
+    }
+
+    payload["hasRolesChanged"] = hasRolesChanged;
     console.log(payload)
+    
     $.ajax({
         url: '/auth/myproject',
         type: 'PUT',
@@ -283,6 +296,8 @@ function updateProject() {
         }
     });
 }
+
+
 
 function deleteProject(event, id) {
     // id값을 Server에서 보내서 DB 삭제 후 reload or 부분 삭제
@@ -386,7 +401,7 @@ function createPayload() {
     const readmeUrl = document.getElementById('updateReadmeUrl').value;
     const githubUrl = document.getElementById('updateGithubUrl').value;
 
-    const roleButtons = document.querySelectorAll('.btn-primary.update-role');
+    const roleButtons = document.querySelectorAll('.btn-primary.update-role-btn');
     let selectedRoles = [];
     roleButtons.forEach(button => {
         selectedRoles.push(button.getAttribute('data-role'));
@@ -436,4 +451,11 @@ function getImageDetails(inputId, imageId) {
         contentType,
         imgChangeCheck
     };
+}
+
+// 수정하기 Form에서 role 값이 달라졌는지 체크
+function arraysEqual(a, b) {
+    console.log("테스트 : " + a.length === b.length)
+    console.log("테스트 : " + a.every((val, index) => val === b[index]))
+    return a.length === b.length && a.every((val, index) => val === b[index]);
 }

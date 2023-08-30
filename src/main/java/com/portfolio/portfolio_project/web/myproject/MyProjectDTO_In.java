@@ -57,4 +57,33 @@ public class MyProjectDTO_In {
                     .build();
         }
     }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class putDTO {
+        private String projectName;
+        private String members; 
+        private String startDate;
+        private String endDate;
+        private String readmeUrl;
+        private String githubUrl;
+        private List<String> selectedRoles; 
+        private Boolean hasRolesChanged;
+        
+        private ImageDetails projectImageDetails;
+        private ImageDetails featureImageDetails;
+
+        @Getter
+        @Setter
+        @AllArgsConstructor
+        @NoArgsConstructor
+        public static class ImageDetails {
+            private String imageSrc;
+            private String imageName;
+            private String contentType;
+            private Boolean imgChangeCheck;
+        }
+    }
 }
