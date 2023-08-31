@@ -2,7 +2,7 @@ const changedSkills = {
     'BackEnd': [],
     'FrontEnd': [],
     'DevOps': [],
-    'ETC': []
+    'ETC': [],
 };
 
 let checkInitialSkill = []
@@ -82,14 +82,19 @@ function addSkills(section) {
 }
 
 function updateSkills() {
+    const jwtToken = localStorage.getItem('jwtToken'); 
     console.log('Changed skills:', changedSkills);
 
-
+    console.log("About to send: ", JSON.stringify(changedSkills));
     $.ajax({
         url: "/auth/skills",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(changedSkills),
+        headers: {
+            'Authorization': jwtToken  
+        },
+
         success: function(response) {
             console.log(response);
         },
@@ -129,7 +134,7 @@ function updateChangedSkills(section, name, status) {
     }
   
     // 새로운 상태를 changedSkills에 추가 (초기 상태에 있던걸 remove한 것도 기록하여 저장)
-    changedSkills[section].push({ name, status });
+    changedSkills[section].push({ name, status });  
 }
 
 
