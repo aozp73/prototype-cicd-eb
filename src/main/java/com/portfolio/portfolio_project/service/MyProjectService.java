@@ -10,12 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.portfolio.portfolio_project.core.exception.Exception400;
 import com.portfolio.portfolio_project.core.exception.Exception500;
-import com.portfolio.portfolio_project.core.util.myproject_utils.MyProjectUtils;
 import com.portfolio.portfolio_project.core.util.s3_utils.S3Utils;
 import com.portfolio.portfolio_project.domain.jpa.myproject.my_project.MyProject;
 import com.portfolio.portfolio_project.domain.jpa.myproject.my_project.MyProjectRepository;
 import com.portfolio.portfolio_project.domain.jpa.myproject.my_project_role.MyProjectRole;
 import com.portfolio.portfolio_project.domain.jpa.myproject.my_project_role.MyProjectRoleRepository;
+import com.portfolio.portfolio_project.service.module.MyProjectModules;
 import com.portfolio.portfolio_project.web.myproject.MyProjectDTO_In;
 import com.portfolio.portfolio_project.web.myproject.MyProjectDTO_Out;
 
@@ -28,7 +28,7 @@ public class MyProjectService {
     private final MyProjectRoleRepository myProjectRoleRepository;
     private final MyProjectRepository myProjectRepository;
     private final S3Utils s3Utils;
-    private final MyProjectUtils myProjectUtils;
+    private final MyProjectModules myProjectUtils;
 
     // FindAll
     @Transactional(readOnly = true)

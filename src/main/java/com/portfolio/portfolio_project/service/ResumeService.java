@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.portfolio.portfolio_project.core.exception.Exception400;
 import com.portfolio.portfolio_project.core.exception.Exception500;
-import com.portfolio.portfolio_project.core.util.order_utils.OrderUtils;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_academy_edu.ResumeAcademyEdu;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_academy_edu.ResumeAcademyEduRepository;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_certificate.ResumeCertificate;
@@ -16,6 +15,7 @@ import com.portfolio.portfolio_project.domain.mongodb.resume.resume_school_edu.R
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_school_edu.ResumeSchoolEduRepository;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_self_study.ResumeSelfStudy;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_self_study.ResumeSelfStudyRepository;
+import com.portfolio.portfolio_project.service.module.row_order_module.OrderUtils;
 import com.portfolio.portfolio_project.web.resume.ResumeDTO_In;
 import com.portfolio.portfolio_project.web.resume.ResumeDTO_In.OrderUpdateDto;
 import com.portfolio.portfolio_project.web.resume.ResumeDTO_Out;

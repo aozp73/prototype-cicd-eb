@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.portfolio.portfolio_project.core.util.order_utils.Orderable;
+import com.portfolio.portfolio_project.service.module.row_order_module.Orderable;
 
 import lombok.Builder;
 import lombok.Getter;

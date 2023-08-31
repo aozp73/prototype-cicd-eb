@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-public class SkillsDTO_In {
+public class MySkillsDTO_In {
 
     @Getter
     @Setter
