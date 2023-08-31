@@ -2,6 +2,11 @@
     
     <%@ include file="layout/header.jsp" %>     
 
+    <input type="hidden" id="backEndSkills" value="${backEndSkills}"/>
+    <input type="hidden" id="frontEndSkills" value="${frontEndSkills}"/>
+    <input type="hidden" id="devOpsSkills" value="${devOpsSkills}"/>
+    <input type="hidden" id="etcSkills" value="${etcSkills}"/>
+
     <div class="py-5" style="background-color: #F9F9F9; position: relative;" id="main-container">    
         <button type="button" class="btn btn-outline-primary skills-btn-fixed edit-controls" style="display: none;" onclick="getUpdateForm(event)">수정하기</button>
         <div class="container container-custom-width" style="margin-bottom: 53px;">
@@ -133,6 +138,7 @@
     </div>
     <!-- 수정 Form Modal -->
 
-<script src="/js/skills.js"></script>
+
+<script src="/js/myskills.js"></script>
     
 <%@ include file="layout/footer.jsp" %>

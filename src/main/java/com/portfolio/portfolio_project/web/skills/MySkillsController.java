@@ -2,6 +2,7 @@ package com.portfolio.portfolio_project.web.skills;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,8 +19,14 @@ public class MySkillsController {
     private final MySkillsService mySkillsService;
 
     @GetMapping("/skills")
-    public String skillspage(){
-        return "/skills";
+    public String myskillspage(Model model){
+
+        MySkillsDTO_Out.FindAllDTO mySkillAllDTO = mySkillsService.findAllSkills();
+        model.addAttribute("backEndSkills", mySkillAllDTO.getBackEndSkills());
+        model.addAttribute("frontEndSkills", mySkillAllDTO.getFrontEndSkills());
+        model.addAttribute("devOpsSkills", mySkillAllDTO.getDevOpsSkills());
+        model.addAttribute("etcSkills", mySkillAllDTO.getEtcSkills());
+        return "/myskills";
     }
 
     @PostMapping("/auth/skills")

@@ -10,6 +10,7 @@ import com.portfolio.portfolio_project.domain.jpa.skills.my_skill.MySkill;
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill.MySkillRepository;
 import com.portfolio.portfolio_project.service.module.MySkillsModules;
 import com.portfolio.portfolio_project.web.skills.MySkillsDTO_In;
+import com.portfolio.portfolio_project.web.skills.MySkillsDTO_Out;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,8 +21,15 @@ public class MySkillsService {
     private final MySkillRepository mySkillRepository;
     private final MySkillsModules mySkillsModules;
     
+    @Transactional(readOnly = true)
+    public MySkillsDTO_Out.FindAllDTO findAllSkills() {
+        List<MySkill> mySkillsPS = mySkillRepository.findAll();
+
+        return MySkillsDTO_Out.FindAllDTO.fromEntity(mySkillsPS);
+    }
+
     @Transactional
-    public String mySkills_post(MySkillsDTO_In.PostDTO postDTO_In) {
+    public void mySkills_post(MySkillsDTO_In.PostDTO postDTO_In) {
         List<MySkill> toAdd = new ArrayList<>();
         List<MySkill> toRemove = new ArrayList<>();
 
@@ -32,8 +40,6 @@ public class MySkillsService {
 
         mySkillRepository.saveAll(toAdd);
         mySkillRepository.deleteAll(toRemove);
-
-        return "";
     }
 
 
