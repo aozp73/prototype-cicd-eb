@@ -83,7 +83,7 @@
                 </div>
                 <div class="ms-4 mb-4">
                     <div class="mb-1">
-                        <strong>2. README (기술스택, 시연영상, 느낀점 등)</strong>
+                        <strong>2. README (기술블로그, 기술스택, 느낀점 등)</strong>
                     </div>
                     <div class="ms-3">
                         <p id="projectModalREADMELink"></p>

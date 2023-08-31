@@ -111,7 +111,7 @@ public class MyProjectService {
         return MyProjectDTO_Out.PutDTO.fromEntity(myProjectPS, myProjectRolesPS);
     }
 
-
+    @Transactional
     public void myProject_delete(Long projectPK){
         MyProject myProjectPS = myProjectRepository.findById(projectPK).orElseThrow(() ->{
             throw new Exception400("존재하지 않는 게시물 입니다.");

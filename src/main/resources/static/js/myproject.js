@@ -97,15 +97,13 @@ function postProject() {
         alert("이미지 파일을 등록해야 합니다.")
         return
     }
-    
-    let data = {};
-    formData.forEach((value, key) => {data[key] = value});
 
     $.ajax({
         url: "/auth/myproject",
         type: "POST",
-        data: JSON.stringify(data),
-        contentType: 'application/json',
+        data: formData,
+        contentType: false, // 서버에 데이터의 contentType을 자동으로 설정하도록 함
+        processData: false, // jQuery가 data를 QueryString으로 처리하지 않도록 설정
         headers: {
             'Authorization': jwtToken  
         },
@@ -138,7 +136,7 @@ function updateProject() {
         hasRolesChanged = true;
     }
     payload["hasRolesChanged"] = hasRolesChanged;
-    console.log(payload)
+
     $.ajax({
         url: '/auth/myproject',
         type: 'PUT',
@@ -162,8 +160,8 @@ function updateProject() {
             const iconsForMembers = getMembersIcons(membersCount);
             newCard.find('.member-icons').html("&nbsp;" + iconsForMembers);
         },
-        error: function(jqXHR, textStatus, errorThrown) {
-
+        error: function(error) {
+            alert(error.responseJSON.data);
         }
     });
 }
@@ -191,8 +189,6 @@ function deleteProject(event, pk) {
             alert(error.responseJSON.data);
         }
     })
-
-
 }
 
 
@@ -354,6 +350,11 @@ function getImageDetails(inputId, imageId) {
     let contentType = '';
     let imgChangeCheck = false;
 
+    if(file && !file.type.startsWith('image/')){
+        alert("이미지 파일을 등록해야 합니다.")
+        return
+    }
+
     let imageElement = document.getElementById(imageId);
     let imageSrc = imageElement.src;
 
@@ -375,7 +376,7 @@ function getImageDetails(inputId, imageId) {
     };
 }
 
-// 수정하기 Form - role 값이 달라졌는지 체크
+// 수정하기 - role 값이 달라졌는지 체크
 function arraysEqual(a, b) {
     return a.length === b.length && a.every((val, index) => val === b[index]);
 }
@@ -490,6 +491,5 @@ $(document).ready(function() {
 
 // 상세정보 모달창 url, 이미지 새창 열기 
 function openImageInNewWindow(src) {
-    window.open(src, 'Image', 'width=800,height=600,left=600,top=50');
+    window.open(src, '_blank');
 }
-

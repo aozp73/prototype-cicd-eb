@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +34,7 @@ public class MyProjectController {
     }
 
     @PostMapping("/auth/myproject")
-    public ResponseEntity<?> myproject_post(@RequestBody MyProjectDTO_In.PostDTO postDTO_In){
+    public ResponseEntity<?> myproject_post(@ModelAttribute MyProjectDTO_In.PostDTO postDTO_In){
         MyProjectDTO_Out.PostDTO postDTO_Out = myProjectService.myProject_post(postDTO_In);
 
         return ResponseEntity.ok().body(new ResponseDTO<>().data(postDTO_Out));
