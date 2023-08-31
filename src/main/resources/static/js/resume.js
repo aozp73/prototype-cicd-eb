@@ -61,8 +61,6 @@ function initEditMode() {
                         }
                     });
 
-                    console.log(`Tbody ID: ${tbodyID}`);
-                    console.log('arr:', rowPKs);
                     const jwtToken = localStorage.getItem('jwtToken'); 
 
                     // ajax 통신으로 Row 드래그 후, 순서를 갱신하여 기록 (페이지 요청 시 그대로 적용)

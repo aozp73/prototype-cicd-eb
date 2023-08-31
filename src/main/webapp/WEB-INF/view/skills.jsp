@@ -65,7 +65,7 @@
 
                         <div class="mb-5">
                             <h3 class="me-2"style="display:inline">Back-End</h3>
-                            <select id="backendSelect" onchange="addButton('backend')" style="width: 20%;">
+                            <select id="BackEndSelect" onchange="addSkills('BackEnd')" style="width: 20%;">
                                 <option selected></option>
                                 <option value="Java">Java</option>
                                 <option value="Python">Python</option>
@@ -77,12 +77,12 @@
                                 <option value="Postman">Postman</option>
                             </select>
                             <hr>
-                            <div id="backendButtons" class="mt-2" style="height: 60px;"></div>
+                            <div id="BackEndSkills" class="mt-2" style="height: 60px;"></div>
                         </div>
 
                         <div class="mb-5">
                             <h3 class="me-2"style="display:inline">Front-End</h3>
-                            <select id="frontendSelect" onchange="addButton('frontend')" style="width: 20%;">
+                            <select id="FrontEndSelect" onchange="addSkills('FrontEnd')" style="width: 20%;">
                                 <option selected></option>
                                 <option value="HTML5">HTML5</option>
                                 <option value="CSS3">CSS3</option>
@@ -90,23 +90,23 @@
                                 <option value="jQuery">jQuery</option>
                             </select>
                             <hr>
-                            <div id="frontendButtons" class="mt-2"  style="height: 60px;"></div>
+                            <div id="FrontEndSkills" class="mt-2"  style="height: 60px;"></div>
                         </div>
 
                         <div class="mb-5">
                             <h3 class="me-2"style="display:inline">Dev-Ops</h3>
-                            <select id="devopsSelect" onchange="addButton('devops')" style="width: 20%;">
+                            <select id="DevOpsSelect" onchange="addSkills('DevOps')" style="width: 20%;">
                                 <option selected></option>
                                 <option value="Docker">Docker</option>
                                 <option value="Kubernetes">Kubernetes</option>
                             </select>
                             <hr>
-                            <div id="devopsButtons" class="mt-2"  style="height: 60px;"></div>
+                            <div id="DevOpsSkills" class="mt-2"  style="height: 60px;"></div>
                         </div>
 
                         <div class="mb-5">
                             <h3 class="me-2"style="display:inline">ETC</h3>
-                            <select id="etcSelect" onchange="addButton('etc')" style="width: 20%;">
+                            <select id="ETCSelect" onchange="addSkills('ETC')" style="width: 20%;">
                                 <option selected></option>
                                 <option value="GitHub">GitHub</option>
                                 <option value="Notion">Notion</option>
@@ -119,7 +119,7 @@
                                 <option value="AmazonS3">AmazonS3</option>
                             </select>
                             <hr>
-                            <div id="etcButtons" class="mt-2"  style="height: 60px;"></div>
+                            <div id="ETCSkills" class="mt-2"  style="height: 60px;"></div>
                         </div>
 
                     </form>
