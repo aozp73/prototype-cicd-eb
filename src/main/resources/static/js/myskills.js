@@ -142,20 +142,6 @@ function modalSetting(section, value) {
 function getUpdateForm(event){
     var modal = new bootstrap.Modal(document.getElementById("skillsAddForm"));
     modal.show();
-
-    // jQuery를 이용해 Select2 라이브러리 초기화 (검색 기능이 있는 JavaScript 라이브러리)
-    $('#BackEndSelect').select2({
-        dropdownParent: $('#skillsAddForm') 
-    }); 
-    $('#FrontEndSelect').select2({
-        dropdownParent: $('#skillsAddForm') 
-    }); 
-    $('#DevOpsSelect').select2({
-        dropdownParent: $('#skillsAddForm') 
-    }); 
-    $('#ETCSelect').select2({
-        dropdownParent: $('#skillsAddForm') 
-    }); 
 }
 
 // 모달 창이 닫힐 때 
@@ -264,6 +250,7 @@ function updateSkills() {
     $.ajax({
         url: "/auth/skills",
         type: "POST",
+        dataType: 'json',
         contentType: "application/json",
         data: JSON.stringify(changedSkills),
         headers: {
@@ -299,27 +286,32 @@ function updateChangedSkills(section, name, status) {
     // DB에서 가져온 상태에서 처음 removed 되었다면, 정보를 checkInitialSkill 배열에 추가
     if (status === 'removed' && !existing) {
         checkInitialSkill.push({ section, name });
-    }
+    } 
 
     // 이전이 added 상태였고, 현재 'removed' 된거라면 -> DB에 없던 상태에서 added된건지 확인
     if (status === 'removed' && existing && existing.status === 'added') {
-        const initialRemoved = checkInitialSkill.find(skill => skill.name === name && skill.section === section);
+        const initialCheck1 = checkInitialSkill.find(skill => skill.name === name && skill.section === section);
         // 첫 요청 시 DB에 없던 상태에서 추가된 것이 아니라면 removed를 push하지 않고 함수 종료 
         // (DB에 없는 상태이니 removed를 Server로 보내면 안됨)
-        if (!initialRemoved) {
+        if (!initialCheck1) {
             return;
         }
     }
-  
+
+    // 반대의 상황도 처리
+    if (status ==='added' && existing && existing.status === 'removed'){
+        const initialCheck2 = checkInitialSkill.find(skill => skill.name === name && skill.section === section);
+
+        if (initialCheck2) {
+            return;
+        }
+    }
+
     // 새로운 상태를 changedSkills에 추가 
     changedSkills[section].push({ name, status });  
 }
 
 // ====== 서버에 보내는 객체의 유효성을 체크하는 함수 ============================ //
-
-
-
-
 
 
 // seletbox에서 선택할 수 있는 badges (해당 오브젝트로 랜더링)
@@ -329,11 +321,11 @@ var badges = {
     "Java": "https://img.shields.io/badge/Java-007396.svg?style=flat-square&logo=openjdk&logoColor=white",
     "SpringBoot":"https://img.shields.io/badge/SpringBoot-%236DB33F.svg?style=flat-square&logo=spring&logoColor=white",
     "SpringSecurity":"https://img.shields.io/badge/Spring_Security-%236DB33F?style=flat-square&logo=springsecurity&logoColor=white",
-    "Mybatis":"https://img.shields.io/badge/MyBatis-C70D2C.svg?style=flat-square&logo=FamPay&logoColor=white",
+    "Mybatis":"https://img.shields.io/badge/MyBatis-0052CC.svg?style=flat-square&logo=FamPay&logoColor=white",
     "Jpa":"https://img.shields.io/badge/JPA-5F5F5F?style=flat-square&logo=buffer&logoColor=white",
 
     "MySQL":"https://img.shields.io/badge/MySQL-4479A1.svg?style=flat-square&logo=MySQL&logoColor=white",
-    "MongoDB":"https://img.shields.io/badge/mongoDB-47A248?style=flat-square&logo=MongoDB&logoColor=white",
+    "MongoDB":"https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=MongoDB&logoColor=white",
 
     "JUnit5":"https://img.shields.io/badge/JUnit5-25A162?style=flat-square&logo=junit5&logoColor=white",
     "Postman":"https://img.shields.io/badge/Postman-FF6C37?style=flat-square&logo=postman&logoColor=white",
