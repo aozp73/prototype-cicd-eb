@@ -2,28 +2,26 @@
     
     <%@ include file="layout/header.jsp" %>     
 
-    <div id="allSkills" data-skills='${allSkills}'>
-
-    </div>
+    <div id="allSkills" data-skills='${allSkills}'></div>
 
     <div class="py-5" style="background-color: #F9F9F9; position: relative;" id="main-container">    
         <button type="button" class="btn btn-outline-primary skills-btn-fixed edit-controls" style="display: none;" onclick="getUpdateForm(event)">수정하기</button>
-        <div class="container container-custom-width" style="margin-bottom: 53px;">
+        <div id="backend-container" class="container container-custom-width" style="margin-bottom: 53px;">
             <h3>Back-End</h3>
             <hr>
         </div>
 
-        <div class="container container-custom-width" style="margin-bottom: 53px;">
+        <div id="frontend-container" class="container container-custom-width" style="margin-bottom: 53px;">
             <h3>Front-End</h3>
             <hr>
         </div>
 
-        <div class="container container-custom-width" style="margin-bottom: 53px;">
+        <div id="devops-container" class="container container-custom-width" style="margin-bottom: 53px;">
             <h3>Dev-Ops</h3>
             <hr>
         </div>
 
-        <div class="container container-custom-width" style="margin-bottom: 50px;">
+        <div id="etc-container" class="container container-custom-width" style="margin-bottom: 50px;">
             <h3>ETC</h3>
             <hr>
         </div>
@@ -44,13 +42,16 @@
                             <h3 class="me-2"style="display:inline">Back-End</h3>
                             <select id="BackEndSelect" onchange="addSkills('BackEnd')" style="width: 20%;">
                                 <option selected></option>
-                                <option id="Java" value="Java">Java</option>
                                 <option id="Python" value="Python">Python</option>
+                                <option id="Java" value="Java">Java</option>
                                 <option id="SpringBoot" value="SpringBoot">SpringBoot</option>
                                 <option id="SpringSecurity" value="SpringSecurity">SpringSecurity</option>
-                                <option id="MySQL" value="MySQL">MySQL</option>
                                 <option id="Mybatis" value="Mybatis">Mybatis</option>
                                 <option id="Jpa" value="Jpa">JPA</option>
+                                
+                                <option id="MySQL" value="MySQL">MySQL</option>
+                                <option id="MongoDB" value="MongoDB">MongoDB</option>
+
                                 <option id="JUnit5" value="JUnit5">JUnit5</option>
                                 <option id="Postman" value="Postman">Postman</option>
                             </select>
@@ -66,6 +67,7 @@
                                 <option id="CSS3" value="CSS3">CSS3</option>
                                 <option id="JavaScript" value="JavaScript">JavaScript</option>
                                 <option id="JQuery" value="JQuery">jQuery</option>
+                                <option id="BootStrap" value="BootStrap">BootStrap</option>
                             </select>
                             <hr>
                             <div id="FrontEndSkills" class="mt-2"  style="height: 60px;"></div>
@@ -77,6 +79,7 @@
                                 <option selected></option>
                                 <option id="Docker" value="Docker">Docker</option>
                                 <option id="Kubernetes" value="Kubernetes">Kubernetes</option>
+                                <option id="AmazonEC2" value="AmazonEC2">AmazonEC2</option>
                             </select>
                             <hr>
                             <div id="DevOpsSkills" class="mt-2"  style="height: 60px;"></div>
@@ -93,7 +96,6 @@
                                 <option id="Eclipse" value="Eclipse">Eclipse</option>
                                 <option id="AWS" value="AWS">AWS</option>
                                 <option id="Firebase" value="Firebase">Firebase</option>
-                                <option id="AmazonEC2" value="AmazonEC2">AmazonEC2</option>
                                 <option id="AmazonS3" value="AmazonS3">AmazonS3</option>
                             </select>
                             <hr>
