@@ -70,6 +70,11 @@ function addSkills(section) {
             // changedSkills[section].push({name: value, status: 'removed'});
             updateChangedSkills(section, value, 'removed');
             skillsDiv.removeChild(container);
+
+            el = `
+                <option id="${value}" value="${value}">${value}</option>
+            `
+            $(`#${section}Select`).append(el)
         };
         btn.appendChild(closeIcon);
         
@@ -79,6 +84,7 @@ function addSkills(section) {
         updateChangedSkills(section, value, 'added');
         // changedSkills[section].push({name: value, status: 'added'});
         skillsDiv.appendChild(container);
+        $(`#${value}`).remove()
     }
 }
 
@@ -97,7 +103,7 @@ function updateSkills() {
         },
 
         success: function(response) {
-            console.log(response);
+            location.reload(true);
         },
         error: function(error) {
             alert(error.responseJSON.data);
@@ -106,10 +112,10 @@ function updateSkills() {
 }
 
 // 스킬 업데이트 함수
-// add하고 remove를 반복해서 한다면, 마지막 액션만 기록되어야 함
+// (add, remove를 반복해서 한다면, 마지막 액션만 기록되어 Server로 보내져야함)
 function updateChangedSkills(section, name, status) {
     // changedSkills의 section 키에 연결된 배열에서 name이 같은 객체를 찾음
-    // existing에는 배열에서 찾은 객체를 저장하거나, 찾지 못했다면 undefined 저장
+    // existing에는 배열에서 찾은 객체 저장 / 찾지 못했다면 undefined 저장
     const existing = changedSkills[section].find(skill => skill.name === name);
     
     // 이전에 추가되거나 삭제된 기록이 있다면, 그 기록을 지움
@@ -118,57 +124,68 @@ function updateChangedSkills(section, name, status) {
       changedSkills[section].splice(index, 1);
     }
 
-    // 만약 초기 상태(즉, DB에서 가져온 상태)에서 처음으로 removed 상태가 되면,
-    // 그 정보를 checkInitialSkill 배열에 추가
+    // DB에서 가져온 상태에서 처음 removed 되었다면, 정보를 checkInitialSkill 배열에 추가
     if (status === 'removed' && !existing) {
         checkInitialSkill.push({ section, name });
     }
 
-    // 이전에 added 상태였는데 현재 'removed' 상태로 바뀌면,
-    // 그게 초기 상태에서 바뀐 것인지 확인
+    // 이전이 added 상태였고, 현재 'removed' 된거라면 -> DB에 없던 상태에서 added된건지 확인
     if (status === 'removed' && existing && existing.status === 'added') {
         const initialRemoved = checkInitialSkill.find(skill => skill.name === name && skill.section === section);
-        // 초기 상태에서 추가된 것이 아니라면 함수를 종료 (초기 상태가 아니라면 변한게 없음)
+        // 첫 요청 시 DB에 없던 상태에서 추가된 것이 아니라면 removed를 push하지 않고 함수 종료 
+        // (DB에 없는 상태이니 removed를 Server로 보내면 안됨)
         if (!initialRemoved) {
             return;
         }
     }
   
-    // 새로운 상태를 changedSkills에 추가 (초기 상태에 있던걸 remove한 것도 기록하여 저장)
+    // 새로운 상태를 changedSkills에 추가 
     changedSkills[section].push({ name, status });  
+    console.log(changedSkills)
 }
 
 
 
-// 모달 창이 닫힐 때 두 배열 초기화
+// 모달 창이 닫힐 때 
 document.addEventListener('DOMContentLoaded', (event) => {
     var myModal = document.getElementById('skillsAddForm')
     myModal.addEventListener('hidden.bs.modal', function (event) {
+        // 배열 초기화
         changedSkills['BackEnd'] = [];
         changedSkills['FrontEnd'] = [];
         changedSkills['DevOps'] = [];
         changedSkills['ETC'] = [];
 
         checkInitialSkill = [];
+
+        // 새로 추가 및 삭제 내역 / 선택한 내역 초기화
+        document.getElementById('BackEndSkills').innerHTML = '';
+        document.getElementById('FrontEndSkills').innerHTML = '';
+        document.getElementById('DevOpsSkills').innerHTML = '';
+        document.getElementById('ETCSkills').innerHTML = '';
+    
+        document.getElementById('BackEndSelect').selectedIndex = -1;
+        document.getElementById('FrontEndSelect').selectedIndex = -1;
+        document.getElementById('DevOpsSelect').selectedIndex = -1;
+        document.getElementById('ETCSelect').selectedIndex = -1;
     });
 });
 
-
 var badges = {
-    "Python": "https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=Python&logoColor=white",
     "Java": "https://img.shields.io/badge/Java-%23ED8B00.svg?style=flat-square&logo=openjdk&logoColor=white",
-    "Spring":"https://img.shields.io/badge/SpringBoot-%236DB33F.svg?style=flat-square&logo=spring&logoColor=white",
-    "Spring Security":"https://img.shields.io/badge/Spring_Security-6DB33F?style=flat-square&logo=spring&logoColor=white",
+    "Python": "https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=Python&logoColor=white",
+    "SpringBoot":"https://img.shields.io/badge/SpringBoot-%236DB33F.svg?style=flat-square&logo=spring&logoColor=white",
+    "SpringSecurity":"https://img.shields.io/badge/Spring_Security-6DB33F?style=flat-square&logo=spring&logoColor=white",
     "MySQL":"https://img.shields.io/badge/MySQL-%2300f.svg?style=flat-square&logo=MySQL&logoColor=white",
     "Mybatis":"https://img.shields.io/badge/MyBatis-C70D2C.svg?style=flat-square",
-    "JPA":"https://img.shields.io/badge/JPA-A5915F.svg?style=flat-square",
+    "Jpa":"https://img.shields.io/badge/JPA-A5915F.svg?style=flat-square",
     "JUnit5":"https://img.shields.io/badge/JUnit5-25A162?style=flat-square&logo=junit5&logoColor=white",
     "Postman":"https://img.shields.io/badge/Postman-FF6C37?style=flat-square&logo=postman&logoColor=white",
 
     "HTML5":"https://img.shields.io/badge/HTML5-%23E34F26.svg?style=flat-square&logo=html5&logoColor=white",
     "CSS3":"https://img.shields.io/badge/CSS3-%231572B6.svg?style=flat-square&logo=css3&logoColor=white",
     "JavaScript":"https://img.shields.io/badge/JavaScript-%23323330.svg?style=flat-square&logo=javascript&logoColor=%23F7DF1E",
-    "Jquery":"https://img.shields.io/badge/jQuery-%230769AD.svg?style=flat-square&logo=jquery&logoColor=white",
+    "JQuery":"https://img.shields.io/badge/jQuery-%230769AD.svg?style=flat-square&logo=jquery&logoColor=white",
     
     "Docker":"https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=Docker&logoColor=white",
     "Kubernetes":"https://img.shields.io/badge/Kubernetes-2496ED?style=flat-square&logo=Kubernetes&logoColor=white",
@@ -223,8 +240,8 @@ function loadSkillsOnModal() {
 }
 
 function modalSetting(section, value) {
-    const buttonsDiv = document.getElementById(`${section}Skills`);
-
+    const skillsDiv = document.getElementById(`${section}Skills`);
+    
     if (value) {
         const container = document.createElement("div");
         container.className = "no-hover-container";
@@ -248,27 +265,21 @@ function modalSetting(section, value) {
 
         closeIcon.onclick = function(event) {
             event.stopPropagation();
-            buttonsDiv.removeChild(container);
+            updateChangedSkills(section, value, 'removed');
+            skillsDiv.removeChild(container);
+            el = `
+                <option id="${value}" value="${value}">${value}</option>
+            `
+            $(`#${section}Select`).append(el)
         };
+
         btn.appendChild(closeIcon);
 
         container.appendChild(btn);
 
         // 컨테이너에 버튼 추가
-        buttonsDiv.appendChild(container);
+        skillsDiv.appendChild(container);
+        $(`#${value}`).remove()
     }
 }
 
-// 수정 모달창 닫으면 새로 추가 및 삭제 내역 / 선택한 내역 초기화
-// (수정하기 클릭 시 reload(True) 진행. 이때만 랜더링 변경이 있어야함)
-document.getElementById('skillsAddForm').addEventListener('hidden.bs.modal', function() {
-    document.getElementById('BackEndSkills').innerHTML = '';
-    document.getElementById('FrontEndSkills').innerHTML = '';
-    document.getElementById('DevOpsSkills').innerHTML = '';
-    document.getElementById('ETCSkills').innerHTML = '';
-
-    document.getElementById('BackEndSelect').selectedIndex = -1;
-    document.getElementById('FrontEndSelect').selectedIndex = -1;
-    document.getElementById('DevOpsSelect').selectedIndex = -1;
-    document.getElementById('ETCSelect').selectedIndex = -1;
-});

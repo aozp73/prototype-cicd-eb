@@ -36,7 +36,6 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="skillsModalLabel">Skill 정보 수정</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </button>
                 </div>
                 <div class="modal-body">
                     <form id="updateSkillsForm">
@@ -45,14 +44,15 @@
                             <h3 class="me-2"style="display:inline">Back-End</h3>
                             <select id="BackEndSelect" onchange="addSkills('BackEnd')" style="width: 20%;">
                                 <option selected></option>
-                                <option value="Java">Java</option>
-                                <option value="Python">Python</option>
-                                <option value="Spring">Spring</option>
-                                <option value="Spring Security">Spring Security</option>
-                                <option value="MySQL">MySQL</option>
-                                <option value="JPA">JPA</option>
-                                <option value="JUnit5">JUnit5</option>
-                                <option value="Postman">Postman</option>
+                                <option id="Java" value="Java">Java</option>
+                                <option id="Python" value="Python">Python</option>
+                                <option id="SpringBoot" value="SpringBoot">SpringBoot</option>
+                                <option id="SpringSecurity" value="SpringSecurity">SpringSecurity</option>
+                                <option id="MySQL" value="MySQL">MySQL</option>
+                                <option id="Mybatis" value="Mybatis">Mybatis</option>
+                                <option id="Jpa" value="Jpa">JPA</option>
+                                <option id="JUnit5" value="JUnit5">JUnit5</option>
+                                <option id="Postman" value="Postman">Postman</option>
                             </select>
                             <hr>
                             <div id="BackEndSkills" class="mt-2" style="height: 60px;"></div>
@@ -62,10 +62,10 @@
                             <h3 class="me-2"style="display:inline">Front-End</h3>
                             <select id="FrontEndSelect" onchange="addSkills('FrontEnd')" style="width: 20%;">
                                 <option selected></option>
-                                <option value="HTML5">HTML5</option>
-                                <option value="CSS3">CSS3</option>
-                                <option value="JavaScript">JavaScript</option>
-                                <option value="jQuery">jQuery</option>
+                                <option id="HTML5" value="HTML5">HTML5</option>
+                                <option id="CSS3" value="CSS3">CSS3</option>
+                                <option id="JavaScript" value="JavaScript">JavaScript</option>
+                                <option id="JQuery" value="JQuery">jQuery</option>
                             </select>
                             <hr>
                             <div id="FrontEndSkills" class="mt-2"  style="height: 60px;"></div>
@@ -75,8 +75,8 @@
                             <h3 class="me-2"style="display:inline">Dev-Ops</h3>
                             <select id="DevOpsSelect" onchange="addSkills('DevOps')" style="width: 20%;">
                                 <option selected></option>
-                                <option value="Docker">Docker</option>
-                                <option value="Kubernetes">Kubernetes</option>
+                                <option id="Docker" value="Docker">Docker</option>
+                                <option id="Kubernetes" value="Kubernetes">Kubernetes</option>
                             </select>
                             <hr>
                             <div id="DevOpsSkills" class="mt-2"  style="height: 60px;"></div>
@@ -86,15 +86,15 @@
                             <h3 class="me-2"style="display:inline">ETC</h3>
                             <select id="ETCSelect" onchange="addSkills('ETC')" style="width: 20%;">
                                 <option selected></option>
-                                <option value="GitHub">GitHub</option>
-                                <option value="Notion">Notion</option>
-                                <option value="Jira">Jira</option>
-                                <option value="VisualStudioCode">VisualStudioCode</option>
-                                <option value="Eclipse">Eclipse</option>
-                                <option value="AWS">AWS</option>
-                                <option value="Firebase">Firebase</option>
-                                <option value="AmazonEC2">AmazonEC2</option>
-                                <option value="AmazonS3">AmazonS3</option>
+                                <option id="GitHub" value="GitHub">GitHub</option>
+                                <option id="Notion" value="Notion">Notion</option>
+                                <option id="Jira" value="Jira">Jira</option>
+                                <option id="VisualStudioCode" value="VisualStudioCode">VisualStudioCode</option>
+                                <option id="Eclipse" value="Eclipse">Eclipse</option>
+                                <option id="AWS" value="AWS">AWS</option>
+                                <option id="Firebase" value="Firebase">Firebase</option>
+                                <option id="AmazonEC2" value="AmazonEC2">AmazonEC2</option>
+                                <option id="AmazonS3" value="AmazonS3">AmazonS3</option>
                             </select>
                             <hr>
                             <div id="ETCSkills" class="mt-2"  style="height: 60px;"></div>

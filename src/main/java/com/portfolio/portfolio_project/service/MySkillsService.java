@@ -39,6 +39,7 @@ public class MySkillsService {
 
         mySkillRepository.saveAll(toAdd);
         mySkillRepository.deleteAll(toRemove);
+        System.out.println("테스트 : " + toRemove.size());
     }
 
 

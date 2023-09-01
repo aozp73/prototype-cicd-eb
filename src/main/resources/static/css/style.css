@@ -149,6 +149,11 @@
     pointer-events: auto; 
 }
 
+.struck-through {
+    text-decoration: line-through;
+}
+
+
 
 /* TechBlog page */
 .blog-image-preview {
