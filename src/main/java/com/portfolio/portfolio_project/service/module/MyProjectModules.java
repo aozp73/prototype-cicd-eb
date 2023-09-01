@@ -1,4 +1,4 @@
-package com.portfolio.portfolio_project.core.util.myproject_utils;
+package com.portfolio.portfolio_project.service.module;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Component
-public class MyProjectUtils {
+public class MyProjectModules {
     private final MyProjectRoleRepository myProjectRoleRepository;
     private final MyProjectRoleCodeRepository myProjectRoleCodeRepository;
 

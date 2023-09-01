@@ -33,6 +33,7 @@ public class MainIntroduceController {
         return "/mainpage";
     }
 
+    // POST
     @PostMapping("/auth/main")
     public ResponseEntity<?> main_post(@RequestBody MainIntroduceDTO_In.postDTO postDTO_In){
         MainIntroduceDTO_Out.PostDTO postDTO_Out = mainIntroduceService.main_post(postDTO_In);
@@ -40,6 +41,7 @@ public class MainIntroduceController {
         return ResponseEntity.ok().body(new ResponseDTO<>().data(postDTO_Out));
     }
 
+    // PUT
     @PutMapping("/auth/main")
     public ResponseEntity<?> main_put(@RequestBody MainIntroduceDTO_In.putDTO putDTO_In){
         MainIntroduceDTO_Out.PutDTO putDTO_Out = mainIntroduceService.main_put(putDTO_In);
@@ -47,6 +49,7 @@ public class MainIntroduceController {
         return ResponseEntity.ok().body(new ResponseDTO<>().data(putDTO_Out));
     }
 
+    // DELETE
     @DeleteMapping("/auth/main")
     public ResponseEntity<?> main_delete(@RequestParam("postPK") Long postPK){
         mainIntroduceService.main_delete(postPK);

@@ -33,6 +33,7 @@ public class MyProjectController {
         return "/myproject";
     }
 
+    // POST
     @PostMapping("/auth/myproject")
     public ResponseEntity<?> myproject_post(@ModelAttribute MyProjectDTO_In.PostDTO postDTO_In){
         MyProjectDTO_Out.PostDTO postDTO_Out = myProjectService.myProject_post(postDTO_In);
@@ -40,6 +41,7 @@ public class MyProjectController {
         return ResponseEntity.ok().body(new ResponseDTO<>().data(postDTO_Out));
     }
 
+    // PUT
     @PutMapping("/auth/myproject")
     public ResponseEntity<?> myproject_put(@RequestBody MyProjectDTO_In.PutDTO putDTO_In){
         MyProjectDTO_Out.PutDTO putDTO_Out = myProjectService.myProject_put(putDTO_In);
@@ -47,6 +49,7 @@ public class MyProjectController {
         return ResponseEntity.ok().body(new ResponseDTO<>().data(putDTO_Out));
     }
 
+    // DELETE
     @DeleteMapping("/auth/myproject")
     public ResponseEntity<?> main_delete(@RequestParam("projectPK") Long projectPK){
         myProjectService.myProject_delete(projectPK);

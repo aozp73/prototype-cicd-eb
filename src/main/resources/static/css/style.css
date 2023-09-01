@@ -149,6 +149,11 @@
     pointer-events: auto; 
 }
 
+.image-container {
+    padding: 8px; 
+}
+  
+
 
 /* TechBlog page */
 .blog-image-preview {
