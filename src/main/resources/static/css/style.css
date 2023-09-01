@@ -149,10 +149,10 @@
     pointer-events: auto; 
 }
 
-.struck-through {
-    text-decoration: line-through;
+.image-container {
+    padding: 8px; 
 }
-
+  
 
 
 /* TechBlog page */

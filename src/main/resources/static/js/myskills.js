@@ -77,7 +77,7 @@ function addSkills(section) {
             $(`#${section}Select`).append(el)
         };
         btn.appendChild(closeIcon);
-        
+
         container.appendChild(btn);
     
         // 컨테이너에 버튼 추가
@@ -141,7 +141,6 @@ function updateChangedSkills(section, name, status) {
   
     // 새로운 상태를 changedSkills에 추가 
     changedSkills[section].push({ name, status });  
-    console.log(changedSkills)
 }
 
 
@@ -216,14 +215,23 @@ window.addEventListener("load", function() {
         for(var category in allSkills) {
             var skills = allSkills[category];
             var container = containers[category];
-    
+            let imageCount = 0;
+
             skills.forEach(function(skill) {
                 var imgTag = document.createElement("img");
                 imgTag.src = badges[skill]; 
+                imgTag.className = "me-1";
+                
                 container.appendChild(imgTag);
+                imageCount++;
+
+                // 5개씩 이미지가 추가될 때마다 <br> 태그 추가
+                if (imageCount > 0 && imageCount % 5 === 0) {
+                    var breakTag = document.createElement("br");
+                    container.appendChild(breakTag);
+                }
             });
         }
-
 });
 
 // 수정 모달창 활성화 시 최초 페이지 요청 때 받은 DB 값으로 랜더링
