@@ -24,6 +24,7 @@ public class MySkillsService {
     @Transactional(readOnly = true)
     public MySkillsDTO_Out.FindAllDTO findAllSkills() {
         List<MySkill> mySkillsPS = mySkillRepository.findAll();
+
         return MySkillsDTO_Out.FindAllDTO.fromEntity(mySkillsPS);
     }
 
@@ -32,14 +33,14 @@ public class MySkillsService {
         List<MySkill> toAdd = new ArrayList<>();
         List<MySkill> toRemove = new ArrayList<>();
 
+        // toAdd, toRemove 리스트에 추가, 삭제할 엔터티 모으는 함수
         mySkillsModules.processSkills(postDTO_In.getBackEnd(), "BackEnd", toAdd, toRemove);
         mySkillsModules.processSkills(postDTO_In.getFrontEnd(), "FrontEnd", toAdd, toRemove);
         mySkillsModules.processSkills(postDTO_In.getDevOps(), "DevOps", toAdd, toRemove);
         mySkillsModules.processSkills(postDTO_In.getETC(), "ETC", toAdd, toRemove);
 
+        // 추가, 삭제 진행
         mySkillRepository.saveAll(toAdd);
         mySkillRepository.deleteAll(toRemove);
     }
-
-
 }

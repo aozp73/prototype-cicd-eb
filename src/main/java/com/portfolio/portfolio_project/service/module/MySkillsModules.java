@@ -29,7 +29,6 @@ public class MySkillsModules {
         MySkillTypeCode mySkillTypeCodePS = mySkillTypeCodeRepository.findBySkillType(SkillType.valueOf(section)).orElseThrow(() -> {
             throw new Exception400("존재하지 않는 스킬타입입니다.");
         });
-        System.out.println("테스트 00 : " + skillDTO.getStatus());
 
         // 새로 추가하는 스킬이라면 list에 모아서 한번에 saveAll()
         if ("added".equals(skillDTO.getStatus())) {
