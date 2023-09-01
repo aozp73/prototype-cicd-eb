@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.google.gson.Gson;
 import com.portfolio.portfolio_project.core.dto.ResponseDTO;
 import com.portfolio.portfolio_project.service.MySkillsService;
 
@@ -20,12 +21,12 @@ public class MySkillsController {
 
     @GetMapping("/skills")
     public String myskillspage(Model model){
-
-        MySkillsDTO_Out.FindAllDTO mySkillAllDTO = mySkillsService.findAllSkills();
-        model.addAttribute("backEndSkills", mySkillAllDTO.getBackEndSkills());
-        model.addAttribute("frontEndSkills", mySkillAllDTO.getFrontEndSkills());
-        model.addAttribute("devOpsSkills", mySkillAllDTO.getDevOpsSkills());
-        model.addAttribute("etcSkills", mySkillAllDTO.getEtcSkills());
+    
+        MySkillsDTO_Out.FindAllDTO mySkillsAllDTO = mySkillsService.findAllSkills();
+        Gson gson = new Gson();
+        String jsonSkills = gson.toJson(mySkillsAllDTO.getSkillsMap());
+        model.addAttribute("allSkills", jsonSkills);
+        
         return "/myskills";
     }
 

@@ -24,7 +24,6 @@ public class MySkillsService {
     @Transactional(readOnly = true)
     public MySkillsDTO_Out.FindAllDTO findAllSkills() {
         List<MySkill> mySkillsPS = mySkillRepository.findAll();
-
         return MySkillsDTO_Out.FindAllDTO.fromEntity(mySkillsPS);
     }
 

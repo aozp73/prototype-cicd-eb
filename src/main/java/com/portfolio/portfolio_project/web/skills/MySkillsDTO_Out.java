@@ -1,6 +1,5 @@
 package com.portfolio.portfolio_project.web.skills;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,10 +21,7 @@ public class MySkillsDTO_Out {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class FindAllDTO {
-        private List<String> backEndSkills;
-        private List<String> frontEndSkills;
-        private List<String> devOpsSkills;
-        private List<String> etcSkills;
+        private Map<SkillType, List<String>> skillsMap;
 
         public static FindAllDTO fromEntity(List<MySkill> mySkillsPS) {
             Map<SkillType, List<String>> groupedSkills = mySkillsPS.stream()
@@ -33,18 +29,8 @@ public class MySkillsDTO_Out {
                             skill -> skill.getMySkillTypeCode().getSkillType(),
                             Collectors.mapping(MySkill::getSkill, Collectors.toList())
                     ));
-            
-            List<String> backEndSkills = groupedSkills.getOrDefault(SkillType.BackEnd, Collections.emptyList());
-            List<String> frontEndSkills = groupedSkills.getOrDefault(SkillType.FrontEnd, Collections.emptyList());
-            List<String> devOpsSkills = groupedSkills.getOrDefault(SkillType.DevOps, Collections.emptyList());
-            List<String> etcSkills = groupedSkills.getOrDefault(SkillType.ETC, Collections.emptyList());
 
-            return FindAllDTO.builder()
-                    .backEndSkills(backEndSkills)
-                    .frontEndSkills(frontEndSkills)
-                    .devOpsSkills(devOpsSkills)
-                    .etcSkills(etcSkills)
-                    .build();
+            return new FindAllDTO(groupedSkills);
         }
     }
 }

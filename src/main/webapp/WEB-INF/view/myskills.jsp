@@ -2,57 +2,30 @@
     
     <%@ include file="layout/header.jsp" %>     
 
-    <input type="hidden" id="backEndSkills" value="${backEndSkills}"/>
-    <input type="hidden" id="frontEndSkills" value="${frontEndSkills}"/>
-    <input type="hidden" id="devOpsSkills" value="${devOpsSkills}"/>
-    <input type="hidden" id="etcSkills" value="${etcSkills}"/>
+    <div id="allSkills" data-skills='${allSkills}'>
+
+    </div>
 
     <div class="py-5" style="background-color: #F9F9F9; position: relative;" id="main-container">    
         <button type="button" class="btn btn-outline-primary skills-btn-fixed edit-controls" style="display: none;" onclick="getUpdateForm(event)">수정하기</button>
         <div class="container container-custom-width" style="margin-bottom: 53px;">
             <h3>Back-End</h3>
             <hr>
-            <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=Python&logoColor=white"/>
-            <img src="https://img.shields.io/badge/Java-%23ED8B00.svg?style=flat-square&logo=openjdk&logoColor=white">
-            <img src="https://img.shields.io/badge/Spring-%236DB33F.svg?style=flat-square&logo=spring&logoColor=white">
-            <img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=flat-square&logo=spring&logoColor=white">
-            <br>
-            <img src="https://img.shields.io/badge/MySQL-%2300f.svg?style=flat-square&logo=MySQL&logoColor=white">
-            <img src="https://img.shields.io/badge/MyBatis-C70D2C.svg?style=flat-square">
-            <img src="https://img.shields.io/badge/JPA-A5915F.svg?style=flat-square">
-            <img src="https://img.shields.io/badge/JUnit5-25A162?style=flat-square&logo=junit5&logoColor=white">
-            <img src="https://img.shields.io/badge/Postman-FF6C37?style=flat-square&logo=postman&logoColor=white">
         </div>
 
         <div class="container container-custom-width" style="margin-bottom: 53px;">
             <h3>Front-End</h3>
             <hr>
-            <img src="https://img.shields.io/badge/HTML5-%23E34F26.svg?style=flat-square&logo=html5&logoColor=white">
-            <img src="https://img.shields.io/badge/CSS3-%231572B6.svg?style=flat-square&logo=css3&logoColor=white">
-            <img src="https://img.shields.io/badge/JavaScript-%23323330.svg?style=flat-square&logo=javascript&logoColor=%23F7DF1E">
-            <img src="https://img.shields.io/badge/jQuery-%230769AD.svg?style=flat-square&logo=jquery&logoColor=white">
         </div>
 
         <div class="container container-custom-width" style="margin-bottom: 53px;">
             <h3>Dev-Ops</h3>
             <hr>
-            <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=Docker&logoColor=white"/>
-            <img src="https://img.shields.io/badge/Kubernetes-2496ED?style=flat-square&logo=Kubernetes&logoColor=white"/>
         </div>
 
         <div class="container container-custom-width" style="margin-bottom: 50px;">
             <h3>ETC</h3>
             <hr>
-            <img src="https://img.shields.io/badge/GitHub-%23121011.svg?style=flat-square&logo=github&logoColor=white">
-            <img src="https://img.shields.io/badge/Notion-000000?style=flat-square&logo=Notion&logoColor=white">
-            <img src="https://img.shields.io/badge/Jira-0052CC?style=flat-square&logo=Jira&logoColor=white">
-            <img src="https://img.shields.io/badge/VisualStudioCode-007ACC?style=flat-square&logo=VisualStudioCode&logoColor=white">
-            <img src="https://img.shields.io/badge/Eclipse-2C2255?style=flat-square&logo=Eclipse&logoColor=white">
-            <br>
-            <img src="https://img.shields.io/badge/AWS-%23FF9900.svg?style=flat-square&logo=amazon-aws&logoColor=white">
-            <img src="https://img.shields.io/badge/Firebase-FF6A00?style=flat-square&logo=firebase&logoColor=white">
-            <img src="https://img.shields.io/badge/AmazonEC2-FF9900?style=flat-square&logo=amazonec2&logoColor=white">
-            <img src="https://img.shields.io/badge/AmazonS3-569A31?style=flat-square&logo=amazons3&logoColor=white">
         </div>
 
     </div>
