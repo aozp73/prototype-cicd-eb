@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.portfolio.portfolio_project.core.exception.Exception500;
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill.MySkill;
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill.MySkillRepository;
 import com.portfolio.portfolio_project.service.module.MySkillsModules;
@@ -23,7 +24,12 @@ public class MySkillsService {
     
     @Transactional(readOnly = true)
     public MySkillsDTO_Out.FindAllDTO findAllSkills() {
-        List<MySkill> mySkillsPS = mySkillRepository.findAll();
+        List<MySkill> mySkillsPS = new ArrayList<>();
+        try {
+            mySkillsPS = mySkillRepository.findAll();
+        } catch (Exception e) {
+            throw new Exception500("스킬 조회에 실패했습니다.");
+        }
 
         return MySkillsDTO_Out.FindAllDTO.fromEntity(mySkillsPS);
     }
@@ -40,7 +46,15 @@ public class MySkillsService {
         mySkillsModules.processSkills(postDTO_In.getETC(), "ETC", toAdd, toRemove);
 
         // 추가, 삭제 진행
-        mySkillRepository.saveAll(toAdd);
-        mySkillRepository.deleteAll(toRemove);
+        try {
+            mySkillRepository.saveAll(toAdd);
+        } catch (Exception e) {
+            throw new Exception500("스킬 저장에 실패했습니다.");
+        }
+        try {
+            mySkillRepository.deleteAll(toRemove);
+        } catch (Exception e) {
+            throw new Exception500("스킬 삭제에 실패했습니다.");
+        }
     }
 }
