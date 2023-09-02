@@ -49,7 +49,7 @@ public class MainIntroduceService {
             throw new Exception400("업데이트하려는 게시물이 존재하지 않습니다.");
         });
 
-        putDTO_In.putEntity(mainIntroducePS, putDTO_In);
+        putDTO_In.toEntity(mainIntroducePS, putDTO_In);
 
         if (putDTO_In.getImgChangeCheck()) {
             List<String> nameAndUrl = s3Utils.uploadImageToS3(putDTO_In.getImageData(), 

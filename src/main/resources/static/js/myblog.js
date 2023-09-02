@@ -121,9 +121,9 @@ function addPost() {
         imageName: file.name,
         contentType: file.type,
 
-        postTitle: postTitle,
-        postSubTitle: postSubTitle,
-        postContent: postContent
+        mainTitle: postTitle,
+        content: postContent,
+        subTitle: postSubTitle
     };
 
     $.ajax({

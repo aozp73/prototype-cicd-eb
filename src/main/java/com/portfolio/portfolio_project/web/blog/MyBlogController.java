@@ -7,10 +7,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.portfolio.portfolio_project.core.dto.ResponseDTO;
+import com.portfolio.portfolio_project.service.MyBlogService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Controller
 public class MyBlogController {
     
+    private final MyBlogService myBlogService;
+
     @GetMapping("/blog")
     public String myblogpage(){
         return "/myblog";
@@ -18,13 +24,7 @@ public class MyBlogController {
 
     @PostMapping("/auth/blog")
     public ResponseEntity<?> main_post(@RequestBody MyBlogDTO_In.postDTO postDTO_In){
-        System.out.println("테스트 : " + postDTO_In.getPostTitle());
-        System.out.println("테스트 : " + postDTO_In.getPostContent());
-        System.out.println("테스트 : " + postDTO_In.getPostSubTitle());
-
-        System.out.println("테스트 : " + postDTO_In.getImageName());
-        System.out.println("테스트 : " + postDTO_In.getContentType());
-        System.out.println("테스트 : " + postDTO_In.getImageData().substring(0, 15));
+        myBlogService.myBlog_post(postDTO_In);
 
         return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
     }
