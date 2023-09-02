@@ -4,6 +4,13 @@
 
         <div class="py-5" style="background-color: #F9F9F9" id="main-container">
         
+            <div class="mt-3 container d-flex align-items-center mb-4" style="position: relative;">
+                <div id="blogURL" style="position: absolute; right: 147px;">
+                    <span style="font-size: 17px;">블로그 주소 &nbsp;<a style="text-decoration: none; font-size: 16px;" href="https://blog.naver.com/aozp73" target="_blank">https://blog.naver.com/aozp73</a> </span>
+                </div>
+            </div>
+            <br> <br>
+
             <c:forEach var="blog" items="${myBlogList}">
                 <div class="container" id="container-${blog.id}" style="padding-left: 150px; padding-right: 150px; margin-top: 20px;">
                     <div class="mb-4" id="mainTitle-${blog.id}">
@@ -12,7 +19,7 @@
                     </div>
                     <div class="row">
                         <div class="col-5">
-                            <div class="blog-image-preview-change mb-3" style="height: 261px; background-image: url('${blog.imgURL}'); background-size: 100% 100%;">
+                            <div class="blog-image-preview-change mb-3" style="height: 261px; background-image: url('${blog.imgURL}');">
                             </div>
                         </div>
                         <div class="col-7">
@@ -72,9 +79,9 @@
                     </div>
 
                 </div>
-
-
             </div>
+
+            
         </div>
         
 
