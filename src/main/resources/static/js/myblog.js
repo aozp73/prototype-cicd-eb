@@ -233,8 +233,22 @@ function addPost() {
 // ~ add 
 
 // delete ~ 
-function deletePost(container_number) {
-    console.log(container_number);
+function deletePost(pk) {
+    const jwtToken = localStorage.getItem('jwtToken'); 
+
+    $.ajax({
+        url: '/auth/blog?blogPK=' + pk, 
+        type: 'DELETE', 
+        headers: {
+            'Authorization': jwtToken  
+        },
+        success: function(response) {
+            console.log(response)
+        },
+        error: function(error) {
+            alert(error.responseJSON.data);
+        }
+    })
 }
 // ~ delete 
 

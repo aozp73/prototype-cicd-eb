@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.portfolio.portfolio_project.core.exception.Exception400;
+import com.portfolio.portfolio_project.core.exception.Exception500;
 import com.portfolio.portfolio_project.core.util.s3_utils.S3Utils;
 import com.portfolio.portfolio_project.domain.jpa.myblog.my_blog.MyBlog;
 import com.portfolio.portfolio_project.domain.jpa.myblog.my_blog.MyBlogRepository;
@@ -28,7 +29,6 @@ public class MyBlogService {
         
         return MyBlogDTO_Out.FindAllDTO.fromEntityList(myBlogsPS);
     }
-
 
     // POST
     @Transactional
@@ -66,6 +66,20 @@ public class MyBlogService {
         }
 
         return MyBlogDTO_Out.PutDTO.fromEntity(myblogPS);
+    }
+
+    // DELETE
+    @Transactional
+    public void myBlog_delete(Long blogPK){
+        MyBlog myBlogPS = myBlogRepository.findById(blogPK).orElseThrow(() -> {
+            throw new Exception400("삭제하려는 게시물이 존재하지 않습니다.");
+        });
+
+        try {
+            myBlogRepository.delete(myBlogPS);
+        } catch (Exception e) {
+            throw new Exception500("게시물 삭제에 실패하였습니다.");
+        }
     }
 
 }
