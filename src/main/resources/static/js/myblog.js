@@ -16,40 +16,13 @@ function toggleEditMode() {
     });
 }
 
-// 사진 미리보기 ~
-function previewImage(event, container_number) {
-    const reader = new FileReader();
-    const file = event.target.files[0];
-    
-    reader.onloadend = function() {
-        const imagePreview = document.querySelector('#image-preview-' + container_number);
-        imagePreview.classList.remove('blog-image-preview'); 
-        imagePreview.classList.add('blog-image-preview-change');
-        imagePreview.style.backgroundImage = 'url(' + reader.result + ')';
-        imagePreview.style.backgroundSize = '100% 100%';
-       
-        if (container_number === 'new') {
-             document.querySelector('.plus-icon').style.display = 'none'; 
-        }
-    }
-    
-    if (file) {
-        reader.readAsDataURL(file);
-    } else {
-        resetPreview();
-    }
-}
-// ~ 사진 미리보기
 
-function resetPreview() {
-    const imagePreview = document.querySelector('.blog-image-preview');
-    imagePreview.style.backgroundImage = 'none';
-    document.querySelector('.plus-icon').style.display = 'block';
-}
+// ====== updateForm / update / add / delete ============================ //
 
-// update ~
+// updateForm
 function updateForm(event, container_number) {
     const section = document.getElementById('container-' + container_number);
+
     const mainTitle = section.querySelector('#mainTitle-' + container_number + ' h3').innerText;
     const subTitle = section.querySelector('#subTitle-' + container_number + ' h4').innerText;
     let content = section.querySelector('#content-' + container_number + ' p').innerText;
@@ -86,7 +59,7 @@ function updateForm(event, container_number) {
     `;
 }
 
-// update ~
+// update
 function updatePost(pk) {
     const jwtToken = localStorage.getItem('jwtToken');
     const payload = createPostPayload(pk)
@@ -102,11 +75,7 @@ function updatePost(pk) {
         data: JSON.stringify(payload),  
 
         success: function(response, textStatus, jqXHR) {
-            console.log(response.data.mainTitle)
-            console.log(response.data.subTitle)
-            console.log(response.data.content)
-            console.log(response.data.imgURL)
-            // 수정 완료 후 해당 게시글의 값 변경
+
             el = `
                 <div class="container" id="container-${response.data.id}" style="padding-left: 150px; padding-right: 150px; margin-top: 20px;">
                     <div class="mb-4" id="mainTitle-${response.data.id}">
@@ -147,9 +116,8 @@ function updatePost(pk) {
         }
     });
 }
-// ~ update
 
-// add ~ 
+// add
 function addPost() {
     const jwtToken = localStorage.getItem('jwtToken'); 
     
@@ -223,16 +191,14 @@ function addPost() {
             `
 
             $(el).insertBefore('#main-container > :last-child');
-
         },
         error: function(error) {
             alert(error.responseJSON.data);
         }
     });
 }
-// ~ add 
 
-// delete ~ 
+// delete 
 function deletePost(pk) {
     const jwtToken = localStorage.getItem('jwtToken'); 
 
@@ -254,9 +220,41 @@ function deletePost(pk) {
         }
     })
 }
-// ~ delete 
+
+// ====== updateForm / update / add / delete ============================ //
 
 
+// ====== 이미지 관련 및 기타 함수 ============================ //
+
+// 이미지 미리보기 
+function previewImage(event, container_number) {
+    const reader = new FileReader();
+    const file = event.target.files[0];
+    
+    reader.onloadend = function() {
+        const imagePreview = document.querySelector('#image-preview-' + container_number);
+        imagePreview.classList.remove('blog-image-preview'); 
+        imagePreview.classList.add('blog-image-preview-change');
+        imagePreview.style.backgroundImage = 'url(' + reader.result + ')';
+        imagePreview.style.backgroundSize = '100% 100%';
+       
+        if (container_number === 'new') {
+             document.querySelector('.plus-icon').style.display = 'none'; 
+        }
+    }
+    
+    if (file) {
+        reader.readAsDataURL(file);
+    } else {
+        resetPreview();
+    }
+}
+
+function resetPreview() {
+    const imagePreview = document.querySelector('.blog-image-preview');
+    imagePreview.style.backgroundImage = 'none';
+    document.querySelector('.plus-icon').style.display = 'block';
+}
 
 // 수정하기 버튼 클릭 시, payload 생성 함수
 function createPostPayload(pk) {
@@ -297,3 +295,5 @@ function createPostPayload(pk) {
 
     return payload;
 }
+
+// ====== 이미지 관련 및 기타 함수 ============================ //
