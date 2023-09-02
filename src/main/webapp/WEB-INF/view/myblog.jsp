@@ -51,8 +51,8 @@
                 <div class="row">
 
                     <div class="col-5">
-                        <div class="blog-image-preview mb-3" id="image-preview-new" style="height: 261px;" onclick="document.getElementById('imageInput').click();">
-                            <input type="file" id="imageInput" style="display: none;" onchange="previewImage(event, 'new')">
+                        <div class="blog-image-preview mb-3" id="image-preview-new" style="height: 261px;" onclick="document.getElementById('fileInput').click();">
+                            <input type="file" id="fileInput" style="display: none;" onchange="previewImage(event, 'new')">
                             <div class="plus-icon">+</div>
                         </div>
                     </div>

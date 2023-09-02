@@ -34,4 +34,20 @@ public class MyBlogDTO_In {
                 .build();
         }
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class putDTO {
+        private Long id;
+        private String mainTitle;
+        private String content;
+        private String subTitle;
+
+        private String imageName;
+        private String contentType;
+        private String imageData;
+        private Boolean imgChangeCheck;
+    }
 }

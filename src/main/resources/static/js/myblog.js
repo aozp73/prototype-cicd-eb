@@ -65,8 +65,8 @@ function updateForm(event, container_number) {
         </div>
         <div class="row">
             <div class="col-5">
-                <div class="blog-image-preview-change mb-3" id="image-preview-${container_number}" style="height: 261px; background-image: url('${backgroundImage}'); background-size: 100% 100%;" onclick="document.getElementById('imageInput-${container_number}').click();">
-                    <input type="file" id="imageInput-${container_number}" style="display: none;" onchange="previewImage(event, ${container_number})">
+                <div class="blog-image-preview-change mb-3" id="image-preview-${container_number}" style="height: 261px; background-image: url('${backgroundImage}'); background-size: 100% 100%;" onclick="document.getElementById('fileInput-${container_number}').click();">
+                    <input type="file" id="fileInput-${container_number}" style="display: none;" onchange="previewImage(event, ${container_number})">
                 </div>
             </div>
             <div class="col-7">
@@ -86,18 +86,30 @@ function updateForm(event, container_number) {
     `;
 }
 
-function updatePost(container_number) {
-    let mainTitle = document.getElementById('mainTitle-' + container_number).value;
-    let subTitle = document.getElementById('subTitle-' + container_number).value;
-    let content = document.getElementById('content-' + container_number).value;
-    content = content.replace(/\n/g, "<br>");
+// update ~
+function updatePost(pk) {
+    const jwtToken = localStorage.getItem('jwtToken');
+    const payload = createPostPayload(pk)
 
-    let backgroundImage = document.getElementById('image-preview-' + container_number).style.backgroundImage.slice(5, -2);
-    console.log("PK:",container_number)
-    console.log("Title:", mainTitle);
-    console.log("Subtitle:", subTitle);
-    console.log("Content:", content);
-    console.log("Background Image URL:", backgroundImage);
+    $.ajax({
+        url: '/auth/blog',
+        type: 'PUT',
+        dataType: 'json',
+        contentType: 'application/json',
+        headers: {
+            'Authorization': jwtToken 
+        },
+        data: JSON.stringify(payload),  
+
+        success: function(response, textStatus, jqXHR) {
+
+        },
+        error: function(error) {
+            alert(error.responseJSON.data);
+        }
+    });
+
+
 }
 // ~ update
 
@@ -112,8 +124,9 @@ function addPost() {
         alert("이미지를 등록해야 합니다.")
         return;
     }
-    
-    const file = imageInput.files[0]
+
+    let fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0]
     const mainTitle = $("#mainTitle-new").val();
     const subTitle = $("#subTitle-new").val();
     let content = $("#content-new").val();
@@ -188,3 +201,45 @@ function deletePost(container_number) {
     console.log(container_number);
 }
 // ~ delete 
+
+
+
+// 수정하기 버튼 클릭 시, payload 생성 함수
+function createPostPayload(pk) {
+    const input = document.getElementById('fileInput-' + pk);
+    const file = input.files[0];
+    let imageName = '';
+    let contentType = '';
+    let imgChangeCheck = false;
+    
+    const imagePreview_div = document.getElementById('image-preview-' + pk);
+    let imgSrc = imagePreview_div.style.backgroundImage.slice(5, -2); 
+    const isBase64Image = imgSrc.startsWith('data:image/');
+
+    if (isBase64Image) {
+        imageName = file.name;
+        contentType = file.type;
+        imgChangeCheck = true;
+    } else {
+        imgSrc = '';
+    }
+
+    let mainTitle = document.getElementById('mainTitle-' + pk).value;
+    let subTitle = document.getElementById('subTitle-' + pk).value;
+    let content = document.getElementById('content-' + pk).value;
+    content = content.replace(/\n/g, "<br>");
+
+    let payload = {
+        id: pk,
+        mainTitle: mainTitle,
+        subTitle: subTitle,
+        content: content,
+
+        imageName: imageName,
+        contentType: contentType,
+        imageData: imgSrc,
+        imgChangeCheck: imgChangeCheck
+    };
+
+    return payload;
+}
