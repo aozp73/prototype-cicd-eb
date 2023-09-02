@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.portfolio.portfolio_project.core.exception.Exception400;
 import com.portfolio.portfolio_project.core.util.s3_utils.S3Utils;
 import com.portfolio.portfolio_project.domain.jpa.myblog.my_blog.MyBlog;
 import com.portfolio.portfolio_project.domain.jpa.myblog.my_blog.MyBlogRepository;
@@ -31,7 +32,7 @@ public class MyBlogService {
 
     // POST
     @Transactional
-    public MyBlogDTO_Out.PostDTO myBlog_post(MyBlogDTO_In.postDTO postDTO_In){
+    public MyBlogDTO_Out.PostDTO myBlog_post(MyBlogDTO_In.PostDTO postDTO_In){
         List<String> blogImg_nameAndUrl = s3Utils.uploadImageToS3(postDTO_In.getImageData(), 
                                 postDTO_In.getImageName(), 
                                 postDTO_In.getContentType(),
@@ -44,6 +45,27 @@ public class MyBlogService {
         myBlogRepository.save(myBlog);
         
         return MyBlogDTO_Out.PostDTO.fromEntity(myBlog);
+    }
+
+    // PUT
+    @Transactional
+    public String myBlog_put(MyBlogDTO_In.PutDTO putDTO_In){
+        MyBlog myblogPS = myBlogRepository.findById(putDTO_In.getId()).orElseThrow(() -> {
+            throw new Exception400("업데이트하려는 게시물이 존재하지 않습니다.");
+        });
+
+        putDTO_In.toEntity(myblogPS);
+
+        if (putDTO_In.getImgChangeCheck()) {
+            List<String> nameAndUrl = s3Utils.uploadImageToS3(putDTO_In.getImageData(), 
+                                                              putDTO_In.getImageName(), 
+                                                              putDTO_In.getContentType(),
+                                                              "my_blog");
+            myblogPS.setBlogImgName(nameAndUrl.get(0));
+            myblogPS.setBlogImgUrl(nameAndUrl.get(1));
+        }
+
+        return "";
     }
 
 }

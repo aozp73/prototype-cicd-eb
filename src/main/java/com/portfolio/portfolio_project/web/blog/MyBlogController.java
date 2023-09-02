@@ -32,7 +32,7 @@ public class MyBlogController {
 
     // POST
     @PostMapping("/auth/blog")
-    public ResponseEntity<?> main_post(@RequestBody MyBlogDTO_In.postDTO postDTO_In){
+    public ResponseEntity<?> main_post(@RequestBody MyBlogDTO_In.PostDTO postDTO_In){
         MyBlogDTO_Out.PostDTO postDTO_Out = myBlogService.myBlog_post(postDTO_In);
 
         return ResponseEntity.ok().body(new ResponseDTO<>().data(postDTO_Out));
@@ -40,16 +40,8 @@ public class MyBlogController {
 
     // PUT
     @PutMapping("/auth/blog")
-    public ResponseEntity<?> main_put(@RequestBody MyBlogDTO_In.putDTO putDTO_In){
-        System.out.println("테스트 : " + putDTO_In.getId());
-        System.out.println("테스트 : " + putDTO_In.getMainTitle());
-        System.out.println("테스트 : " + putDTO_In.getSubTitle());
-        System.out.println("테스트 : " + putDTO_In.getContent());
-        System.out.println();
-        System.out.println("테스트 : " + putDTO_In.getContentType());
-        System.out.println("테스트 : " + putDTO_In.getImageData());
-        System.out.println("테스트 : " + putDTO_In.getImageName());
-        System.out.println("테스트 : " + putDTO_In.getImgChangeCheck());
+    public ResponseEntity<?> main_put(@RequestBody MyBlogDTO_In.PutDTO putDTO_In){
+        myBlogService.myBlog_put(putDTO_In);
 
         return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
     }

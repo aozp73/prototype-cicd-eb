@@ -15,7 +15,7 @@ public class MyBlogDTO_In {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class postDTO {
+    public static class PostDTO {
         private String mainTitle;
         private String content;
         private String subTitle;
@@ -39,7 +39,7 @@ public class MyBlogDTO_In {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class putDTO {
+    public static class PutDTO {
         private Long id;
         private String mainTitle;
         private String content;
@@ -49,5 +49,12 @@ public class MyBlogDTO_In {
         private String contentType;
         private String imageData;
         private Boolean imgChangeCheck;
+
+        public void toEntity(MyBlog myBlogPS){
+            myBlogPS.setMainTitle(this.mainTitle);
+            myBlogPS.setSubTitle(this.subTitle);
+            myBlogPS.setContent(this.content);
+            myBlogPS.setUpdatedAt(LocalDateTime.now());
+        }
     }
 }

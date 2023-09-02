@@ -32,7 +32,7 @@ public class MainIntroduceService {
 
     // POST
     @Transactional
-    public MainIntroduceDTO_Out.PostDTO main_post(MainIntroduceDTO_In.postDTO postDTO_In){
+    public MainIntroduceDTO_Out.PostDTO main_post(MainIntroduceDTO_In.PostDTO postDTO_In){
         List<String> nameAndUrl = s3Utils.uploadImageToS3(postDTO_In.getImageData(), postDTO_In.getImageName(), postDTO_In.getContentType(), "main_introduce");
 
         MainIntroduce mainIntroduce = postDTO_In.toEntity();
@@ -46,12 +46,12 @@ public class MainIntroduceService {
 
     // PUT
     @Transactional
-    public MainIntroduceDTO_Out.PutDTO main_put(MainIntroduceDTO_In.putDTO putDTO_In){
+    public MainIntroduceDTO_Out.PutDTO main_put(MainIntroduceDTO_In.PutDTO putDTO_In){
         MainIntroduce mainIntroducePS = mainIntroduceRepository.findById(putDTO_In.getId()).orElseThrow(() -> {
             throw new Exception400("업데이트하려는 게시물이 존재하지 않습니다.");
         });
 
-        putDTO_In.toEntity(mainIntroducePS, putDTO_In);
+        putDTO_In.toEntity(mainIntroducePS);
 
         if (putDTO_In.getImgChangeCheck()) {
             List<String> nameAndUrl = s3Utils.uploadImageToS3(putDTO_In.getImageData(), 
