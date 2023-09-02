@@ -41,8 +41,8 @@ public class MyBlogController {
     // PUT
     @PutMapping("/auth/blog")
     public ResponseEntity<?> main_put(@RequestBody MyBlogDTO_In.PutDTO putDTO_In){
-        myBlogService.myBlog_put(putDTO_In);
+        MyBlogDTO_Out.PutDTO putDTO_Out = myBlogService.myBlog_put(putDTO_In);
 
-        return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
+        return ResponseEntity.ok().body(new ResponseDTO<>().data(putDTO_Out));
     }
 }

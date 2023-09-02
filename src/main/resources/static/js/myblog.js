@@ -102,14 +102,50 @@ function updatePost(pk) {
         data: JSON.stringify(payload),  
 
         success: function(response, textStatus, jqXHR) {
+            console.log(response.data.mainTitle)
+            console.log(response.data.subTitle)
+            console.log(response.data.content)
+            console.log(response.data.imgURL)
+            // 수정 완료 후 해당 게시글의 값 변경
+            el = `
+                <div class="container" id="container-${response.data.id}" style="padding-left: 150px; padding-right: 150px; margin-top: 20px;">
+                    <div class="mb-4" id="mainTitle-${response.data.id}">
+                        <h3>${response.data.mainTitle}</h3>
+                        <hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="blog-image-preview-change mb-3" style="height: 261px; background-image: url('${response.data.imgURL}'); background-size: 100% 100%;">
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="mb-4" id="subTitle-${response.data.id}">
+                                <h4>${response.data.subTitle}</h4>
+                            </div>
+                            <div class="mb-3" id="content-${response.data.id}">
+                                <p>
+                                ${response.data.content} 
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height: 80px;">
+                        <div class="edit-controls" style="display: block; ">
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${response.data.id})">수정하기</button>
+                                <button type="button" class="btn btn-outline-danger" onclick="deletePost(${response.data.id})">삭제하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
 
+            $("#container-" + response.data.id).replaceWith(el);
         },
         error: function(error) {
             alert(error.responseJSON.data);
         }
     });
-
-
 }
 // ~ update
 

@@ -49,7 +49,7 @@ public class MyBlogService {
 
     // PUT
     @Transactional
-    public String myBlog_put(MyBlogDTO_In.PutDTO putDTO_In){
+    public MyBlogDTO_Out.PutDTO myBlog_put(MyBlogDTO_In.PutDTO putDTO_In){
         MyBlog myblogPS = myBlogRepository.findById(putDTO_In.getId()).orElseThrow(() -> {
             throw new Exception400("업데이트하려는 게시물이 존재하지 않습니다.");
         });
@@ -65,7 +65,7 @@ public class MyBlogService {
             myblogPS.setBlogImgUrl(nameAndUrl.get(1));
         }
 
-        return "";
+        return MyBlogDTO_Out.PutDTO.fromEntity(myblogPS);
     }
 
 }

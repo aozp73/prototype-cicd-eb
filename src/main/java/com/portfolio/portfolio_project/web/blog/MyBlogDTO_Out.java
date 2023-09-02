@@ -51,4 +51,20 @@ public class MyBlogDTO_Out {
             return new PostDTO(entity.getId(), entity.getMainTitle(), entity.getSubTitle(), entity.getContent(), entity.getBlogImgUrl());
         }
     }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class PutDTO {
+        private Long id;
+        private String mainTitle;
+        private String subTitle;
+        private String content;
+        private String imgURL;
+
+        public static PutDTO fromEntity(MyBlog entity) {
+            return new PutDTO(entity.getId(), entity.getMainTitle(), entity.getSubTitle(), entity.getContent(), entity.getBlogImgUrl());
+        }
+    }
 }
