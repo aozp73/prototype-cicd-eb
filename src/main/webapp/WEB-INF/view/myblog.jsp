@@ -117,6 +117,6 @@
         </div>
         
 
-<script src="/js/blog.js"></script>
+<script src="/js/myblog.js"></script>
     
 <%@ include file="layout/footer.jsp" %>

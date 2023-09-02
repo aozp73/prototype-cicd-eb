@@ -101,6 +101,8 @@ function updatePost(container_number) {
 
 // add ~ 
 function addPost() {
+    const jwtToken = localStorage.getItem('jwtToken'); 
+    
     const imagePreview = document.getElementById('image-preview-new');
     const backgroundImage = imagePreview.style.backgroundImage.slice(5, -2); 
     
