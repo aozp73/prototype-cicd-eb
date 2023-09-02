@@ -24,8 +24,8 @@ public class MyBlogController {
 
     @PostMapping("/auth/blog")
     public ResponseEntity<?> main_post(@RequestBody MyBlogDTO_In.postDTO postDTO_In){
-        myBlogService.myBlog_post(postDTO_In);
+        MyBlogDTO_Out.PostDTO postDTO_Out = myBlogService.myBlog_post(postDTO_In);
 
-        return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
+        return ResponseEntity.ok().body(new ResponseDTO<>().data(postDTO_Out));
     }
 }

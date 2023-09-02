@@ -138,6 +138,11 @@ function addPost() {
 
         success: function(response, textStatus, jqXHR) {
             console.log(response);
+            console.log(response.data.id)
+            console.log(response.data.postTitle)
+            console.log(response.data.postSubTitle)
+            console.log(response.data.postContent)
+            console.log(response.data.imgURL)
         },
         error: function(error) {
             alert(error.responseJSON.data);
