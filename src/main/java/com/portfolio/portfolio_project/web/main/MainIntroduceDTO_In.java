@@ -15,7 +15,7 @@ public class MainIntroduceDTO_In {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class postDTO {
+    public static class PostDTO {
         private String postTitle;
         private String postContent;
         private String imageName;
@@ -36,7 +36,7 @@ public class MainIntroduceDTO_In {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class putDTO {
+    public static class PutDTO {
         private Long id;
         private String postTitle;
         private String postContent;
@@ -45,10 +45,10 @@ public class MainIntroduceDTO_In {
         private String imageData;
         private Boolean imgChangeCheck;
 
-        public void putEntity(MainIntroduce mainIntroduce, putDTO putDTO) {
-            mainIntroduce.setTitle(putDTO.getPostTitle());
-            mainIntroduce.setContent(putDTO.getPostContent());
-            mainIntroduce.setUpdatedAt(LocalDateTime.now());
+        public void toEntity(MainIntroduce mainIntroducePS) {
+            mainIntroducePS.setTitle(this.getPostTitle());
+            mainIntroducePS.setContent(this.getPostContent());
+            mainIntroducePS.setUpdatedAt(LocalDateTime.now());
         }   
     }
 }
