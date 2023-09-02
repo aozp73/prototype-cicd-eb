@@ -103,15 +103,44 @@ function updatePost(container_number) {
 function addPost() {
     const imagePreview = document.getElementById('image-preview-new');
     const backgroundImage = imagePreview.style.backgroundImage.slice(5, -2); 
+    
+    if (!backgroundImage || !backgroundImage.startsWith('data:image')) {
+        alert("이미지를 등록해야 합니다.")
+        return;
+    }
+    
+    const file = imageInput.files[0]
+    const postTitle = $("#postTitle-new").val();
+    const postSubTitle = $("#postSubTitle-new").val();
+    const postContent = $("#postContent-new").val();
 
-    const postTitle = document.getElementById('postTitle-new').value;
-    const postSubTitle = document.getElementById('postSubTitle-new').value;
-    const postContent = document.getElementById('postContent-new').value;
+    const postData = {
+        imageData: backgroundImage,
+        imageName: file.name,
+        contentType: file.type,
 
-    console.log("Title:", postTitle);
-    console.log("Subtitle:", postSubTitle);
-    console.log("Content:", postContent);
-    console.log("Image URL:", backgroundImage);
+        postTitle: postTitle,
+        postSubTitle: postSubTitle,
+        postContent: postContent
+    };
+
+    $.ajax({
+        url: '/auth/blog',
+        type: 'POST',
+        data: JSON.stringify(postData),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        headers: {
+            'Authorization': jwtToken 
+        },
+
+        success: function(response, textStatus, jqXHR) {
+            console.log(response);
+        },
+        error: function(error) {
+            alert(error.responseJSON.data);
+        }
+    });
 }
 // ~ add 
 
