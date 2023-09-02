@@ -137,12 +137,41 @@ function addPost() {
         },
 
         success: function(response, textStatus, jqXHR) {
-            console.log(response);
-            console.log(response.data.id)
-            console.log(response.data.postTitle)
-            console.log(response.data.postSubTitle)
-            console.log(response.data.postContent)
-            console.log(response.data.imgURL)
+            const el = `
+                <div class="container" id="container-${response.data.id}" style="padding-left: 150px; padding-right: 150px; margin-top: 20px;">
+                <div class="mb-4" id="heading-${response.data.id}">
+                    <h3>${response.data.postTitle}</h3>
+                    <hr>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="blog-image-preview-change mb-3" style="height: 261px; background-image: url('${response.data.imgURL}'); background-size: 100% 100%;">
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="mb-4" id="subheading-${response.data.id}">
+                            <h4>${response.data.postSubTitle}</h4>
+                        </div>
+                        <div class="mb-3" id="content-${response.data.id}">
+                            <p>
+                            ${response.data.postContent}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div style="height: 80px;">
+                    <div class="edit-controls" style="display: block; ">
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${response.data.id})">수정하기</button>
+                            <button type="button" class="btn btn-outline-danger" onclick="deletePost(${response.data.id})">삭제하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `
+
+            $(el).insertBefore('#main-container > :last-child');
+
         },
         error: function(error) {
             alert(error.responseJSON.data);

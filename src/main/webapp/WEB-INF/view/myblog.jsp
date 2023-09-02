@@ -72,12 +72,9 @@
                     </div>
                 </div>
             </div>
-            <br><br>
 
 
-
-            <br><br>
-            <div class="edit-controls container" style="padding-left: 150px; padding-right: 150px; display: none;">
+            <div class="edit-controls container" style="margin-top: 120px; padding-left: 150px; padding-right: 150px; display: none;">
 
                 <div class="mb-4">
                     <div class="ms-2 mb-4">
