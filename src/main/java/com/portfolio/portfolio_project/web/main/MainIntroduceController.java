@@ -26,7 +26,6 @@ public class MainIntroduceController {
     // FindAll
     @GetMapping("/mainpage")
     public String main_findAll(Model model){
-        System.out.println("테스트 : ");
         List<MainIntroduceDTO_Out.FindAllDTO> mainIntroduceList = mainIntroduceService.main_findAll();
         model.addAttribute("mainIntroduceList", mainIntroduceList);
 

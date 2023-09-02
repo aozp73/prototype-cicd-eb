@@ -4,76 +4,40 @@
 
         <div class="py-5" style="background-color: #F9F9F9" id="main-container">
         
-            <div class="container" id="container-1" style="padding-left: 150px; padding-right: 150px; margin-top: 20px;">
-                <div class="mb-4" id="heading-1">
-                    <h3>제목1</h3>
-                    <hr>
-                </div>
-                <div class="row">
-                    <div class="col-5">
-                        <div class="blog-image-preview-change mb-3" style="height: 261px; background-image: url('/image/blogpage-sample.jpg'); background-size: 100% 100%;">
+            <c:forEach var="blog" items="${myBlogList}">
+                <div class="container" id="container-${blog.id}" style="padding-left: 150px; padding-right: 150px; margin-top: 20px;">
+                    <div class="mb-4" id="heading-${blog.id}">
+                        <h3>${blog.postTitle}</h3>
+                        <hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="blog-image-preview-change mb-3" style="height: 261px; background-image: url('${blog.imgURL}'); background-size: 100% 100%;">
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="mb-4" id="subheading-${blog.id}">
+                                <h4>${blog.postSubTitle}</h4>
+                            </div>
+                            <div class="mb-3" id="content-${blog.id}">
+                                <p>
+                                ${blog.postContent} 
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-7">
-                        <div class="mb-4" id="subheading-1">
-                            <h4>소제목</h4>
-                        </div>
-                        <div class="mb-3" id="content-1">
-                            <p>
-                               내용<br>
-                               내용<br>
-                               내용<br>
-                               내용<br>
-                               내용<br>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div style="height: 80px;">
-                    <div class="edit-controls" style="display: none; ">
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, 1)">수정하기</button>
-                            <button type="button" class="btn btn-outline-danger" onclick="deletePost(1)">삭제하기</button>
+                    <div style="height: 80px;">
+                        <div class="edit-controls" style="display: none; ">
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${blog.id})">수정하기</button>
+                                <button type="button" class="btn btn-outline-danger" onclick="deletePost(${blog.id})">삭제하기</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </c:forEach>
  
-
-            <div class="container" id="container-2" style="padding-left: 150px; padding-right: 150px; margin-top: 20px;">
-                <div class="mb-4" id="heading-2">
-                    <h3>제목2</h3>
-                    <hr>
-                </div>
-                <div class="row">
-                    <div class="col-5">
-                        <div class="blog-image-preview-change mb-3" style="height: 261px; background-image: url('/image/blogpage-sample.jpg'); background-size: 100% 100%;">
-                        </div>
-                    </div>
-                    <div class="col-7">
-                        <div class="mb-4" id="subheading-2">
-                            <h4>소제목</h4>
-                        </div>
-                        <div class="mb-3" id="content-2">
-                            <p>
-                               내용<br>
-                               내용<br>
-                               내용<br>
-                               내용<br>
-                               내용<br>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="edit-controls" style="display: none;">
-                    <div class="mt-3 d-flex justify-content-end">
-                        <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, 2)">수정하기</button>
-                        <button type="button" class="btn btn-outline-danger" onclick="deletePost(2)">삭제하기</button>
-                    </div>
-                </div>
-            </div>
-
-
+            <%-- 등록하기 Form --%>
             <div class="edit-controls container" style="margin-top: 120px; padding-left: 150px; padding-right: 150px; display: none;">
 
                 <div class="mb-4">

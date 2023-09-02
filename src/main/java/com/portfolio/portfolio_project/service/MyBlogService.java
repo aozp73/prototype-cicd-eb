@@ -20,6 +20,16 @@ public class MyBlogService {
     private final MyBlogRepository myBlogRepository;
     private final S3Utils s3Utils;
 
+    // FindAll
+    @Transactional(readOnly = true)
+    public List<MyBlogDTO_Out.FindAllDTO> myBlog_findAll(){
+        List<MyBlog> myBlogsPS = myBlogRepository.findAll();
+        
+        return MyBlogDTO_Out.FindAllDTO.fromEntityList(myBlogsPS);
+    }
+
+
+    // POST
     @Transactional
     public MyBlogDTO_Out.PostDTO myBlog_post(MyBlogDTO_In.postDTO postDTO_In){
         List<String> blogImg_nameAndUrl = s3Utils.uploadImageToS3(postDTO_In.getImageData(), 
