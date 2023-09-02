@@ -244,6 +244,10 @@ function deletePost(pk) {
         },
         success: function(response) {
             console.log(response)
+
+            $(`#container-${pk}`).fadeOut(function() {
+                $(this).remove();
+            });
         },
         error: function(error) {
             alert(error.responseJSON.data);
