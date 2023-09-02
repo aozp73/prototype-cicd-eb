@@ -18,9 +18,9 @@ public class MyBlogDTO_Out {
     @NoArgsConstructor
     public static class FindAllDTO {
         private Long id;
-        private String postTitle;
-        private String postSubTitle;
-        private String postContent;
+        private String mainTitle;
+        private String subTitle;
+        private String content;
         private String imgURL;
 
         public static FindAllDTO fromEntity(MyBlog entity) {
@@ -42,9 +42,9 @@ public class MyBlogDTO_Out {
     @NoArgsConstructor
     public static class PostDTO {
         private Long id;
-        private String postTitle;
-        private String postSubTitle;
-        private String postContent;
+        private String mainTitle;
+        private String subTitle;
+        private String content;
         private String imgURL;
 
         public static PostDTO fromEntity(MyBlog entity) {

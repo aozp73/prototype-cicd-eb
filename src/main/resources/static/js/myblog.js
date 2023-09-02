@@ -49,17 +49,18 @@ function resetPreview() {
 
 // update ~
 function updateForm(event, container_number) {
-    let section = document.getElementById('container-' + container_number);
-    let heading = section.querySelector('#heading-' + container_number + ' h3').innerText;
-    let subheading = section.querySelector('#subheading-' + container_number + ' h4').innerText;
+    const section = document.getElementById('container-' + container_number);
+    const mainTitle = section.querySelector('#mainTitle-' + container_number + ' h3').innerText;
+    const subTitle = section.querySelector('#subTitle-' + container_number + ' h4').innerText;
     let content = section.querySelector('#content-' + container_number + ' p').innerText;
+    content = content.replace(/<br>/g, "\n");
 
-    let backgroundImage = section.querySelector('.blog-image-preview-change').style.backgroundImage.slice(5, -2);
+    const backgroundImage = section.querySelector('.blog-image-preview-change').style.backgroundImage.slice(5, -2);
     
     section.innerHTML = `
         <div class="mb-4">
             <div class="mb-4">
-                <input type="text" class="form-control" id="postTitle-${container_number}" value="${heading}">
+                <input type="text" class="form-control" id="mainTitle-${container_number}" value="${mainTitle}">
             </div>
         </div>
         <div class="row">
@@ -71,10 +72,10 @@ function updateForm(event, container_number) {
             <div class="col-7">
                 <form id="postForm-${container_number}">
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="postSubTitle-${container_number}" value="${subheading}">
+                        <input type="text" class="form-control" id="subTitle-${container_number}" value="${subTitle}">
                     </div>
                     <div class="mb-3">
-                        <textarea class="form-control" id="postContent-${container_number}" rows="8">${content}</textarea>
+                        <textarea class="form-control" id="content-${container_number}" rows="8">${content}</textarea>
                     </div>
                 </form>
                 <div class="my-3 d-flex justify-content-end">
@@ -86,15 +87,16 @@ function updateForm(event, container_number) {
 }
 
 function updatePost(container_number) {
-    let postTitle = document.getElementById('postTitle-' + container_number).value;
-    let postSubTitle = document.getElementById('postSubTitle-' + container_number).value;
-    let postContent = document.getElementById('postContent-' + container_number).value;
+    let mainTitle = document.getElementById('mainTitle-' + container_number).value;
+    let subTitle = document.getElementById('subTitle-' + container_number).value;
+    let content = document.getElementById('content-' + container_number).value;
+    content = content.replace(/\n/g, "<br>");
 
     let backgroundImage = document.getElementById('image-preview-' + container_number).style.backgroundImage.slice(5, -2);
     console.log("PK:",container_number)
-    console.log("Title:", postTitle);
-    console.log("Subtitle:", postSubTitle);
-    console.log("Content:", postContent);
+    console.log("Title:", mainTitle);
+    console.log("Subtitle:", subTitle);
+    console.log("Content:", content);
     console.log("Background Image URL:", backgroundImage);
 }
 // ~ update
@@ -112,18 +114,19 @@ function addPost() {
     }
     
     const file = imageInput.files[0]
-    const postTitle = $("#postTitle-new").val();
-    const postSubTitle = $("#postSubTitle-new").val();
-    const postContent = $("#postContent-new").val();
+    const mainTitle = $("#mainTitle-new").val();
+    const subTitle = $("#subTitle-new").val();
+    let content = $("#content-new").val();
+    content = content.replace(/\n/g, "<br>");
 
     const postData = {
         imageData: backgroundImage,
         imageName: file.name,
         contentType: file.type,
 
-        mainTitle: postTitle,
-        content: postContent,
-        subTitle: postSubTitle
+        mainTitle: mainTitle,
+        content: content,
+        subTitle: subTitle
     };
 
     $.ajax({
@@ -139,8 +142,8 @@ function addPost() {
         success: function(response, textStatus, jqXHR) {
             const el = `
                 <div class="container" id="container-${response.data.id}" style="padding-left: 150px; padding-right: 150px; margin-top: 20px;">
-                <div class="mb-4" id="heading-${response.data.id}">
-                    <h3>${response.data.postTitle}</h3>
+                <div class="mb-4" id="mainTitle-${response.data.id}">
+                    <h3>${response.data.mainTitle}</h3>
                     <hr>
                 </div>
                 <div class="row">
@@ -149,12 +152,12 @@ function addPost() {
                         </div>
                     </div>
                     <div class="col-7">
-                        <div class="mb-4" id="subheading-${response.data.id}">
-                            <h4>${response.data.postSubTitle}</h4>
+                        <div class="mb-4" id="subTitle-${response.data.id}">
+                            <h4>${response.data.subTitle}</h4>
                         </div>
                         <div class="mb-3" id="content-${response.data.id}">
                             <p>
-                            ${response.data.postContent}
+                            ${response.data.content}
                             </p>
                         </div>
                     </div>

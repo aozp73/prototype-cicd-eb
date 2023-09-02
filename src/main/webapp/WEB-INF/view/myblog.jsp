@@ -6,8 +6,8 @@
         
             <c:forEach var="blog" items="${myBlogList}">
                 <div class="container" id="container-${blog.id}" style="padding-left: 150px; padding-right: 150px; margin-top: 20px;">
-                    <div class="mb-4" id="heading-${blog.id}">
-                        <h3>${blog.postTitle}</h3>
+                    <div class="mb-4" id="mainTitle-${blog.id}">
+                        <h3>${blog.mainTitle}</h3>
                         <hr>
                     </div>
                     <div class="row">
@@ -16,12 +16,12 @@
                             </div>
                         </div>
                         <div class="col-7">
-                            <div class="mb-4" id="subheading-${blog.id}">
-                                <h4>${blog.postSubTitle}</h4>
+                            <div class="mb-4" id="subTitle-${blog.id}">
+                                <h4>${blog.subTitle}</h4>
                             </div>
                             <div class="mb-3" id="content-${blog.id}">
                                 <p>
-                                ${blog.postContent} 
+                                ${blog.content} 
                                 </p>
                             </div>
                         </div>
@@ -45,7 +45,7 @@
                         <h2>새 글쓰기</h2>
                     </div>
                     <div>
-                        <input type="text" class="form-control" id="postTitle-new" placeholder="제목을 입력하세요">
+                        <input type="text" class="form-control" id="mainTitle-new" placeholder="제목을 입력하세요">
                     </div>
                 </div>
                 <div class="row">
@@ -60,10 +60,10 @@
                     <div class="col-7">
                         <form id="postForm">
                             <div class="mb-3">
-                                <input type="text" class="form-control" id="postSubTitle-new" placeholder="소제목을 입력하세요">
+                                <input type="text" class="form-control" id="subTitle-new" placeholder="소제목을 입력하세요">
                             </div>
                             <div class="mb-3">
-                                <textarea class="form-control" id="postContent-new" rows="8" placeholder="내용을 입력하세요"></textarea>
+                                <textarea class="form-control" id="content-new" rows="8" placeholder="내용을 입력하세요"></textarea>
                             </div>
                         </form>
                         <div class="my-3 d-flex justify-content-end">
