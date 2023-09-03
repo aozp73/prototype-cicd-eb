@@ -1,6 +1,7 @@
 package com.portfolio.portfolio_project.integration_test;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -89,6 +90,39 @@ public class MyBlogIntegrationTest {
                         .andExpect(jsonPath("$.data.id").value(3L))
                         .andExpect(jsonPath("$.data.mainTitle").value("등록 제목"))
                         .andExpect(jsonPath("$.data.content").value("등록 내용"))
+                        .andExpect(jsonPath("$.data.imgURL").exists());
+        }
+
+        @DisplayName("게시글 수정")
+        @Test
+        public void blog_put_test() throws Exception {
+                // given
+                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+                MyBlogDTO_In.PutDTO postDTO_In = new MyBlogDTO_In.PutDTO(1L,
+                                                                         "수정 제목",
+                                                                         "수정 내용", 
+                                                                         "수정 소제목",
+                                                                         "수정 이미지 이름.png",
+                                                                         "image/png",
+                                                                         "data:image/png;base64,aGVsbG8=",
+                                                                         true);
+
+                String requestBody = om.writeValueAsString(postDTO_In);
+
+                // when
+                ResultActions resultActions = mvc
+                                .perform(put("/auth/blog").content(requestBody)
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+                log.info("결과 : " + responseBody);
+
+                // then
+                resultActions
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.data.id").value(1L))
+                        .andExpect(jsonPath("$.data.mainTitle").value("수정 제목"))
+                        .andExpect(jsonPath("$.data.content").value("수정 내용"))
                         .andExpect(jsonPath("$.data.imgURL").exists());
         }
 
