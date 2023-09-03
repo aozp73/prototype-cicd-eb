@@ -21,7 +21,7 @@ public class MySkillDummy {
     public static MySkill newSkill2(MySkillTypeCode mySkillTypeCode) {
 
         return MySkill.builder()
-                .id(1L)
+                .id(2L)
                 .skill("CSS")
                 .mySkillTypeCode(mySkillTypeCode)
                 .createdAt(LocalDateTime.now())

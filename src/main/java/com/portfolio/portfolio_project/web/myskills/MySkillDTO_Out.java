@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-public class MySkillsDTO_Out {
+public class MySkillDTO_Out {
 
     @Getter
     @Setter

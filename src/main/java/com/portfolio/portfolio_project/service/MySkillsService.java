@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.portfolio.portfolio_project.core.exception.Exception500;
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill.MySkill;
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill.MySkillRepository;
-import com.portfolio.portfolio_project.service.module.MySkillsModules;
-import com.portfolio.portfolio_project.web.myskills.MySkillsDTO_In;
-import com.portfolio.portfolio_project.web.myskills.MySkillsDTO_Out;
+import com.portfolio.portfolio_project.service.module.MySkillModules;
+import com.portfolio.portfolio_project.web.myskills.MySkillDTO_In;
+import com.portfolio.portfolio_project.web.myskills.MySkillDTO_Out;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,10 +20,10 @@ import lombok.RequiredArgsConstructor;
 public class MySkillsService {
     
     private final MySkillRepository mySkillRepository;
-    private final MySkillsModules mySkillsModules;
+    private final MySkillModules mySkillsModules;
     
     @Transactional(readOnly = true)
-    public MySkillsDTO_Out.FindAllDTO findAllSkills() {
+    public MySkillDTO_Out.FindAllDTO findAllSkills() {
         List<MySkill> mySkillsPS = new ArrayList<>();
         try {
             mySkillsPS = mySkillRepository.findAll();
@@ -31,11 +31,11 @@ public class MySkillsService {
             throw new Exception500("스킬 조회에 실패했습니다.");
         }
 
-        return MySkillsDTO_Out.FindAllDTO.fromEntity(mySkillsPS);
+        return MySkillDTO_Out.FindAllDTO.fromEntity(mySkillsPS);
     }
 
     @Transactional
-    public void mySkills_post(MySkillsDTO_In.PostDTO postDTO_In) {
+    public void mySkills_post(MySkillDTO_In.PostDTO postDTO_In) {
         List<MySkill> toAdd = new ArrayList<>();
         List<MySkill> toRemove = new ArrayList<>();
 

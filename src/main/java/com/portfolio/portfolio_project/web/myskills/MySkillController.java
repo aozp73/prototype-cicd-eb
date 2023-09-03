@@ -15,14 +15,14 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Controller
-public class MySkillsController {
+public class MySkillController {
 
     private final MySkillsService mySkillsService;
 
     // FindAll
     @GetMapping("/skills")
     public String myskillspage(Model model){
-        MySkillsDTO_Out.FindAllDTO mySkillsAllDTO = mySkillsService.findAllSkills();
+        MySkillDTO_Out.FindAllDTO mySkillsAllDTO = mySkillsService.findAllSkills();
 
         // JavaScript로 오브젝트를 바로 받을 수 있게 JSON 변환 후 응답
         Gson gson = new Gson();
@@ -34,7 +34,7 @@ public class MySkillsController {
 
     // POST
     @PostMapping("/auth/skills")
-    public ResponseEntity<?> skills_post(@RequestBody MySkillsDTO_In.PostDTO postDTO_In){
+    public ResponseEntity<?> skills_post(@RequestBody MySkillDTO_In.PostDTO postDTO_In){
         mySkillsService.mySkills_post(postDTO_In);
         
         return ResponseEntity.ok().body(new ResponseDTO<>().data(""));
