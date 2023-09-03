@@ -90,6 +90,8 @@ public class ResumeDTO_In {
 
     @Getter
     @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class OrderUpdateDto {
         private String id;
         private Integer order;

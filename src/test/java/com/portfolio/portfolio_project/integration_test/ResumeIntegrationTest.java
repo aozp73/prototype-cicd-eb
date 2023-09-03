@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,6 +40,7 @@ import com.portfolio.portfolio_project.domain.mongodb.resume.resume_self_study.R
 import com.portfolio.portfolio_project.integration_test.dummy.ResumeDummy;
 import com.portfolio.portfolio_project.web.resume.ResumeDTO_In.Academyedu_postDTO;
 import com.portfolio.portfolio_project.web.resume.ResumeDTO_In.Certificate_postDTO;
+import com.portfolio.portfolio_project.web.resume.ResumeDTO_In.OrderUpdateDto;
 import com.portfolio.portfolio_project.web.resume.ResumeDTO_In.Schooledu_postDTO;
 import com.portfolio.portfolio_project.web.resume.ResumeDTO_In.Selfstudy_postDTO;
 
@@ -92,7 +94,7 @@ public class ResumeIntegrationTest {
         // POST 테스트
         @DisplayName("학교교육 이력 등록")
         @Test
-        public void resume_school_edu_post_test() throws Exception {
+        public void resume_schooledu_post_test() throws Exception {
                 // given
                 String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
                 Schooledu_postDTO schooledu_postDTO = new Schooledu_postDTO();
@@ -116,7 +118,7 @@ public class ResumeIntegrationTest {
 
         @DisplayName("학원교육 이력 등록")
         @Test
-        public void resume_academy_edu_post_test() throws Exception {
+        public void resume_academyedu_post_test() throws Exception {
                 // given
                 String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
                 Academyedu_postDTO academyedu_postDTO = new Academyedu_postDTO();
@@ -190,7 +192,7 @@ public class ResumeIntegrationTest {
         // DELETE
         @DisplayName("학교교육 이력 삭제")
         @Test
-        public void resume_school_edu_delete_test() throws Exception {
+        public void resume_schooledu_delete_test() throws Exception {
                 // given
                 String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
                 List<ResumeSchoolEdu> schoolEdus = resumeSchoolEduRepository.findAll();
@@ -211,7 +213,7 @@ public class ResumeIntegrationTest {
 
         @DisplayName("학원교육 이력 삭제")
         @Test
-        public void resume_academy_edu_delete_test() throws Exception {
+        public void resume_academyedu_delete_test() throws Exception {
                 // given
                 String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
                 List<ResumeAcademyEdu> academyEdus = resumeAcademyEduRepository.findAll();
@@ -271,6 +273,39 @@ public class ResumeIntegrationTest {
                 assertEquals(1, selfStudies2.size()); // setup() 데이터를 근거로 검증
                 assertEquals("YouTube", selfStudies2.get(0).getSelfStudyPlatform());
         }
+
+        // Row Move
+        @DisplayName("학교교육 row 이동")
+        @Test
+        public void resume_schooledu_rowmove_test() throws Exception {
+                // given
+                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+
+                List<ResumeSchoolEdu> schoolEdus = resumeSchoolEduRepository.findAll();
+
+                List<OrderUpdateDto> updates = new ArrayList<>();
+                OrderUpdateDto dto1 = new OrderUpdateDto(schoolEdus.get(0).getId(),2);
+                OrderUpdateDto dto2 = new OrderUpdateDto(schoolEdus.get(1).getId(),1);
+                updates.add(dto1);
+                updates.add(dto2);
+                
+                String requestBody = om.writeValueAsString(updates);
+
+                // when
+                ResultActions resultActions = mvc
+                    .perform(post("/auth/resume/updateOrder/schooledu").content(requestBody)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+                log.info("결과 : " + responseBody);
+
+                // then
+                List<ResumeSchoolEdu> schoolEdus2 = resumeSchoolEduRepository.findAll();
+
+                resultActions.andExpect(status().isOk());
+                assertEquals(2,schoolEdus2.get(0).getOrder());
+                assertEquals(1,schoolEdus2.get(1).getOrder());
+        } 
 
 
 
