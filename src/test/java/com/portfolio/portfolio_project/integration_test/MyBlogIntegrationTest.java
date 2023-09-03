@@ -1,5 +1,7 @@
 package com.portfolio.portfolio_project.integration_test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -78,7 +80,7 @@ public class MyBlogIntegrationTest {
 
                 // when
                 ResultActions resultActions = mvc
-                                .perform(post("/auth/blog").content(requestBody)
+                                                .perform(post("/auth/blog").content(requestBody)
                                                 .contentType(MediaType.APPLICATION_JSON)
                                                 .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
                 String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -111,7 +113,7 @@ public class MyBlogIntegrationTest {
 
                 // when
                 ResultActions resultActions = mvc
-                                .perform(put("/auth/blog").content(requestBody)
+                                                .perform(put("/auth/blog").content(requestBody)
                                                 .contentType(MediaType.APPLICATION_JSON)
                                                 .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
                 String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -124,6 +126,25 @@ public class MyBlogIntegrationTest {
                         .andExpect(jsonPath("$.data.mainTitle").value("수정 제목"))
                         .andExpect(jsonPath("$.data.content").value("수정 내용"))
                         .andExpect(jsonPath("$.data.imgURL").exists());
+        }
+
+        @DisplayName("게시글 삭제")
+        @Test
+        public void blog_delete_test() throws Exception {
+                // given
+                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+                Long blogPK = 1L;
+
+                // when
+                ResultActions resultActions = mvc
+                                                .perform(delete("/auth/blog?blogPK="+blogPK)
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+                                                
+                // then
+                List<MyBlog> mainIntroduces = myBlogRepository.findAll();
+                assertEquals(1, mainIntroduces.size());
+                resultActions.andExpect(status().isOk());
         }
 
     

@@ -84,7 +84,7 @@ public class MainIntroduceIntegrationTest {
 
                 // when
                 ResultActions resultActions = mvc
-                                .perform(post("/auth/main").content(requestBody)
+                                                .perform(post("/auth/main").content(requestBody)
                                                 .contentType(MediaType.APPLICATION_JSON)
                                                 .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
                 String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -116,7 +116,7 @@ public class MainIntroduceIntegrationTest {
 
                 // when
                 ResultActions resultActions = mvc
-                                .perform(put("/auth/main").content(requestBody)
+                                                .perform(put("/auth/main").content(requestBody)
                                                 .contentType(MediaType.APPLICATION_JSON)
                                                 .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
                 String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -140,7 +140,7 @@ public class MainIntroduceIntegrationTest {
 
                 // when
                 ResultActions resultActions = mvc
-                                .perform(delete("/auth/main?postPK="+postPK)
+                                                .perform(delete("/auth/main?postPK="+postPK)
                                                 .contentType(MediaType.APPLICATION_JSON)
                                                 .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
                                                 
