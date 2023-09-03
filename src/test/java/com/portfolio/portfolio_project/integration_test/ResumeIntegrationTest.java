@@ -1,10 +1,13 @@
 package com.portfolio.portfolio_project.integration_test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -27,6 +30,7 @@ import com.portfolio.portfolio_project.core.jwt.MyJwtProvider;
 import com.portfolio.portfolio_project.domain.jpa.user.User;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_academy_edu.ResumeAcademyEduRepository;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_certificate.ResumeCertificateRepository;
+import com.portfolio.portfolio_project.domain.mongodb.resume.resume_school_edu.ResumeSchoolEdu;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_school_edu.ResumeSchoolEduRepository;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_self_study.ResumeSelfStudyRepository;
 import com.portfolio.portfolio_project.integration_test.dummy.ResumeDummy;
@@ -180,6 +184,27 @@ public class ResumeIntegrationTest {
         } 
 
 
+        // DELETE
+        @DisplayName("학교교육 이력 삭제")
+        @Test
+        public void resume_school_edu_delete_test() throws Exception {
+                // given
+                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+                List<ResumeSchoolEdu> schoolEdus = resumeSchoolEduRepository.findAll();
+                String resumeID = schoolEdus.get(0).getId();
+
+                // when
+                ResultActions resultActions = mvc
+                                                .perform(delete("/auth/resume/schooledu?resumeID="+resumeID)
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+                                                
+                // then
+                resultActions.andExpect(status().isOk());
+                List<ResumeSchoolEdu> schoolEdus2 = resumeSchoolEduRepository.findAll();
+                assertEquals(1, schoolEdus2.size()); // setup() 데이터를 근거로 검증
+                assertEquals("2020-05-03", schoolEdus2.get(0).getSchoolGraduateDate());
+        }
 
 
         // 각 Document 세팅
