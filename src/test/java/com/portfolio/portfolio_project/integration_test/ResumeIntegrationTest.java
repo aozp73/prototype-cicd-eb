@@ -2,6 +2,7 @@ package com.portfolio.portfolio_project.integration_test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,8 +24,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portfolio.portfolio_project.core.jwt.MyJwtProvider;
@@ -43,6 +46,7 @@ import com.portfolio.portfolio_project.web.resume.ResumeDTO_In.Certificate_postD
 import com.portfolio.portfolio_project.web.resume.ResumeDTO_In.OrderUpdateDto;
 import com.portfolio.portfolio_project.web.resume.ResumeDTO_In.Schooledu_postDTO;
 import com.portfolio.portfolio_project.web.resume.ResumeDTO_In.Selfstudy_postDTO;
+import com.portfolio.portfolio_project.web.resume.ResumeDTO_Out.FindAllDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -404,7 +408,33 @@ public class ResumeIntegrationTest {
         } 
 
 
+        // FindAll
+        @DisplayName("이력 정보 조회")
+        @Test
+        public void resume_findAll_test() throws Exception {
+                // given
 
+                // when
+                ResultActions resultActions = mvc
+                                                .perform(get("/resume")
+                                                .contentType(MediaType.APPLICATION_JSON));
+
+                MvcResult mvcResult = resultActions.andReturn();
+                ModelAndView modelAndView = mvcResult.getModelAndView();
+                FindAllDTO findAllDTO = new FindAllDTO();
+                if (modelAndView != null) {
+                    findAllDTO = (FindAllDTO) modelAndView.getModel().get("resumeAllDTO");
+                    
+                }
+                
+                // then
+                resultActions.andExpect(status().isOk());
+                assertEquals("파이썬 대학교", findAllDTO.getResumeSchoolEdus().get(1).getSchoolName());
+                assertEquals("수료", findAllDTO.getResumeAcademyEdus().get(1).getAcademyCompletionStatus());
+                assertEquals("한국TOEIC위원회", findAllDTO.getResumeCertificates().get(1).getCertificateIssuingAgency());
+                assertEquals("YouTube", findAllDTO.getResumeSelfStudies().get(1).getSelfStudyPlatform());
+
+        }
 
         // ===========  각 Document 세팅  =================================================
         public void setup() {
