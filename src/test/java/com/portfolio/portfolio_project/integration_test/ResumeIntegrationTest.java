@@ -28,10 +28,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portfolio.portfolio_project.core.jwt.MyJwtProvider;
 import com.portfolio.portfolio_project.domain.jpa.user.User;
+import com.portfolio.portfolio_project.domain.mongodb.resume.resume_academy_edu.ResumeAcademyEdu;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_academy_edu.ResumeAcademyEduRepository;
+import com.portfolio.portfolio_project.domain.mongodb.resume.resume_certificate.ResumeCertificate;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_certificate.ResumeCertificateRepository;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_school_edu.ResumeSchoolEdu;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_school_edu.ResumeSchoolEduRepository;
+import com.portfolio.portfolio_project.domain.mongodb.resume.resume_self_study.ResumeSelfStudy;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_self_study.ResumeSelfStudyRepository;
 import com.portfolio.portfolio_project.integration_test.dummy.ResumeDummy;
 import com.portfolio.portfolio_project.web.resume.ResumeDTO_In.Academyedu_postDTO;
@@ -206,8 +209,73 @@ public class ResumeIntegrationTest {
                 assertEquals("2020-05-03", schoolEdus2.get(0).getSchoolGraduateDate());
         }
 
+        @DisplayName("학원교육 이력 삭제")
+        @Test
+        public void resume_academy_edu_delete_test() throws Exception {
+                // given
+                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+                List<ResumeAcademyEdu> academyEdus = resumeAcademyEduRepository.findAll();
+                String resumeID = academyEdus.get(0).getId();
 
-        // 각 Document 세팅
+                // when
+                ResultActions resultActions = mvc
+                                                .perform(delete("/auth/resume/academyedu?resumeID="+resumeID)
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+                                                
+                // then
+                resultActions.andExpect(status().isOk());
+                List<ResumeAcademyEdu> academyEdus2 = resumeAcademyEduRepository.findAll();
+                assertEquals(1, academyEdus2.size()); // setup() 데이터를 근거로 검증
+                assertEquals("2018-09-01", academyEdus2.get(0).getAcademyCompletionDate());
+        }
+
+        @DisplayName("자격증 이력 삭제")
+        @Test
+        public void resume_certificate_delete_test() throws Exception {
+                // given
+                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+                List<ResumeCertificate> certificates = resumeCertificateRepository.findAll();
+                String resumeID = certificates.get(0).getId();
+
+                // when
+                ResultActions resultActions = mvc
+                                                .perform(delete("/auth/resume/certificate?resumeID="+resumeID)
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+                                                
+                // then
+                resultActions.andExpect(status().isOk());
+                List<ResumeCertificate> certificates2 = resumeCertificateRepository.findAll();
+                assertEquals(1, certificates2.size()); // setup() 데이터를 근거로 검증
+                assertEquals("한국TOEIC위원회", certificates2.get(0).getCertificateIssuingAgency());
+        }
+
+        @DisplayName("자기주도학습 이력 삭제")
+        @Test
+        public void resume_selfstudy_delete_test() throws Exception {
+                // given
+                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+                List<ResumeSelfStudy> selfStudies = resumeSelfStudyRepository.findAll();
+                String resumeID = selfStudies.get(0).getId();
+
+                // when
+                ResultActions resultActions = mvc
+                                                .perform(delete("/auth/resume/selfstudy?resumeID="+resumeID)
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+                                                
+                // then
+                resultActions.andExpect(status().isOk());
+                List<ResumeSelfStudy> selfStudies2 = resumeSelfStudyRepository.findAll();
+                assertEquals(1, selfStudies2.size()); // setup() 데이터를 근거로 검증
+                assertEquals("YouTube", selfStudies2.get(0).getSelfStudyPlatform());
+        }
+
+
+
+
+        // ===========  각 Document 세팅  =================================================
         public void setup() {
             resumeSchoolEduRepository.save(ResumeDummy.newResumeSchoolEdu1());
             resumeSchoolEduRepository.save(ResumeDummy.newResumeSchoolEdu2());
