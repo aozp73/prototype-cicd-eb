@@ -1,12 +1,15 @@
 package com.portfolio.portfolio_project.integration_test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
@@ -19,11 +22,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.portfolio.portfolio_project.core.jwt.MyJwtProvider;
+import com.portfolio.portfolio_project.domain.jpa.skills.enums.SkillType;
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill.MySkill;
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill.MySkillRepository;
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill_type_code.MySkillTypeCode;
@@ -40,7 +48,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class MySkillsIntegrationTest {
+public class MySkillIntegrationTest {
 
         @Autowired
         private MockMvc mvc;
@@ -106,5 +114,30 @@ public class MySkillsIntegrationTest {
                 assertEquals("Python", mySkills.get(0).getSkill());
                 resultActions.andExpect(status().isOk());
         }
-    
+
+        @DisplayName("스킬 조회")
+        @Test
+        public void skill_findAll_test() throws Exception {
+                // given
+
+                // when
+                MvcResult mvcResult = mvc.perform(get("/skills")
+                                        .contentType(MediaType.APPLICATION_JSON))
+                                        .andReturn();
+
+                ModelAndView modelAndView = mvcResult.getModelAndView();
+                
+                if (modelAndView != null) {
+                        Object allSkillsObj = modelAndView.getModel().get("allSkills");
+                        if (allSkillsObj instanceof String) {
+                                String allSkillsJson = (String) allSkillsObj;
+
+                                Map<SkillType, List<String>> skillsMap = new Gson().fromJson(allSkillsJson, new TypeToken<Map<SkillType, List<String>>>() {}.getType());
+                                assertThat(skillsMap.get(SkillType.BackEnd)).hasSize(1);
+                                assertThat(skillsMap.get(SkillType.BackEnd)).containsExactly("Java");
+                                assertThat(skillsMap.get(SkillType.FrontEnd)).hasSize(1);
+                                assertThat(skillsMap.get(SkillType.FrontEnd)).containsExactly("CSS");
+                        }
+                }
+        }
 }
