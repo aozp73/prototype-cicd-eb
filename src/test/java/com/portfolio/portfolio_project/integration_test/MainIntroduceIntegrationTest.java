@@ -1,11 +1,14 @@
 package com.portfolio.portfolio_project.integration_test;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +80,13 @@ public class MainIntroduceIntegrationTest {
                 log.info("결과 : " + responseBody);
 
                 // then
-                resultActions.andExpect(status().isOk());
+                resultActions
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.data.id").exists())
+                        .andExpect(jsonPath("$.data.postTitle").value("등록 제목"))
+                        .andExpect(jsonPath("$.data.postContent").value("등록 내용"))
+                        .andExpect(jsonPath("$.data.imgURL").exists());
+
         }
 
         @DisplayName("게시글 수정")
@@ -104,7 +113,12 @@ public class MainIntroduceIntegrationTest {
                 log.info("결과 : " + responseBody);
 
                 // then
-                resultActions.andExpect(status().isOk());
+                resultActions
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.data.id").exists())
+                        .andExpect(jsonPath("$.data.postTitle").value("수정 제목"))
+                        .andExpect(jsonPath("$.data.postContent").value("수정 내용"))
+                        .andExpect(jsonPath("$.data.imgURL").exists());
         }
 
         @DisplayName("게시글 삭제")
@@ -124,5 +138,22 @@ public class MainIntroduceIntegrationTest {
                 List<MainIntroduce> mainIntroduces = mainIntroduceRepository.findAll();
                 assertEquals(1, mainIntroduces.size());
                 resultActions.andExpect(status().isOk());
+        }
+
+        @DisplayName("게시글 조회")
+        @Test
+        public void main_findAll_test() throws Exception {
+                // given
+
+                // when
+                ResultActions resultActions = mvc
+                                .perform(get("/mainpage")
+                                                .contentType(MediaType.APPLICATION_JSON));
+
+                // then
+                resultActions
+                        .andExpect(status().isOk())
+                        .andExpect(model().attributeExists("mainIntroduceList"))
+                        .andExpect(model().attribute("mainIntroduceList", hasSize(2)));
         }
 }
