@@ -50,97 +50,100 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class MySkillIntegrationTest {
 
-        @Autowired
-        private MockMvc mvc;
-        @Autowired
-        private ObjectMapper om;
-        @Autowired
-        private EntityManager em;
-        @Autowired
-        private MyJwtProvider myJwtProvider;
-        @Autowired
-        private MySkillRepository mySkillRepository;
-        @Autowired
-        private MySkillTypeCodeRepository mySkillTypeCodeRepository;
+    @Autowired
+    private MockMvc mvc;
+    @Autowired
+    private ObjectMapper om;
+    @Autowired
+    private EntityManager em;
+    @Autowired
+    private MyJwtProvider myJwtProvider;
+    @Autowired
+    private MySkillRepository mySkillRepository;
+    @Autowired
+    private MySkillTypeCodeRepository mySkillTypeCodeRepository;
 
-        @BeforeEach
-        public void init() {
-                em.createNativeQuery("ALTER TABLE my_skill_tb AUTO_INCREMENT = 1").executeUpdate();
-                setup();
-        }
+    @BeforeEach
+    public void init() {
+            em.createNativeQuery("ALTER TABLE my_skill_tb AUTO_INCREMENT = 1").executeUpdate();
+            setup();
+    }
 
 
-        @DisplayName("스킬 등록/제거")
-        @Test
-        public void skill_postAndDelete_test() throws Exception {
-                // given
-                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+    @DisplayName("스킬 등록/제거")
+    @Test
+    public void skill_postAndDelete_test() throws Exception {
+            // given
+            String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
 
-                MySkillDTO_In.PostDTO.SkillDTO javaSkill = new MySkillDTO_In.PostDTO.SkillDTO("Java", "removed");
-                MySkillDTO_In.PostDTO.SkillDTO cssSkill = new MySkillDTO_In.PostDTO.SkillDTO("CSS", "removed");
-                MySkillDTO_In.PostDTO.SkillDTO pythonSkill = new MySkillDTO_In.PostDTO.SkillDTO("Python", "added");
+            MySkillDTO_In.PostDTO.SkillDTO javaSkill = new MySkillDTO_In.PostDTO.SkillDTO("Java", "removed");
+            MySkillDTO_In.PostDTO.SkillDTO cssSkill = new MySkillDTO_In.PostDTO.SkillDTO("CSS", "removed");
+            MySkillDTO_In.PostDTO.SkillDTO pythonSkill = new MySkillDTO_In.PostDTO.SkillDTO("Python", "added");
 
-                List<MySkillDTO_In.PostDTO.SkillDTO> BackEnd = Arrays.asList(javaSkill, pythonSkill);
-                List<MySkillDTO_In.PostDTO.SkillDTO> FrontEnd = Arrays.asList(cssSkill);
-                List<MySkillDTO_In.PostDTO.SkillDTO> DevOps = new ArrayList<>(); 
-                List<MySkillDTO_In.PostDTO.SkillDTO> ETC = new ArrayList<>(); 
+            List<MySkillDTO_In.PostDTO.SkillDTO> BackEnd = Arrays.asList(javaSkill, pythonSkill);
+            List<MySkillDTO_In.PostDTO.SkillDTO> FrontEnd = Arrays.asList(cssSkill);
+            List<MySkillDTO_In.PostDTO.SkillDTO> DevOps = new ArrayList<>(); 
+            List<MySkillDTO_In.PostDTO.SkillDTO> ETC = new ArrayList<>(); 
 
-                MySkillDTO_In.PostDTO postDTO_In = new MySkillDTO_In.PostDTO(BackEnd, FrontEnd, DevOps, ETC);
+            MySkillDTO_In.PostDTO postDTO_In = new MySkillDTO_In.PostDTO(BackEnd, FrontEnd, DevOps, ETC);
 
-                String requestBody = om.writeValueAsString(postDTO_In);
+            String requestBody = om.writeValueAsString(postDTO_In);
 
-                // when
-                ResultActions resultActions = mvc
-                                                .perform(post("/auth/skills").content(requestBody)
-                                                .contentType(MediaType.APPLICATION_JSON)
-                                                .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
-                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-                log.info("결과 : " + responseBody);
+            // when
+            ResultActions resultActions = mvc
+                                            .perform(post("/auth/skills").content(requestBody)
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                            .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+            String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+            log.info("결과 : " + responseBody);
 
-                // then
-                List<MySkill> mySkills = mySkillRepository.findAll();
-                assertEquals(1, mySkills.size());
-                assertEquals("Python", mySkills.get(0).getSkill());
-                resultActions.andExpect(status().isOk());
-        }
+            // then
+            List<MySkill> mySkills = mySkillRepository.findAll();
+            assertEquals(1, mySkills.size());
+            assertEquals("Python", mySkills.get(0).getSkill());
+            resultActions.andExpect(status().isOk());
+    }
 
-        @DisplayName("스킬 조회")
-        @Test
-        public void skill_findAll_test() throws Exception {
-                // given
+    @DisplayName("스킬 조회")
+    @Test
+    public void skill_findAll_test() throws Exception {
+            // given
 
-                // when
-                MvcResult mvcResult = mvc.perform(get("/skills")
-                                        .contentType(MediaType.APPLICATION_JSON))
-                                        .andReturn();
+            // when
+            MvcResult mvcResult = mvc.perform(get("/skills")
+                                    .contentType(MediaType.APPLICATION_JSON))
+                                    .andReturn();
 
-                ModelAndView modelAndView = mvcResult.getModelAndView();
-                
-                if (modelAndView != null) {
-                        Object allSkillsObj = modelAndView.getModel().get("allSkills");
-                        if (allSkillsObj instanceof String) {
-                                String allSkillsJson = (String) allSkillsObj;
+            ModelAndView modelAndView = mvcResult.getModelAndView();
+            
+            if (modelAndView != null) {
+                    Object allSkillsObj = modelAndView.getModel().get("allSkills");
+                    if (allSkillsObj instanceof String) {
+                            String allSkillsJson = (String) allSkillsObj;
 
-                                Map<SkillType, List<String>> skillsMap = new Gson().fromJson(allSkillsJson, new TypeToken<Map<SkillType, List<String>>>() {}.getType());
-                                assertThat(skillsMap.get(SkillType.BackEnd)).hasSize(1);
-                                assertThat(skillsMap.get(SkillType.BackEnd)).containsExactly("Java");
-                                assertThat(skillsMap.get(SkillType.FrontEnd)).hasSize(1);
-                                assertThat(skillsMap.get(SkillType.FrontEnd)).containsExactly("CSS");
-                        }
-                }
-        }
+                            Map<SkillType, List<String>> skillsMap = new Gson().fromJson(allSkillsJson, new TypeToken<Map<SkillType, List<String>>>() {}.getType());
+                            assertThat(skillsMap.get(SkillType.BackEnd)).hasSize(1);
+                            assertThat(skillsMap.get(SkillType.BackEnd)).containsExactly("Java");
+                            assertThat(skillsMap.get(SkillType.FrontEnd)).hasSize(1);
+                            assertThat(skillsMap.get(SkillType.FrontEnd)).containsExactly("CSS");
+                    }
+            }
+    }
 
-        public void setup(){
-                MySkillTypeCode backEnd = mySkillTypeCodeRepository.findById(1L).get();
-                MySkillTypeCode frontEnd = mySkillTypeCodeRepository.findById(2L).get();
 
-                List<MySkill> mySkills = new ArrayList<>();
-                mySkills.add(MySkillDummy.newSkill1(backEnd));
-                mySkills.add(MySkillDummy.newSkill2(frontEnd));
+    // ===========  Entity 세팅  =================================================
 
-                mySkillRepository.saveAll(mySkills);
+    public void setup(){
+            MySkillTypeCode backEnd = mySkillTypeCodeRepository.findById(1L).get();
+            MySkillTypeCode frontEnd = mySkillTypeCodeRepository.findById(2L).get();
 
-                em.flush();
-                em.clear();
-        }
+            List<MySkill> mySkills = new ArrayList<>();
+            mySkills.add(MySkillDummy.newSkill1(backEnd));
+            mySkills.add(MySkillDummy.newSkill2(frontEnd));
+
+            mySkillRepository.saveAll(mySkills);
+
+            em.flush();
+            em.clear();
+    }
 }

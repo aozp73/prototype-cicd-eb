@@ -45,129 +45,132 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class MainIntroduceIntegrationTest {
     
-        @Autowired
-        private MockMvc mvc;
-        @Autowired
-        private ObjectMapper om;
-        @Autowired
-        private EntityManager em;
-        @Autowired
-        private MyJwtProvider myJwtProvider;
-        @Autowired
-        private MainIntroduceRepository mainIntroduceRepository;
+    @Autowired
+    private MockMvc mvc;
+    @Autowired
+    private ObjectMapper om;
+    @Autowired
+    private EntityManager em;
+    @Autowired
+    private MyJwtProvider myJwtProvider;
+    @Autowired
+    private MainIntroduceRepository mainIntroduceRepository;
 
-        @BeforeEach
-        public void init() {
-                em.createNativeQuery("ALTER TABLE main_introduce_tb AUTO_INCREMENT = 1").executeUpdate();
-                setup();
-        }    
+    @BeforeEach
+    public void init() {
+            em.createNativeQuery("ALTER TABLE main_introduce_tb AUTO_INCREMENT = 1").executeUpdate();
+            setup();
+    }    
 
 
-        @DisplayName("게시글 등록")
-        @Test
-        public void main_post_test() throws Exception {
-                // given
-                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
-                MainIntroduceDTO_In.PostDTO postDTO_In = new MainIntroduceDTO_In.PostDTO("등록 제목", 
-                                                                                         "등록 내용", 
-                                                                                         "등록 이미지 이름.png",
-                                                                                         "image/png",
-                                                                                         "data:image/png;base64,aGVsbG8=");
+    @DisplayName("게시글 등록")
+    @Test
+    public void main_post_test() throws Exception {
+            // given
+            String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+            MainIntroduceDTO_In.PostDTO postDTO_In = new MainIntroduceDTO_In.PostDTO("등록 제목", 
+                                                                                        "등록 내용", 
+                                                                                        "등록 이미지 이름.png",
+                                                                                        "image/png",
+                                                                                        "data:image/png;base64,aGVsbG8=");
 
-                String requestBody = om.writeValueAsString(postDTO_In);
+            String requestBody = om.writeValueAsString(postDTO_In);
 
-                // when
-                ResultActions resultActions = mvc
-                                                .perform(post("/auth/main").content(requestBody)
-                                                .contentType(MediaType.APPLICATION_JSON)
-                                                .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
-                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-                log.info("결과 : " + responseBody);
+            // when
+            ResultActions resultActions = mvc
+                                            .perform(post("/auth/main").content(requestBody)
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                            .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+            String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+            log.info("결과 : " + responseBody);
 
-                // then
-                resultActions
-                        .andExpect(status().isOk())
-                        .andExpect(jsonPath("$.data.id").value(3L))
-                        .andExpect(jsonPath("$.data.postTitle").value("등록 제목"))
-                        .andExpect(jsonPath("$.data.postContent").value("등록 내용"))
-                        .andExpect(jsonPath("$.data.imgURL").exists());
-        }
+            // then
+            resultActions
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.data.id").value(3L))
+                    .andExpect(jsonPath("$.data.postTitle").value("등록 제목"))
+                    .andExpect(jsonPath("$.data.postContent").value("등록 내용"))
+                    .andExpect(jsonPath("$.data.imgURL").exists());
+    }
 
-        @DisplayName("게시글 수정")
-        @Test
-        public void main_put_test() throws Exception {
-                // given
-                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
-                MainIntroduceDTO_In.PutDTO putDTO_In = new MainIntroduceDTO_In.PutDTO(1L,
-                                                                                      "수정 제목", 
-                                                                                      "수정 내용", 
-                                                                                      "수정 이미지 이름.png",
-                                                                                      "image/png",
-                                                                                      "data:image/png;base64,aGVsbG8=",
-                                                                                      true);
+    @DisplayName("게시글 수정")
+    @Test
+    public void main_put_test() throws Exception {
+            // given
+            String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+            MainIntroduceDTO_In.PutDTO putDTO_In = new MainIntroduceDTO_In.PutDTO(1L,
+                                                                                    "수정 제목", 
+                                                                                    "수정 내용", 
+                                                                                    "수정 이미지 이름.png",
+                                                                                    "image/png",
+                                                                                    "data:image/png;base64,aGVsbG8=",
+                                                                                    true);
 
-                String requestBody = om.writeValueAsString(putDTO_In);
+            String requestBody = om.writeValueAsString(putDTO_In);
 
-                // when
-                ResultActions resultActions = mvc
-                                                .perform(put("/auth/main").content(requestBody)
-                                                .contentType(MediaType.APPLICATION_JSON)
-                                                .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
-                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-                log.info("결과 : " + responseBody);
+            // when
+            ResultActions resultActions = mvc
+                                            .perform(put("/auth/main").content(requestBody)
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                            .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+            String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+            log.info("결과 : " + responseBody);
 
-                // then
-                resultActions
-                        .andExpect(status().isOk())
-                        .andExpect(jsonPath("$.data.id").value(1L))
-                        .andExpect(jsonPath("$.data.postTitle").value("수정 제목"))
-                        .andExpect(jsonPath("$.data.postContent").value("수정 내용"))
-                        .andExpect(jsonPath("$.data.imgURL").exists());
-        }
+            // then
+            resultActions
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.data.id").value(1L))
+                    .andExpect(jsonPath("$.data.postTitle").value("수정 제목"))
+                    .andExpect(jsonPath("$.data.postContent").value("수정 내용"))
+                    .andExpect(jsonPath("$.data.imgURL").exists());
+    }
 
-        @DisplayName("게시글 삭제")
-        @Test
-        public void main_delete_test() throws Exception {
-                // given
-                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
-                Long postPK = 1L;
+    @DisplayName("게시글 삭제")
+    @Test
+    public void main_delete_test() throws Exception {
+            // given
+            String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+            Long postPK = 1L;
 
-                // when
-                ResultActions resultActions = mvc
-                                                .perform(delete("/auth/main?postPK="+postPK)
-                                                .contentType(MediaType.APPLICATION_JSON)
-                                                .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
-                                                
-                // then
-                List<MainIntroduce> mainIntroduces = mainIntroduceRepository.findAll();
-                assertEquals(1, mainIntroduces.size());
-                resultActions.andExpect(status().isOk());
-        }
+            // when
+            ResultActions resultActions = mvc
+                                            .perform(delete("/auth/main?postPK="+postPK)
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                            .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+                                            
+            // then
+            List<MainIntroduce> mainIntroduces = mainIntroduceRepository.findAll();
+            assertEquals(1, mainIntroduces.size());
+            resultActions.andExpect(status().isOk());
+    }
 
-        @DisplayName("게시글 조회")
-        @Test
-        public void main_findAll_test() throws Exception {
-                // given
+    @DisplayName("게시글 조회")
+    @Test
+    public void main_findAll_test() throws Exception {
+            // given
 
-                // when
-                ResultActions resultActions = mvc
-                                                .perform(get("/mainpage")
-                                                .contentType(MediaType.APPLICATION_JSON));
+            // when
+            ResultActions resultActions = mvc
+                                            .perform(get("/mainpage")
+                                            .contentType(MediaType.APPLICATION_JSON));
 
-                // then
-                resultActions
-                        .andExpect(status().isOk())
-                        .andExpect(model().attributeExists("mainIntroduceList"))
-                        .andExpect(model().attribute("mainIntroduceList", hasSize(2)));
-        }
+            // then
+            resultActions
+                    .andExpect(status().isOk())
+                    .andExpect(model().attributeExists("mainIntroduceList"))
+                    .andExpect(model().attribute("mainIntroduceList", hasSize(2)));
+    }
 
-        public void setup(){
-                List<MainIntroduce> mainIntroduces = new ArrayList<>();
-                mainIntroduces.add(MainIntroduceDummy.newMainIntroduce1());
-                mainIntroduces.add(MainIntroduceDummy.newMainIntroduce2());
-                mainIntroduceRepository.saveAll(mainIntroduces);
 
-                em.flush();
-                em.clear();
-        }
+    // ===========  Entity 세팅  =================================================
+
+    public void setup(){
+            List<MainIntroduce> mainIntroduces = new ArrayList<>();
+            mainIntroduces.add(MainIntroduceDummy.newMainIntroduce1());
+            mainIntroduces.add(MainIntroduceDummy.newMainIntroduce2());
+            mainIntroduceRepository.saveAll(mainIntroduces);
+
+            em.flush();
+            em.clear();
+    }
 }
