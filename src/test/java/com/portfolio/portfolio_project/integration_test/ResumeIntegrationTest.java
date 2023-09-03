@@ -1,12 +1,10 @@
 package com.portfolio.portfolio_project.integration_test;
 
-import static org.mockito.Answers.values;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -32,7 +30,10 @@ import com.portfolio.portfolio_project.domain.mongodb.resume.resume_certificate.
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_school_edu.ResumeSchoolEduRepository;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_self_study.ResumeSelfStudyRepository;
 import com.portfolio.portfolio_project.integration_test.dummy.ResumeDummy;
+import com.portfolio.portfolio_project.web.resume.ResumeDTO_In.Academyedu_postDTO;
+import com.portfolio.portfolio_project.web.resume.ResumeDTO_In.Certificate_postDTO;
 import com.portfolio.portfolio_project.web.resume.ResumeDTO_In.Schooledu_postDTO;
+import com.portfolio.portfolio_project.web.resume.ResumeDTO_In.Selfstudy_postDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -104,6 +105,78 @@ public class ResumeIntegrationTest {
                         .andExpect(status().isOk())
                         .andExpect(jsonPath("$.data.schoolAdmissionDate").value("2018-09-01"))
                         .andExpect(jsonPath("$.data.schoolName").value("자바 대학교"));
+        } 
+
+        @DisplayName("학원교육 이력 등록")
+        @Test
+        public void resume_academy_edu_post_test() throws Exception {
+                // given
+                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+                Academyedu_postDTO academyedu_postDTO = new Academyedu_postDTO();
+                academyedu_postDTO.setValues(Arrays.asList("2022-09-01","2023-03-31","수료","파이썬 아카데미","웹개발 과정","-"));
+                String requestBody = om.writeValueAsString(academyedu_postDTO);
+
+                // when
+                ResultActions resultActions = mvc
+                                                .perform(post("/auth/resume/academyedu").content(requestBody)
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+                log.info("결과 : " + responseBody);
+
+                // then
+                resultActions
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.data.academyEnrollDate").value("2022-09-01"))
+                        .andExpect(jsonPath("$.data.academyName").value("파이썬 아카데미"));
+        } 
+
+        @DisplayName("자격증 이력 등록")
+        @Test
+        public void resume_certificate_post_test() throws Exception {
+                // given
+                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+                Certificate_postDTO certificate_postDTO = new Certificate_postDTO();
+                certificate_postDTO.setValues(Arrays.asList("2023-06-01","IT 자격증","정보처리기사","산업인력공단","최종합격"));
+                String requestBody = om.writeValueAsString(certificate_postDTO);
+
+                // when
+                ResultActions resultActions = mvc
+                                                .perform(post("/auth/resume/certificate").content(requestBody)
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+                log.info("결과 : " + responseBody);
+
+                // then
+                resultActions
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.data.acquisitionDate").value("2023-06-01"))
+                        .andExpect(jsonPath("$.data.certificateName").value("정보처리기사"));
+        } 
+
+        @DisplayName("자기주도학습 이력 등록")
+        @Test
+        public void resume_selfstudy_post_test() throws Exception {
+                // given
+                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+                Selfstudy_postDTO selfstudy_postDTO = new Selfstudy_postDTO();
+                selfstudy_postDTO.setValues(Arrays.asList("2023-08-01","데브옵스","Docker","인프런","학습 링크"));
+                String requestBody = om.writeValueAsString(selfstudy_postDTO);
+
+                // when
+                ResultActions resultActions = mvc
+                                                .perform(post("/auth/resume/selfstudy").content(requestBody)
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+                log.info("결과 : " + responseBody);
+
+                // then
+                resultActions
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.data.selfStudyDate").value("2023-08-01"))
+                        .andExpect(jsonPath("$.data.selfStudyTheme").value("Docker"));
         } 
 
 
