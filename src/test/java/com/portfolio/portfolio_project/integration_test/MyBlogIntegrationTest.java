@@ -64,6 +64,9 @@ public class MyBlogIntegrationTest {
                 myBlogs.add(MyBlogDummy.newMyBlog1());
                 myBlogs.add(MyBlogDummy.newMyBlog2());
                 myBlogRepository.saveAll(myBlogs);
+                
+                em.flush();
+                em.clear();
         }
 
 

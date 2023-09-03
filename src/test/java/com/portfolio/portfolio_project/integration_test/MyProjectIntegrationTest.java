@@ -1,26 +1,34 @@
 package com.portfolio.portfolio_project.integration_test;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import static org.hamcrest.Matchers.hasSize;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portfolio.portfolio_project.core.jwt.MyJwtProvider;
-import com.portfolio.portfolio_project.domain.jpa.myblog.my_blog.MyBlog;
-import com.portfolio.portfolio_project.domain.jpa.myblog.my_blog.MyBlogRepository;
 import com.portfolio.portfolio_project.domain.jpa.myproject.my_project.MyProject;
 import com.portfolio.portfolio_project.domain.jpa.myproject.my_project.MyProjectRepository;
-import com.portfolio.portfolio_project.integration_test.dummy.MyBlogDummy;
+import com.portfolio.portfolio_project.domain.jpa.user.User;
 import com.portfolio.portfolio_project.integration_test.dummy.MyProjectDummy;
 
 import lombok.extern.slf4j.Slf4j;
@@ -52,5 +60,47 @@ public class MyProjectIntegrationTest {
                 myProjects.add(MyProjectDummy.newMyProject1());
                 myProjects.add(MyProjectDummy.newMyProject2());
                 myProjectRepository.saveAll(myProjects);
+
+                em.flush();
+                em.clear();
+        }
+
+        
+        @DisplayName("프로젝트 등록")
+        @Test
+        public void project_post_test() throws Exception {
+            // given
+            String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+                params.add("projectName", "등록 프로젝트 이름");
+                params.add("member", "3");
+                params.add("startDate", "2023-09-03");
+                params.add("endDate", "2023-09-05");
+                params.add("selectedRoles", "BackEnd,FrontEnd");
+                params.add("readmeUrl", "등록 readme 주소");
+                params.add("githubUrl", "등록 github 주소");
+                params.add("projectImgBase64", "data:image/png;base64,aGVsbG8=");
+                params.add("individualPerformanceBase64", "data:image/png;base64,aGVsbG8=");
+                params.add("projectImageName", "등록 프로젝트 이미지 이름.png");
+                params.add("projectImageType", "image/png");
+                params.add("individualPerformanceImageName", "등록 개인수행 이미지 이름.png");
+                params.add("individualPerformanceImageType", "image/png");
+
+            // when
+            ResultActions resultActions = mvc
+                                            .perform(post("/auth/myproject")
+                                            .params(params)
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                            .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+            String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+            log.info("결과 : " + responseBody);
+
+            // then
+            resultActions
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.data.id").value(3L))
+                    .andExpect(jsonPath("$.data.projectName").value("등록 프로젝트 이름"))
+                    .andExpect(jsonPath("$.data.member").value(3))
+                    .andExpect(jsonPath("$.data.selectedRoles", hasSize(2)));
         }
 }
