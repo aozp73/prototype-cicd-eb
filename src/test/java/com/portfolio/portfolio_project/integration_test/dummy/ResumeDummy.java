@@ -17,6 +17,7 @@ public class ResumeDummy {
                 .schoolMajor("기계 공학과")
                 .schoolCredit("3.7")
                 .schoolGraduateStatus("졸업")
+                .order(1)
                 .createdAt(LocalDateTime.now().toString())
                 .updatedAt(LocalDateTime.now().toString())
                 .build();
@@ -29,6 +30,7 @@ public class ResumeDummy {
                 .schoolMajor("컴퓨터 공학과")
                 .schoolCredit("3.7")
                 .schoolGraduateStatus("졸업")
+                .order(2)
                 .createdAt(LocalDateTime.now().toString())
                 .updatedAt(LocalDateTime.now().toString())
                 .build();
@@ -43,6 +45,7 @@ public class ResumeDummy {
                 .academyName("자바 교육원")
                 .academyCourse("풀스택 과정")
                 .academyEtc("-")
+                .order(1)
                 .createdAt(LocalDateTime.now().toString())
                 .updatedAt(LocalDateTime.now().toString())
                 .build();
@@ -55,6 +58,7 @@ public class ResumeDummy {
                 .academyName("파이썬 교육원")
                 .academyCourse("풀스택 과정")
                 .academyEtc("-")
+                .order(2)
                 .createdAt(LocalDateTime.now().toString())
                 .updatedAt(LocalDateTime.now().toString())
                 .build();
@@ -67,6 +71,7 @@ public class ResumeDummy {
                 .certificateName("SQLD")
                 .certificateIssuingAgency("데이터베이스진흥원")
                 .certificateStatus("최종합격")
+                .order(1)
                 .createdAt(LocalDateTime.now().toString())
                 .updatedAt(LocalDateTime.now().toString())
                 .build();
@@ -78,6 +83,7 @@ public class ResumeDummy {
                 .certificateName("TOEIC (830)")
                 .certificateIssuingAgency("한국TOEIC위원회")
                 .certificateStatus("최종합격")
+                .order(2)
                 .createdAt(LocalDateTime.now().toString())
                 .updatedAt(LocalDateTime.now().toString())
                 .build();
@@ -90,6 +96,7 @@ public class ResumeDummy {
                 .selfStudyTheme("Java")
                 .selfStudyPlatform("Inflearn")
                 .selfStudyBloggingLink("https:/blog.com/study1")
+                .order(1)
                 .createdAt(LocalDateTime.now().toString())
                 .updatedAt(LocalDateTime.now().toString())
                 .build();
@@ -101,6 +108,7 @@ public class ResumeDummy {
                 .selfStudyTheme("Docker")
                 .selfStudyPlatform("YouTube")
                 .selfStudyBloggingLink("https:/blog.com/study2")
+                .order(2)
                 .createdAt(LocalDateTime.now().toString())
                 .updatedAt(LocalDateTime.now().toString())
                 .build();
