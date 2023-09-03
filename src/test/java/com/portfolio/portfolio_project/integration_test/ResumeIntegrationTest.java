@@ -95,6 +95,7 @@ public class ResumeIntegrationTest {
         resumeSelfStudyRepository.deleteAll();
     }
 
+    
     // POST 테스트
     @DisplayName("학교교육 이력 등록")
     @Test
@@ -438,7 +439,7 @@ public class ResumeIntegrationTest {
 
 
     // ===========  각 Document 세팅  =================================================
-    
+
     public void setup() {
         resumeSchoolEduRepository.save(ResumeDummy.newResumeSchoolEdu1());
         resumeSchoolEduRepository.save(ResumeDummy.newResumeSchoolEdu2());
