@@ -34,7 +34,7 @@ import com.portfolio.portfolio_project.web.main.MainIntroduceDTO_In;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@DisplayName("메인페이지 통합 테스트")
+@DisplayName("메인 페이지 - 통합 테스트")
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
