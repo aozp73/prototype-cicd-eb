@@ -42,13 +42,13 @@
                         <a class="nav-link" href="/resume">Resume</a>
                     </li>
                     <li class="nav-item me-4">
-                        <a class="nav-link" href="/project">Project</a>
+                        <a class="nav-link" href="/blog">TechBlog</a>
                     </li>
                     <li class="nav-item me-4">
-                        <a class="nav-link" href="/skills">Skills</a>
+                        <a class="nav-link" href="/project">Project</a>
                     </li>
                     <li class="nav-item me-5">
-                        <a class="nav-link" href="/blog">TechBlog</a>
+                        <a class="nav-link" href="/skills">Skills</a>
                     </li>
                 </ul>
 

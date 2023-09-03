@@ -20,11 +20,11 @@ function toggleEditMode() {
 // ====== updateForm / update / add / delete ============================ //
 
 // updateForm
-function updateForm(event, container_number) {
+function updateForm(container_number) {
     const section = document.getElementById('container-' + container_number);
 
     const mainTitle = section.querySelector('#mainTitle-' + container_number + ' h3').innerText;
-    const subTitle = section.querySelector('#subTitle-' + container_number + ' h4').innerText;
+    const subTitle = section.querySelector('#subTitle-' + container_number + ' h5').innerText;
     let content = section.querySelector('#content-' + container_number + ' p').innerText;
     content = content.replace(/<br>/g, "\n");
 
@@ -38,7 +38,7 @@ function updateForm(event, container_number) {
         </div>
         <div class="row">
             <div class="col-5">
-                <div class="blog-image-preview-change mb-3" id="image-preview-${container_number}" style="height: 261px; background-image: url('${backgroundImage}'); background-size: 100% 100%;" onclick="document.getElementById('fileInput-${container_number}').click();">
+                <div class="blog-image-preview-change mb-3" id="image-preview-${container_number}" style="height: 261px; background-image: url('${backgroundImage}');" onclick="document.getElementById('fileInput-${container_number}').click();">
                     <input type="file" id="fileInput-${container_number}" style="display: none;" onchange="previewImage(event, ${container_number})">
                 </div>
             </div>
@@ -84,12 +84,12 @@ function updatePost(pk) {
                     </div>
                     <div class="row">
                         <div class="col-5">
-                            <div class="blog-image-preview-change mb-3" style="height: 261px; background-image: url('${response.data.imgURL}'); background-size: 100% 100%;">
+                            <div class="blog-image-preview-change mb-3" style="height: 261px; background-image: url('${response.data.imgURL}');">
                             </div>
                         </div>
                         <div class="col-7">
                             <div class="mb-4" id="subTitle-${response.data.id}">
-                                <h4>${response.data.subTitle}</h4>
+                                <h5>${response.data.subTitle}</h5>
                             </div>
                             <div class="mb-3" id="content-${response.data.id}">
                                 <p>
@@ -101,7 +101,7 @@ function updatePost(pk) {
                     <div style="height: 80px;">
                         <div class="edit-controls" style="display: block; ">
                             <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${response.data.id})">수정하기</button>
+                                <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(${response.data.id})">수정하기</button>
                                 <button type="button" class="btn btn-outline-danger" onclick="deletePost(${response.data.id})">삭제하기</button>
                             </div>
                         </div>
@@ -165,12 +165,12 @@ function addPost() {
                 </div>
                 <div class="row">
                     <div class="col-5">
-                        <div class="blog-image-preview-change mb-3" style="height: 261px; background-image: url('${response.data.imgURL}'); background-size: 100% 100%;">
+                        <div class="blog-image-preview-change mb-3" style="height: 261px; background-image: url('${response.data.imgURL}');">
                         </div>
                     </div>
                     <div class="col-7">
                         <div class="mb-4" id="subTitle-${response.data.id}">
-                            <h4>${response.data.subTitle}</h4>
+                            <h5>${response.data.subTitle}</h5>
                         </div>
                         <div class="mb-3" id="content-${response.data.id}">
                             <p>
@@ -182,7 +182,7 @@ function addPost() {
                 <div style="height: 80px;">
                     <div class="edit-controls" style="display: block; ">
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${response.data.id})">수정하기</button>
+                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(${response.data.id})">수정하기</button>
                             <button type="button" class="btn btn-outline-danger" onclick="deletePost(${response.data.id})">삭제하기</button>
                         </div>
                     </div>
@@ -191,6 +191,7 @@ function addPost() {
             `
 
             $(el).insertBefore('#main-container > :last-child');
+            resetFormAndImage()
         },
         error: function(error) {
             alert(error.responseJSON.data);
@@ -236,7 +237,6 @@ function previewImage(event, container_number) {
         imagePreview.classList.remove('blog-image-preview'); 
         imagePreview.classList.add('blog-image-preview-change');
         imagePreview.style.backgroundImage = 'url(' + reader.result + ')';
-        imagePreview.style.backgroundSize = '100% 100%';
        
         if (container_number === 'new') {
              document.querySelector('.plus-icon').style.display = 'none'; 
@@ -251,9 +251,24 @@ function previewImage(event, container_number) {
 }
 
 function resetPreview() {
-    const imagePreview = document.querySelector('.blog-image-preview');
+    const imagePreview = document.querySelector('#image-preview-new');
     imagePreview.style.backgroundImage = 'none';
     document.querySelector('.plus-icon').style.display = 'block';
+}
+
+// 이미지 등록 후 등록 Form 초기화
+function resetFormAndImage() {
+    document.getElementById('mainTitle-new').value = '';
+    document.getElementById('subTitle-new').value = '';
+    document.getElementById('content-new').value = '';
+
+    const imagePreview = document.getElementById('image-preview-new');
+    imagePreview.style.backgroundImage = 'none';
+    imagePreview.classList.remove('blog-image-preview-change');
+    imagePreview.classList.add('blog-image-preview'); 
+    document.querySelector('.plus-icon').style.display = 'block'
+
+    document.getElementById('fileInput').value = '';
 }
 
 // 수정하기 버튼 클릭 시, payload 생성 함수
