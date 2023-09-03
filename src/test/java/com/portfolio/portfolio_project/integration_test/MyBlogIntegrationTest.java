@@ -1,10 +1,13 @@
 package com.portfolio.portfolio_project.integration_test;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -55,7 +58,7 @@ public class MyBlogIntegrationTest {
 
         @BeforeEach
         public void setUp() {
-                em.createNativeQuery("ALTER TABLE main_introduce_tb AUTO_INCREMENT = 1").executeUpdate();
+                em.createNativeQuery("ALTER TABLE my_blog_tb AUTO_INCREMENT = 1").executeUpdate();
 
                 List<MyBlog> myBlogs = new ArrayList<>();
                 myBlogs.add(MyBlogDummy.newMyBlog1());
@@ -147,5 +150,20 @@ public class MyBlogIntegrationTest {
                 resultActions.andExpect(status().isOk());
         }
 
-    
+        @DisplayName("게시글 조회")
+        @Test
+        public void blog_findAll_test() throws Exception {
+                // given
+
+                // when
+                ResultActions resultActions = mvc
+                                                .perform(get("/blog")
+                                                .contentType(MediaType.APPLICATION_JSON));
+
+                // then
+                resultActions
+                        .andExpect(status().isOk())
+                        .andExpect(model().attributeExists("myBlogList"))
+                        .andExpect(model().attribute("myBlogList", hasSize(2)));
+        }
 }

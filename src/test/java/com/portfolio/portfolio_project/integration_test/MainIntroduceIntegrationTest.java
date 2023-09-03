@@ -157,7 +157,7 @@ public class MainIntroduceIntegrationTest {
 
                 // when
                 ResultActions resultActions = mvc
-                                .perform(get("/mainpage")
+                                                .perform(get("/mainpage")
                                                 .contentType(MediaType.APPLICATION_JSON));
 
                 // then
