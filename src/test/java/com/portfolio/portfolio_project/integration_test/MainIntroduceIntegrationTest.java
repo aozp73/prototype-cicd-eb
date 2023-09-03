@@ -1,5 +1,7 @@
 package com.portfolio.portfolio_project.integration_test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -102,6 +104,25 @@ public class MainIntroduceIntegrationTest {
                 log.info("결과 : " + responseBody);
 
                 // then
+                resultActions.andExpect(status().isOk());
+        }
+
+        @DisplayName("게시글 삭제")
+        @Test
+        public void main_delete_test() throws Exception {
+                // given
+                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+                Long postPK = 1L;
+
+                // when
+                ResultActions resultActions = mvc
+                                .perform(delete("/auth/main?postPK="+postPK)
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+                                                
+                // then
+                List<MainIntroduce> mainIntroduces = mainIntroduceRepository.findAll();
+                assertEquals(1, mainIntroduces.size());
                 resultActions.andExpect(status().isOk());
         }
 }
