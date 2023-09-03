@@ -307,6 +307,102 @@ public class ResumeIntegrationTest {
                 assertEquals(1,schoolEdus2.get(1).getOrder());
         } 
 
+        @DisplayName("학원교육 row 이동")
+        @Test
+        public void resume_academyedu_rowmove_test() throws Exception {
+                // given
+                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+
+                List<ResumeAcademyEdu> academyEdus = resumeAcademyEduRepository.findAll();
+
+                List<OrderUpdateDto> updates = new ArrayList<>();
+                OrderUpdateDto dto1 = new OrderUpdateDto(academyEdus.get(0).getId(),2);
+                OrderUpdateDto dto2 = new OrderUpdateDto(academyEdus.get(1).getId(),1);
+                updates.add(dto1);
+                updates.add(dto2);
+
+                String requestBody = om.writeValueAsString(updates);
+
+                // when
+                ResultActions resultActions = mvc
+                    .perform(post("/auth/resume/updateOrder/academyedu").content(requestBody)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+                log.info("결과 : " + responseBody);
+
+                // then
+                List<ResumeAcademyEdu> academyEdus2 = resumeAcademyEduRepository.findAll();
+
+                resultActions.andExpect(status().isOk());
+                assertEquals(2,academyEdus2.get(0).getOrder());
+                assertEquals(1,academyEdus2.get(1).getOrder());
+        } 
+
+        @DisplayName("자격증 row 이동")
+        @Test
+        public void resume_certificate_rowmove_test() throws Exception {
+                // given
+                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+
+                List<ResumeCertificate> certificates = resumeCertificateRepository.findAll();
+
+                List<OrderUpdateDto> updates = new ArrayList<>();
+                OrderUpdateDto dto1 = new OrderUpdateDto(certificates.get(0).getId(),2);
+                OrderUpdateDto dto2 = new OrderUpdateDto(certificates.get(1).getId(),1);
+                updates.add(dto1);
+                updates.add(dto2);
+
+                String requestBody = om.writeValueAsString(updates);
+
+                // when
+                ResultActions resultActions = mvc
+                    .perform(post("/auth/resume/updateOrder/certificate").content(requestBody)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+                log.info("결과 : " + responseBody);
+
+                // then
+                List<ResumeCertificate> certificates2 = resumeCertificateRepository.findAll();
+
+                resultActions.andExpect(status().isOk());
+                assertEquals(2,certificates2.get(0).getOrder());
+                assertEquals(1,certificates2.get(1).getOrder());
+        } 
+
+        @DisplayName("자기주도학습 row 이동")
+        @Test
+        public void resume_selfstudy_rowmove_test() throws Exception {
+                // given
+                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+
+                List<ResumeSelfStudy> selfStudies = resumeSelfStudyRepository.findAll();
+
+                List<OrderUpdateDto> updates = new ArrayList<>();
+                OrderUpdateDto dto1 = new OrderUpdateDto(selfStudies.get(0).getId(),2);
+                OrderUpdateDto dto2 = new OrderUpdateDto(selfStudies.get(1).getId(),1);
+                updates.add(dto1);
+                updates.add(dto2);
+
+                String requestBody = om.writeValueAsString(updates);
+
+                // when
+                ResultActions resultActions = mvc
+                    .perform(post("/auth/resume/updateOrder/selfstudy").content(requestBody)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+                log.info("결과 : " + responseBody);
+
+                // then
+                List<ResumeSelfStudy> selfStudies2 = resumeSelfStudyRepository.findAll();
+
+                resultActions.andExpect(status().isOk());
+                assertEquals(2,selfStudies2.get(0).getOrder());
+                assertEquals(1,selfStudies2.get(1).getOrder());
+        } 
+
 
 
 
