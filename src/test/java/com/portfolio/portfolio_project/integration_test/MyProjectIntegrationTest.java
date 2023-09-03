@@ -1,6 +1,8 @@
 package com.portfolio.portfolio_project.integration_test;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -159,5 +161,24 @@ public class MyProjectIntegrationTest {
                         .andExpect(jsonPath("$.data.member").value(2))
                         .andExpect(jsonPath("$.data.githubUrl").value("등록 github 주소"))
                         .andExpect(jsonPath("$.data.selectedRoles", hasSize(3)));
+        }
+
+        @DisplayName("프로젝트 삭제")
+        @Test
+        public void project_delete_test() throws Exception {
+                // given
+                String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
+                Long projectPK = 1L;
+
+                // when
+                ResultActions resultActions = mvc
+                                                .perform(delete("/auth/myproject?projectPK="+projectPK)
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .header(MyJwtProvider.HEADER, MyJwtProvider.TOKEN_PREFIX + jwt));
+                                                
+                // then
+                List<MyProject> mainIntroduces = myProjectRepository.findAll();
+                assertEquals(1, mainIntroduces.size());
+                resultActions.andExpect(status().isOk());
         }
 }
