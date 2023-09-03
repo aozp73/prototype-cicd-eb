@@ -34,7 +34,7 @@ public class MainIntroduceService {
     @Transactional
     public MainIntroduceDTO_Out.PostDTO main_post(MainIntroduceDTO_In.PostDTO postDTO_In){
         List<String> nameAndUrl = s3Utils.uploadImageToS3(postDTO_In.getImageData(), postDTO_In.getImageName(), postDTO_In.getContentType(), "main_introduce");
-
+        
         MainIntroduce mainIntroduce = postDTO_In.toEntity();
         mainIntroduce.setIntroduceImgName(nameAndUrl.get(0));
         mainIntroduce.setIntroduceImgUrl(nameAndUrl.get(1));

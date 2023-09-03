@@ -10,8 +10,8 @@ import com.portfolio.portfolio_project.core.exception.Exception500;
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill.MySkill;
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill.MySkillRepository;
 import com.portfolio.portfolio_project.service.module.MySkillsModules;
-import com.portfolio.portfolio_project.web.skills.MySkillsDTO_In;
-import com.portfolio.portfolio_project.web.skills.MySkillsDTO_Out;
+import com.portfolio.portfolio_project.web.myskills.MySkillsDTO_In;
+import com.portfolio.portfolio_project.web.myskills.MySkillsDTO_Out;
 
 import lombok.RequiredArgsConstructor;
 

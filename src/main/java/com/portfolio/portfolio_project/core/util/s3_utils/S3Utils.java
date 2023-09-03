@@ -34,11 +34,11 @@ public class S3Utils {
         MultipartFile img_multipartFile;
         try {
             img_multipartFile = BASE64DecodedMultipartFile
-                .convertBase64ToMultipartFile(imageData, imageName, contentType);
+            .convertBase64ToMultipartFile(imageData, imageName, contentType);
         } catch (Exception e) {
             throw new Exception500("MultiPartFIle 변환에 실패하였습니다. :" + e.getStackTrace());
         }
-
+        
         List<String> nameAndUrl = new ArrayList<>();
         try {
             nameAndUrl = S3Utils.uploadFile(img_multipartFile, keyword, bucket, amazonS3Client);

@@ -1,4 +1,4 @@
-package com.portfolio.portfolio_project.web.skills;
+package com.portfolio.portfolio_project.web.myskills;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -35,4 +35,17 @@ spring:
     ansi:
       enabled: always
 
+cloud:
+  aws:
+    region:
+      static: ${static}
+      auto: false # false면 자동으로 리전을 선택하지 않고, static 설정을 따름
+    s3:
+      bucket: ${bucket}
+    credentials:
+      access-key: ${access-key}
+      secret-key: ${secret-key}
+    stack:
+      auto: false # false로 설정된 경우, CloudFormation 스택은 자동으로 생성되거나 관리되지 않음
+
 name: ${MY.JWT}

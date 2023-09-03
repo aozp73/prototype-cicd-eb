@@ -13,7 +13,7 @@ import com.portfolio.portfolio_project.domain.jpa.skills.my_skill.MySkill;
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill.MySkillRepository;
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill_type_code.MySkillTypeCode;
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill_type_code.MySkillTypeCodeRepository;
-import com.portfolio.portfolio_project.web.skills.MySkillsDTO_In;
+import com.portfolio.portfolio_project.web.myskills.MySkillsDTO_In;
 
 import lombok.RequiredArgsConstructor;
 

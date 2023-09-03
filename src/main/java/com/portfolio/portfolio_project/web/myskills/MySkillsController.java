@@ -1,4 +1,4 @@
-package com.portfolio.portfolio_project.web.skills;
+package com.portfolio.portfolio_project.web.myskills;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

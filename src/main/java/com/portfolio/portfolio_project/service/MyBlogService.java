@@ -10,8 +10,8 @@ import com.portfolio.portfolio_project.core.exception.Exception500;
 import com.portfolio.portfolio_project.core.util.s3_utils.S3Utils;
 import com.portfolio.portfolio_project.domain.jpa.myblog.my_blog.MyBlog;
 import com.portfolio.portfolio_project.domain.jpa.myblog.my_blog.MyBlogRepository;
-import com.portfolio.portfolio_project.web.blog.MyBlogDTO_In;
-import com.portfolio.portfolio_project.web.blog.MyBlogDTO_Out;
+import com.portfolio.portfolio_project.web.myblog.MyBlogDTO_In;
+import com.portfolio.portfolio_project.web.myblog.MyBlogDTO_Out;
 
 import lombok.RequiredArgsConstructor;
 
