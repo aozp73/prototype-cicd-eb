@@ -57,15 +57,9 @@ public class MainIntroduceIntegrationTest {
         private MainIntroduceRepository mainIntroduceRepository;
 
         @BeforeEach
-        public void setUp() {
+        public void init() {
                 em.createNativeQuery("ALTER TABLE main_introduce_tb AUTO_INCREMENT = 1").executeUpdate();
-                List<MainIntroduce> mainIntroduces = new ArrayList<>();
-                mainIntroduces.add(MainIntroduceDummy.newMainIntroduce1());
-                mainIntroduces.add(MainIntroduceDummy.newMainIntroduce2());
-                mainIntroduceRepository.saveAll(mainIntroduces);
-
-                em.flush();
-                em.clear();
+                setup();
         }    
 
 
@@ -165,5 +159,15 @@ public class MainIntroduceIntegrationTest {
                         .andExpect(status().isOk())
                         .andExpect(model().attributeExists("mainIntroduceList"))
                         .andExpect(model().attribute("mainIntroduceList", hasSize(2)));
+        }
+
+        public void setup(){
+                List<MainIntroduce> mainIntroduces = new ArrayList<>();
+                mainIntroduces.add(MainIntroduceDummy.newMainIntroduce1());
+                mainIntroduces.add(MainIntroduceDummy.newMainIntroduce2());
+                mainIntroduceRepository.saveAll(mainIntroduces);
+
+                em.flush();
+                em.clear();
         }
 }

@@ -60,16 +60,9 @@ public class MyProjectIntegrationTest {
         private MyProjectRepository myProjectRepository;
 
         @BeforeEach
-        public void setUp() {
+        public void init() {
                 em.createNativeQuery("ALTER TABLE my_project_tb AUTO_INCREMENT = 1").executeUpdate();
-
-                List<MyProject> myProjects = new ArrayList<>();
-                myProjects.add(MyProjectDummy.newMyProject1());
-                myProjects.add(MyProjectDummy.newMyProject2());
-                myProjectRepository.saveAll(myProjects);
-
-                em.flush();
-                em.clear();
+                setup();
         }
 
         
@@ -199,5 +192,15 @@ public class MyProjectIntegrationTest {
                         .andExpect(status().isOk())
                         .andExpect(model().attributeExists("myProjectList"))
                         .andExpect(model().attribute("myProjectList", hasSize(2)));
+        }
+
+        public void setup(){
+                List<MyProject> myProjects = new ArrayList<>();
+                myProjects.add(MyProjectDummy.newMyProject1());
+                myProjects.add(MyProjectDummy.newMyProject2());
+                myProjectRepository.saveAll(myProjects);
+
+                em.flush();
+                em.clear();
         }
 }

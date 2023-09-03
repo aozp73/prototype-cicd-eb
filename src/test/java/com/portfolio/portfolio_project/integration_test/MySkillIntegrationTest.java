@@ -64,20 +64,9 @@ public class MySkillIntegrationTest {
         private MySkillTypeCodeRepository mySkillTypeCodeRepository;
 
         @BeforeEach
-        public void setUp() {
+        public void init() {
                 em.createNativeQuery("ALTER TABLE my_skill_tb AUTO_INCREMENT = 1").executeUpdate();
-
-                MySkillTypeCode backEnd = mySkillTypeCodeRepository.findById(1L).get();
-                MySkillTypeCode frontEnd = mySkillTypeCodeRepository.findById(2L).get();
-
-                List<MySkill> mySkills = new ArrayList<>();
-                mySkills.add(MySkillDummy.newSkill1(backEnd));
-                mySkills.add(MySkillDummy.newSkill2(frontEnd));
-
-                mySkillRepository.saveAll(mySkills);
-
-                em.flush();
-                em.clear();
+                setup();
         }
 
 
@@ -139,5 +128,19 @@ public class MySkillIntegrationTest {
                                 assertThat(skillsMap.get(SkillType.FrontEnd)).containsExactly("CSS");
                         }
                 }
+        }
+
+        public void setup(){
+                MySkillTypeCode backEnd = mySkillTypeCodeRepository.findById(1L).get();
+                MySkillTypeCode frontEnd = mySkillTypeCodeRepository.findById(2L).get();
+
+                List<MySkill> mySkills = new ArrayList<>();
+                mySkills.add(MySkillDummy.newSkill1(backEnd));
+                mySkills.add(MySkillDummy.newSkill2(frontEnd));
+
+                mySkillRepository.saveAll(mySkills);
+
+                em.flush();
+                em.clear();
         }
 }

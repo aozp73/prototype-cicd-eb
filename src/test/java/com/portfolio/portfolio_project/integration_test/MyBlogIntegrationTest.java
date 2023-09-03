@@ -57,16 +57,9 @@ public class MyBlogIntegrationTest {
         private MyBlogRepository myBlogRepository;
 
         @BeforeEach
-        public void setUp() {
+        public void init() {
                 em.createNativeQuery("ALTER TABLE my_blog_tb AUTO_INCREMENT = 1").executeUpdate();
-
-                List<MyBlog> myBlogs = new ArrayList<>();
-                myBlogs.add(MyBlogDummy.newMyBlog1());
-                myBlogs.add(MyBlogDummy.newMyBlog2());
-                myBlogRepository.saveAll(myBlogs);
-                
-                em.flush();
-                em.clear();
+                setup();
         }
 
 
@@ -168,5 +161,15 @@ public class MyBlogIntegrationTest {
                         .andExpect(status().isOk())
                         .andExpect(model().attributeExists("myBlogList"))
                         .andExpect(model().attribute("myBlogList", hasSize(2)));
+        }
+
+        public void setup(){
+                List<MyBlog> myBlogs = new ArrayList<>();
+                myBlogs.add(MyBlogDummy.newMyBlog1());
+                myBlogs.add(MyBlogDummy.newMyBlog2());
+                myBlogRepository.saveAll(myBlogs);
+                
+                em.flush();
+                em.clear();
         }
 }
