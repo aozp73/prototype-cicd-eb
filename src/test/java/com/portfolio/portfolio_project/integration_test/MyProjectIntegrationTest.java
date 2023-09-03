@@ -3,9 +3,11 @@ package com.portfolio.portfolio_project.integration_test;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -180,5 +182,22 @@ public class MyProjectIntegrationTest {
                 List<MyProject> mainIntroduces = myProjectRepository.findAll();
                 assertEquals(1, mainIntroduces.size());
                 resultActions.andExpect(status().isOk());
+        }
+
+        @DisplayName("프로젝트 조회")
+        @Test
+        public void project_findAll_test() throws Exception {
+                // given
+
+                // when
+                ResultActions resultActions = mvc
+                                                .perform(get("/project")
+                                                .contentType(MediaType.APPLICATION_JSON));
+
+                // then
+                resultActions
+                        .andExpect(status().isOk())
+                        .andExpect(model().attributeExists("myProjectList"))
+                        .andExpect(model().attribute("myProjectList", hasSize(2)));
         }
 }
