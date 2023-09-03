@@ -13,21 +13,21 @@ import com.portfolio.portfolio_project.domain.jpa.skills.my_skill.MySkill;
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill.MySkillRepository;
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill_type_code.MySkillTypeCode;
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill_type_code.MySkillTypeCodeRepository;
-import com.portfolio.portfolio_project.web.skills.MySkillsDTO_In;
+import com.portfolio.portfolio_project.web.myskills.MySkillDTO_In;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Component
-public class MySkillsModules {
+public class MySkillModules {
     
     private final MySkillTypeCodeRepository mySkillTypeCodeRepository;
     private final MySkillRepository mySkillRepository;
 
-    public void processSkills(List<MySkillsDTO_In.PostDTO.SkillDTO> skillDTOs, String section, List<MySkill> toAdd, List<MySkill> toRemove) {
+    public void processSkills(List<MySkillDTO_In.PostDTO.SkillDTO> skillDTOs, String section, List<MySkill> toAdd, List<MySkill> toRemove) {
     if (skillDTOs == null) return;
 
-    for (MySkillsDTO_In.PostDTO.SkillDTO skillDTO : skillDTOs) {
+    for (MySkillDTO_In.PostDTO.SkillDTO skillDTO : skillDTOs) {
         MySkillTypeCode mySkillTypeCodePS = mySkillTypeCodeRepository.findBySkillType(SkillType.valueOf(section)).orElseThrow(() -> {
             throw new Exception400("존재하지 않는 스킬타입입니다.");
         });

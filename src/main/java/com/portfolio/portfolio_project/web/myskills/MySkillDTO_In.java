@@ -1,4 +1,4 @@
-package com.portfolio.portfolio_project.web.skills;
+package com.portfolio.portfolio_project.web.myskills;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +10,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-public class MySkillsDTO_In {
+public class MySkillDTO_In {
 
     @Getter
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class PostDTO {
+        // javascipt 로직과 연계하기 위해 대문자로 설정
         @JsonDeserialize(as = ArrayList.class, contentAs = SkillDTO.class)
         private List<SkillDTO> BackEnd;
         @JsonDeserialize(as = ArrayList.class, contentAs = SkillDTO.class)

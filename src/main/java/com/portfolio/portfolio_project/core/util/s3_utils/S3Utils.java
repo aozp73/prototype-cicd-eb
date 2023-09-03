@@ -31,14 +31,18 @@ public class S3Utils {
     private String staticRegion;
 
     public List<String> uploadImageToS3(String imageData, String imageName, String contentType, String keyword) throws Exception500 {
+        System.out.println("테스트 : " + imageData);
+        System.out.println("테스트 : " + imageName);
+        System.out.println("테스트 : " + contentType);
+        System.out.println("테스트 : " + keyword);
         MultipartFile img_multipartFile;
         try {
             img_multipartFile = BASE64DecodedMultipartFile
-                .convertBase64ToMultipartFile(imageData, imageName, contentType);
+            .convertBase64ToMultipartFile(imageData, imageName, contentType);
         } catch (Exception e) {
             throw new Exception500("MultiPartFIle 변환에 실패하였습니다. :" + e.getStackTrace());
         }
-
+        
         List<String> nameAndUrl = new ArrayList<>();
         try {
             nameAndUrl = S3Utils.uploadFile(img_multipartFile, keyword, bucket, amazonS3Client);

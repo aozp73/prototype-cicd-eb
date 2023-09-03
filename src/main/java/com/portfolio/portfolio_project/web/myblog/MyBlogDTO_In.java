@@ -1,4 +1,4 @@
-package com.portfolio.portfolio_project.web.blog;
+package com.portfolio.portfolio_project.web.myblog;
 
 import java.time.LocalDateTime;
 
