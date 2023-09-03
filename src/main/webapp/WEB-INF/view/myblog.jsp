@@ -5,11 +5,11 @@
         <div class="py-5" style="background-color: #F9F9F9" id="main-container">
         
             <div class="mt-3 container d-flex align-items-center mb-4" style="position: relative;">
-                <div id="blogURL" style="position: absolute; right: 147px;">
+                <div id="blogURL" style="position: absolute; right: 162px;">
                     <span style="font-size: 17px;">블로그 주소 &nbsp;<a style="text-decoration: none; font-size: 16px;" href="https://blog.naver.com/aozp73" target="_blank">https://blog.naver.com/aozp73</a> </span>
                 </div>
             </div>
-            <br> <br>
+            <br>
 
             <c:forEach var="blog" items="${myBlogList}">
                 <div class="container" id="container-${blog.id}" style="padding-left: 150px; padding-right: 150px; margin-top: 20px;">
@@ -24,7 +24,7 @@
                         </div>
                         <div class="col-7">
                             <div class="mb-4" id="subTitle-${blog.id}">
-                                <h4>${blog.subTitle}</h4>
+                                <h5>${blog.subTitle}</h5>
                             </div>
                             <div class="mb-3" id="content-${blog.id}">
                                 <p>
@@ -36,7 +36,7 @@
                     <div style="height: 80px;">
                         <div class="edit-controls" style="display: none; ">
                             <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${blog.id})">수정하기</button>
+                                <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(${blog.id})">수정하기</button>
                                 <button type="button" class="btn btn-outline-danger" onclick="deletePost(${blog.id})">삭제하기</button>
                             </div>
                         </div>

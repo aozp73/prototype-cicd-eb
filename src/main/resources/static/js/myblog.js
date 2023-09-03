@@ -20,11 +20,11 @@ function toggleEditMode() {
 // ====== updateForm / update / add / delete ============================ //
 
 // updateForm
-function updateForm(event, container_number) {
+function updateForm(container_number) {
     const section = document.getElementById('container-' + container_number);
 
     const mainTitle = section.querySelector('#mainTitle-' + container_number + ' h3').innerText;
-    const subTitle = section.querySelector('#subTitle-' + container_number + ' h4').innerText;
+    const subTitle = section.querySelector('#subTitle-' + container_number + ' h5').innerText;
     let content = section.querySelector('#content-' + container_number + ' p').innerText;
     content = content.replace(/<br>/g, "\n");
 
@@ -89,7 +89,7 @@ function updatePost(pk) {
                         </div>
                         <div class="col-7">
                             <div class="mb-4" id="subTitle-${response.data.id}">
-                                <h4>${response.data.subTitle}</h4>
+                                <h5>${response.data.subTitle}</h5>
                             </div>
                             <div class="mb-3" id="content-${response.data.id}">
                                 <p>
@@ -101,7 +101,7 @@ function updatePost(pk) {
                     <div style="height: 80px;">
                         <div class="edit-controls" style="display: block; ">
                             <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${response.data.id})">수정하기</button>
+                                <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(${response.data.id})">수정하기</button>
                                 <button type="button" class="btn btn-outline-danger" onclick="deletePost(${response.data.id})">삭제하기</button>
                             </div>
                         </div>
@@ -170,7 +170,7 @@ function addPost() {
                     </div>
                     <div class="col-7">
                         <div class="mb-4" id="subTitle-${response.data.id}">
-                            <h4>${response.data.subTitle}</h4>
+                            <h5>${response.data.subTitle}</h5>
                         </div>
                         <div class="mb-3" id="content-${response.data.id}">
                             <p>
@@ -182,7 +182,7 @@ function addPost() {
                 <div style="height: 80px;">
                     <div class="edit-controls" style="display: block; ">
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(event, ${response.data.id})">수정하기</button>
+                            <button type="button" class="btn btn-outline-secondary me-2" onclick="updateForm(${response.data.id})">수정하기</button>
                             <button type="button" class="btn btn-outline-danger" onclick="deletePost(${response.data.id})">삭제하기</button>
                         </div>
                     </div>
