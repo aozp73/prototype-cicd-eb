@@ -2,7 +2,6 @@ package com.portfolio.portfolio_project.integration_test.dummy;
 
 import java.time.LocalDateTime;
 
-import com.portfolio.portfolio_project.domain.jpa.main.main_introduce.MainIntroduce;
 import com.portfolio.portfolio_project.domain.jpa.myblog.my_blog.MyBlog;
 
 public class MyBlogDummy {

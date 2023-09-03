@@ -6,11 +6,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,6 +25,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portfolio.portfolio_project.core.jwt.MyJwtProvider;
@@ -36,6 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @DisplayName("메인 페이지 - 통합 테스트")
 @ActiveProfiles("test")
+@Transactional
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class MainIntroduceIntegrationTest {
@@ -44,7 +49,8 @@ public class MainIntroduceIntegrationTest {
         private MockMvc mvc;
         @Autowired
         private ObjectMapper om;
-        
+        @Autowired
+        private EntityManager em;
         @Autowired
         private MyJwtProvider myJwtProvider;
         @Autowired
@@ -52,11 +58,16 @@ public class MainIntroduceIntegrationTest {
 
         @BeforeEach
         public void setUp() {
+                em.createNativeQuery("ALTER TABLE main_introduce_tb AUTO_INCREMENT = 1").executeUpdate();
                 List<MainIntroduce> mainIntroduces = new ArrayList<>();
                 mainIntroduces.add(MainIntroduceDummy.newMainIntroduce1());
                 mainIntroduces.add(MainIntroduceDummy.newMainIntroduce2());
                 mainIntroduceRepository.saveAll(mainIntroduces);
-        }
+
+                em.flush();
+                em.clear();
+        }    
+
 
         @DisplayName("게시글 등록")
         @Test
@@ -82,11 +93,10 @@ public class MainIntroduceIntegrationTest {
                 // then
                 resultActions
                         .andExpect(status().isOk())
-                        .andExpect(jsonPath("$.data.id").exists())
+                        .andExpect(jsonPath("$.data.id").value(3L))
                         .andExpect(jsonPath("$.data.postTitle").value("등록 제목"))
                         .andExpect(jsonPath("$.data.postContent").value("등록 내용"))
                         .andExpect(jsonPath("$.data.imgURL").exists());
-
         }
 
         @DisplayName("게시글 수정")
@@ -115,7 +125,7 @@ public class MainIntroduceIntegrationTest {
                 // then
                 resultActions
                         .andExpect(status().isOk())
-                        .andExpect(jsonPath("$.data.id").exists())
+                        .andExpect(jsonPath("$.data.id").value(1L))
                         .andExpect(jsonPath("$.data.postTitle").value("수정 제목"))
                         .andExpect(jsonPath("$.data.postContent").value("수정 내용"))
                         .andExpect(jsonPath("$.data.imgURL").exists());
