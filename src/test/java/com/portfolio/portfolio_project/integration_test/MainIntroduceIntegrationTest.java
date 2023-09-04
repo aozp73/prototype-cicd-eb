@@ -128,6 +128,7 @@ public class MainIntroduceIntegrationTest extends AbstractIntegrationTest {
                     .andExpect(jsonPath("$.data.postTitle").value("수정 제목"))
                     .andExpect(jsonPath("$.data.postContent").value("수정 내용"))
                     .andExpect(jsonPath("$.data.imgURL").exists());
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
     @DisplayName("게시글 삭제")
@@ -147,6 +148,7 @@ public class MainIntroduceIntegrationTest extends AbstractIntegrationTest {
             List<MainIntroduce> mainIntroduces = mainIntroduceRepository.findAll();
             assertEquals(1, mainIntroduces.size());
             resultActions.andExpect(status().isOk());
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
     @DisplayName("게시글 조회")
@@ -164,6 +166,7 @@ public class MainIntroduceIntegrationTest extends AbstractIntegrationTest {
                     .andExpect(status().isOk())
                     .andExpect(model().attributeExists("mainIntroduceList"))
                     .andExpect(model().attribute("mainIntroduceList", hasSize(2)));
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
 

@@ -10,7 +10,7 @@ endif::[]
 :source-highlighter: highlightjs
 
 == 메인 페이지
-=== Main Introduce 게시글 등록 (성공)
+=== 게시글 등록 (성공)
 ===== Request Example
 include::{snippets}/{mainintro}/main_post_test/http-request.adoc[]
 
@@ -20,3 +20,32 @@ include::{snippets}/{mainintro}/main_post_test/http-response.adoc[]
 ===== Curl
 include::{snippets}/{mainintro}/main_post_test/curl-request.adoc[]
 
+=== 게시글 수정 (성공)
+===== Request Example
+include::{snippets}/{mainintro}/main_put_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{mainintro}/main_put_test/http-response.adoc[]
+
+===== Curl
+include::{snippets}/{mainintro}/main_put_test/curl-request.adoc[]
+
+=== 게시글 삭제 (성공)
+===== Request Example
+include::{snippets}/{mainintro}/main_delete_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{mainintro}/main_delete_test/http-response.adoc[]
+
+===== Curl
+include::{snippets}/{mainintro}/main_delete_test/curl-request.adoc[]
+
+=== 게시글 조회 (성공)
+===== Request Example
+include::{snippets}/{mainintro}/main_findAll_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{mainintro}/main_findAll_test/http-response.adoc[]
+
+===== Curl
+include::{snippets}/{mainintro}/main_findAll_test/curl-request.adoc[]

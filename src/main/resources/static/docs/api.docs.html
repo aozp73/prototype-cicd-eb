@@ -447,7 +447,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel1">
 <li><a href="#_메인_페이지">메인 페이지</a>
 <ul class="sectlevel2">
-<li><a href="#_main_introduce_게시글_등록_성공">Main Introduce 게시글 등록 (성공)</a></li>
+<li><a href="#_게시글_등록_성공">게시글 등록 (성공)</a></li>
+<li><a href="#_게시글_수정_성공">게시글 수정 (성공)</a></li>
+<li><a href="#_게시글_삭제_성공">게시글 삭제 (성공)</a></li>
+<li><a href="#_게시글_조회_성공">게시글 조회 (성공)</a></li>
 </ul>
 </li>
 </ul>
@@ -458,14 +461,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_메인_페이지">메인 페이지</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_main_introduce_게시글_등록_성공">Main Introduce 게시글 등록 (성공)</h3>
+<h3 id="_게시글_등록_성공">게시글 등록 (성공)</h3>
 <div class="sect4">
 <h5 id="_request_example">Request Example</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/main HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4MjA5NTIsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.JIcivEr-L1t4I2FPfECA5BUmkwgnXqS9LqY5U5ac24sKFZYTFqLE9Za2Gq75XBUIg84dYWfuXsj1LieGP6zYJA
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4MjY1NTksImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.XhzIecSbjb7yE_8Prak3Zd77IhcxpwmHaHhSc77wXZVdZXe0cHw5_l-Uh4UMjrhav3HR3BRMPMhZuTypxg6vgw
 Content-Length: 204
 Host: localhost:8080
 
@@ -502,7 +505,7 @@ Content-Length: 356
     "id" : 3,
     "postTitle" : "등록 제목",
     "postContent" : "등록 내용",
-    "imgURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/main_introduce/%EB%93%B1%EB%A1%9D%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_901823bc-6888-4f3f-90a7-99eef5594650.png"
+    "imgURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/main_introduce/%EB%93%B1%EB%A1%9D%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_352a171a-5088-4c1a-bd8e-da895b16c06d.png"
   }
 }</code></pre>
 </div>
@@ -514,7 +517,7 @@ Content-Length: 356
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/main' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4MjA5NTIsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.JIcivEr-L1t4I2FPfECA5BUmkwgnXqS9LqY5U5ac24sKFZYTFqLE9Za2Gq75XBUIg84dYWfuXsj1LieGP6zYJA' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4MjY1NTksImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.XhzIecSbjb7yE_8Prak3Zd77IhcxpwmHaHhSc77wXZVdZXe0cHw5_l-Uh4UMjrhav3HR3BRMPMhZuTypxg6vgw' \
     -d '{
   "postTitle" : "등록 제목",
   "postContent" : "등록 내용",
@@ -526,13 +529,155 @@ Content-Length: 356
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_게시글_수정_성공">게시글 수정 (성공)</h3>
+<div class="sect4">
+<h5 id="_request_example_2">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /auth/main HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4MjY1NjAsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.tbyrA8a-NbHECn5hC4_id3oj1wdr6Guy3wo943jFh8SNEkHwUBggSnpVtxU74uv7tU5kFNEeY-Wx5Zm0vJsqhg
+Content-Length: 245
+Host: localhost:8080
+
+{
+  "id" : 1,
+  "postTitle" : "수정 제목",
+  "postContent" : "수정 내용",
+  "imageName" : "수정 이미지 이름.png",
+  "contentType" : "image/png",
+  "imageData" : "data:image/png;base64,aGVsbG8=",
+  "imgChangeCheck" : true
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_2">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 356
+
+{
+  "status" : 200,
+  "msg" : "성공",
+  "data" : {
+    "id" : 1,
+    "postTitle" : "수정 제목",
+    "postContent" : "수정 내용",
+    "imgURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/main_introduce/%EC%88%98%EC%A0%95%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_584d0a31-1c45-4f04-9fd4-7b548c6c273f.png"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_curl_2">Curl</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/main' -i -X PUT \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4MjY1NjAsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.tbyrA8a-NbHECn5hC4_id3oj1wdr6Guy3wo943jFh8SNEkHwUBggSnpVtxU74uv7tU5kFNEeY-Wx5Zm0vJsqhg' \
+    -d '{
+  "id" : 1,
+  "postTitle" : "수정 제목",
+  "postContent" : "수정 내용",
+  "imageName" : "수정 이미지 이름.png",
+  "contentType" : "image/png",
+  "imageData" : "data:image/png;base64,aGVsbG8=",
+  "imgChangeCheck" : true
+}'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_게시글_삭제_성공">게시글 삭제 (성공)</h3>
+<div class="sect4">
+<h5 id="_request_example_3">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /auth/main?postPK=1 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4MjY1NjAsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.tbyrA8a-NbHECn5hC4_id3oj1wdr6Guy3wo943jFh8SNEkHwUBggSnpVtxU74uv7tU5kFNEeY-Wx5Zm0vJsqhg
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_3">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 59
+
+{
+  "status" : 200,
+  "msg" : "성공",
+  "data" : ""
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_curl_3">Curl</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/main?postPK=1' -i -X DELETE \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4MjY1NjAsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.tbyrA8a-NbHECn5hC4_id3oj1wdr6Guy3wo943jFh8SNEkHwUBggSnpVtxU74uv7tU5kFNEeY-Wx5Zm0vJsqhg'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_게시글_조회_성공">게시글 조회 (성공)</h3>
+<div class="sect4">
+<h5 id="_request_example_4">Request Example</h5>
+<div class="paragraph">
+<p>Unresolved directive in api.docs.adoc - include::./build/generated-snippets/main-introduce-integration-test/main_findAll_test/http-request.adoc[]</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_4">Response Example</h5>
+<div class="paragraph">
+<p>Unresolved directive in api.docs.adoc - include::./build/generated-snippets/main-introduce-integration-test/main_findAll_test/http-response.adoc[]</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_curl_4">Curl</h5>
+<div class="paragraph">
+<p>Unresolved directive in api.docs.adoc - include::./build/generated-snippets/main-introduce-integration-test/main_findAll_test/curl-request.adoc[]</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-09-04 17:45:23 +0900
+Last updated 2023-09-04 19:20:14 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
