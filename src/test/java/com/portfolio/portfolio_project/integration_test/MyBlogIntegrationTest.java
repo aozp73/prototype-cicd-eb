@@ -168,7 +168,6 @@ public class MyBlogIntegrationTest extends AbstractIntegrationTest {
                     .andExpect(status().isOk())
                     .andExpect(model().attributeExists("myBlogList"))
                     .andExpect(model().attribute("myBlogList", hasSize(2)));
-            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
 

@@ -4,6 +4,7 @@ endif::[]
 
 :mainintro: main-introduce-integration-test
 :myblog: my-blog-integration-test
+:myproject: my-project-integration-test
 
 = REST API
 :toc: left
@@ -75,3 +76,36 @@ include::{snippets}/{myblog}/blog_delete_test/http-response.adoc[]
 
 ===== Curl
 include::{snippets}/{myblog}/blog_delete_test/curl-request.adoc[]
+
+
+
+== 프로젝트 페이지
+=== 프로젝트 게시글 등록 (성공)
+===== Request Example
+include::{snippets}/{myproject}/project_post_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{myproject}/project_post_test/http-response.adoc[]
+
+===== Curl
+include::{snippets}/{myproject}/project_post_test/curl-request.adoc[]
+
+=== 프로젝트 게시글 수정 (성공)
+===== Request Example
+include::{snippets}/{myproject}/project_put_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{myproject}/project_put_test/http-response.adoc[]
+
+===== Curl
+include::{snippets}/{myproject}/project_put_test/curl-request.adoc[]
+
+=== 프로젝트 게시글 삭제 (성공)
+===== Request Example
+include::{snippets}/{myproject}/project_delete_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{myproject}/project_delete_test/http-response.adoc[]
+
+===== Curl
+include::{snippets}/{myproject}/project_delete_test/curl-request.adoc[]

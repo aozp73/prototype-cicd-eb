@@ -166,7 +166,6 @@ public class MainIntroduceIntegrationTest extends AbstractIntegrationTest {
                     .andExpect(status().isOk())
                     .andExpect(model().attributeExists("mainIntroduceList"))
                     .andExpect(model().attribute("mainIntroduceList", hasSize(2)));
-            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
 
