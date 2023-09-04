@@ -20,17 +20,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.portfolio.portfolio_project.AbstractIntegrationTest;
 import com.portfolio.portfolio_project.core.jwt.MyJwtProvider;
 import com.portfolio.portfolio_project.domain.jpa.myproject.my_project.MyProject;
 import com.portfolio.portfolio_project.domain.jpa.myproject.my_project.MyProjectRepository;
@@ -42,11 +45,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @DisplayName("프로젝트 페이지 - 통합 테스트")
+@AutoConfigureRestDocs(uriScheme = "http", uriHost = "localhost", uriPort = 8080)
 @ActiveProfiles("test")
 @Transactional
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class MyProjectIntegrationTest {
+public class MyProjectIntegrationTest extends AbstractIntegrationTest {
     
     @Autowired
     private MockMvc mvc;
@@ -102,6 +106,7 @@ public class MyProjectIntegrationTest {
                 .andExpect(jsonPath("$.data.projectName").value("등록 프로젝트 이름"))
                 .andExpect(jsonPath("$.data.member").value(3))
                 .andExpect(jsonPath("$.data.selectedRoles", hasSize(2)));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
     @DisplayName("프로젝트 수정")
@@ -112,14 +117,14 @@ public class MyProjectIntegrationTest {
 
             MyProjectDTO_In.PutDTO.ImageDetails projectImageDetails = new MyProjectDTO_In.PutDTO.ImageDetails(
                     "data:image/png;base64,aGVsbG8=",
-                    "등록 프로젝트 이미지 이름.png",
+                    "수정 프로젝트 이미지 이름.png",
                     "image/png",
                     true 
             );
 
             MyProjectDTO_In.PutDTO.ImageDetails featureImageDetails = new MyProjectDTO_In.PutDTO.ImageDetails(
                     "data:image/png;base64,aGVsbG8=",
-                    "등록 개인수행 이미지 이름.png",
+                    "수정 개인수행 이미지 이름.png",
                     "image/png",
                     true 
             );
@@ -127,12 +132,12 @@ public class MyProjectIntegrationTest {
             List<String> selectedRoles = Arrays.asList("BackEnd", "FrontEnd", "DevOps");
 
             MyProjectDTO_In.PutDTO putDTO_In = new MyProjectDTO_In.PutDTO(1L,
-                                                                            "등록 프로젝트 이름",
+                                                                            "수정 프로젝트 이름",
                                                                             2,
                                                                             "2023-09-03",
                                                                             "2023-09-05",
-                                                                            "등록 readme 주소",
-                                                                            "등록 github 주소",
+                                                                            "수정 readme 주소",
+                                                                            "수정 github 주소",
                                                                             selectedRoles,
                                                                             true, 
                                                                             projectImageDetails,
@@ -152,10 +157,11 @@ public class MyProjectIntegrationTest {
             resultActions
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.id").value(1L))
-                    .andExpect(jsonPath("$.data.projectName").value("등록 프로젝트 이름"))
+                    .andExpect(jsonPath("$.data.projectName").value("수정 프로젝트 이름"))
                     .andExpect(jsonPath("$.data.member").value(2))
-                    .andExpect(jsonPath("$.data.githubUrl").value("등록 github 주소"))
+                    .andExpect(jsonPath("$.data.githubUrl").value("수정 github 주소"))
                     .andExpect(jsonPath("$.data.selectedRoles", hasSize(3)));
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
     @DisplayName("프로젝트 삭제")
@@ -175,6 +181,7 @@ public class MyProjectIntegrationTest {
             List<MyProject> mainIntroduces = myProjectRepository.findAll();
             assertEquals(1, mainIntroduces.size());
             resultActions.andExpect(status().isOk());
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
     @DisplayName("프로젝트 조회")

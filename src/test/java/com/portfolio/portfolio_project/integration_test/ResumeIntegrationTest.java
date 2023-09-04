@@ -18,6 +18,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -26,10 +27,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.portfolio.portfolio_project.AbstractIntegrationTest;
 import com.portfolio.portfolio_project.core.jwt.MyJwtProvider;
 import com.portfolio.portfolio_project.domain.jpa.user.User;
 import com.portfolio.portfolio_project.domain.mongodb.resume.resume_academy_edu.ResumeAcademyEdu;
@@ -52,12 +55,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @DisplayName("이력 페이지 - 통합 테스트")
+@AutoConfigureRestDocs(uriScheme = "http", uriHost = "localhost", uriPort = 8080)
 @ActiveProfiles("test")
 @Transactional
 @AutoConfigureMockMvc
 @Rollback(value = true)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class ResumeIntegrationTest {
+public class ResumeIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired
     private MockMvc mvc;
@@ -119,6 +123,7 @@ public class ResumeIntegrationTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.schoolAdmissionDate").value("2018-09-01"))
                     .andExpect(jsonPath("$.data.schoolName").value("자바 대학교"));
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     } 
 
     @DisplayName("학원교육 이력 등록")
@@ -143,6 +148,7 @@ public class ResumeIntegrationTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.academyEnrollDate").value("2022-09-01"))
                     .andExpect(jsonPath("$.data.academyName").value("파이썬 아카데미"));
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     } 
 
     @DisplayName("자격증 이력 등록")
@@ -167,6 +173,7 @@ public class ResumeIntegrationTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.acquisitionDate").value("2023-06-01"))
                     .andExpect(jsonPath("$.data.certificateName").value("정보처리기사"));
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     } 
 
     @DisplayName("자기주도학습 이력 등록")
@@ -191,6 +198,7 @@ public class ResumeIntegrationTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.selfStudyDate").value("2023-08-01"))
                     .andExpect(jsonPath("$.data.selfStudyTheme").value("Docker"));
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     } 
 
 
@@ -214,6 +222,7 @@ public class ResumeIntegrationTest {
             List<ResumeSchoolEdu> schoolEdus2 = resumeSchoolEduRepository.findAll();
             assertEquals(1, schoolEdus2.size()); // setup() 데이터를 근거로 검증
             assertEquals("2020-05-03", schoolEdus2.get(0).getSchoolGraduateDate());
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
     @DisplayName("학원교육 이력 삭제")
@@ -235,6 +244,7 @@ public class ResumeIntegrationTest {
             List<ResumeAcademyEdu> academyEdus2 = resumeAcademyEduRepository.findAll();
             assertEquals(1, academyEdus2.size()); // setup() 데이터를 근거로 검증
             assertEquals("2018-09-01", academyEdus2.get(0).getAcademyCompletionDate());
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
     @DisplayName("자격증 이력 삭제")
@@ -256,6 +266,7 @@ public class ResumeIntegrationTest {
             List<ResumeCertificate> certificates2 = resumeCertificateRepository.findAll();
             assertEquals(1, certificates2.size()); // setup() 데이터를 근거로 검증
             assertEquals("한국TOEIC위원회", certificates2.get(0).getCertificateIssuingAgency());
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
     @DisplayName("자기주도학습 이력 삭제")
@@ -277,6 +288,7 @@ public class ResumeIntegrationTest {
             List<ResumeSelfStudy> selfStudies2 = resumeSelfStudyRepository.findAll();
             assertEquals(1, selfStudies2.size()); // setup() 데이터를 근거로 검증
             assertEquals("YouTube", selfStudies2.get(0).getSelfStudyPlatform());
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
     // Row Move
@@ -310,6 +322,7 @@ public class ResumeIntegrationTest {
             resultActions.andExpect(status().isOk());
             assertEquals(2,schoolEdus2.get(0).getOrder());
             assertEquals(1,schoolEdus2.get(1).getOrder());
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     } 
 
     @DisplayName("학원교육 row 이동")
@@ -342,6 +355,7 @@ public class ResumeIntegrationTest {
             resultActions.andExpect(status().isOk());
             assertEquals(2,academyEdus2.get(0).getOrder());
             assertEquals(1,academyEdus2.get(1).getOrder());
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     } 
 
     @DisplayName("자격증 row 이동")
@@ -374,6 +388,7 @@ public class ResumeIntegrationTest {
             resultActions.andExpect(status().isOk());
             assertEquals(2,certificates2.get(0).getOrder());
             assertEquals(1,certificates2.get(1).getOrder());
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     } 
 
     @DisplayName("자기주도학습 row 이동")
@@ -406,6 +421,7 @@ public class ResumeIntegrationTest {
             resultActions.andExpect(status().isOk());
             assertEquals(2,selfStudies2.get(0).getOrder());
             assertEquals(1,selfStudies2.get(1).getOrder());
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     } 
 
 
@@ -434,7 +450,7 @@ public class ResumeIntegrationTest {
             assertEquals("수료", findAllDTO.getResumeAcademyEdus().get(1).getAcademyCompletionStatus());
             assertEquals("한국TOEIC위원회", findAllDTO.getResumeCertificates().get(1).getCertificateIssuingAgency());
             assertEquals("YouTube", findAllDTO.getResumeSelfStudies().get(1).getSelfStudyPlatform());
-
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
 

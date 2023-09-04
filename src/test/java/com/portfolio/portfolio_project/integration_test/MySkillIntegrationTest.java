@@ -17,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -24,12 +25,14 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.portfolio.portfolio_project.AbstractIntegrationTest;
 import com.portfolio.portfolio_project.core.jwt.MyJwtProvider;
 import com.portfolio.portfolio_project.domain.jpa.skills.enums.SkillType;
 import com.portfolio.portfolio_project.domain.jpa.skills.my_skill.MySkill;
@@ -44,11 +47,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @DisplayName("스킬 페이지 - 통합 테스트")
+@AutoConfigureRestDocs(uriScheme = "http", uriHost = "localhost", uriPort = 8080)
 @ActiveProfiles("test")
 @Transactional
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class MySkillIntegrationTest {
+public class MySkillIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired
     private MockMvc mvc;
@@ -72,7 +76,7 @@ public class MySkillIntegrationTest {
 
     @DisplayName("스킬 등록/제거")
     @Test
-    public void skill_postAndDelete_test() throws Exception {
+    public void skill_post_delete_test() throws Exception {
             // given
             String jwt = myJwtProvider.create(User.builder().id(1L).email("aozp73@naver.com").role("admin").build());
 
@@ -102,6 +106,7 @@ public class MySkillIntegrationTest {
             assertEquals(1, mySkills.size());
             assertEquals("Python", mySkills.get(0).getSkill());
             resultActions.andExpect(status().isOk());
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
     @DisplayName("스킬 조회")
