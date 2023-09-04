@@ -19,15 +19,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.portfolio.portfolio_project.AbstractIntegrationTest;
 import com.portfolio.portfolio_project.core.jwt.MyJwtProvider;
 import com.portfolio.portfolio_project.domain.jpa.main.main_introduce.MainIntroduce;
 import com.portfolio.portfolio_project.domain.jpa.main.main_introduce.MainIntroduceRepository;
@@ -39,11 +42,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @DisplayName("메인 페이지 - 통합 테스트")
+@AutoConfigureRestDocs(uriScheme = "http", uriHost = "localhost", uriPort = 8080)
 @ActiveProfiles("test")
 @Transactional
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class MainIntroduceIntegrationTest {
+public class MainIntroduceIntegrationTest extends AbstractIntegrationTest {
     
     @Autowired
     private MockMvc mvc;
@@ -91,6 +95,7 @@ public class MainIntroduceIntegrationTest {
                     .andExpect(jsonPath("$.data.postTitle").value("등록 제목"))
                     .andExpect(jsonPath("$.data.postContent").value("등록 내용"))
                     .andExpect(jsonPath("$.data.imgURL").exists());
+            resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
     @DisplayName("게시글 수정")

@@ -1,0 +1,22 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:mainintro: main-introduce-integration-test
+
+= REST API
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+
+== 메인 페이지
+=== Main Introduce 게시글 등록 (성공)
+===== Request Example
+include::{snippets}/{mainintro}/main_post_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{mainintro}/main_post_test/http-response.adoc[]
+
+===== Curl
+include::{snippets}/{mainintro}/main_post_test/curl-request.adoc[]
+
