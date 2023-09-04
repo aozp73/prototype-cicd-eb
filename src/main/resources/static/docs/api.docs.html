@@ -459,6 +459,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_프로젝트_게시글_삭제_성공">프로젝트 게시글 삭제 (성공)</a></li>
 </ul>
 </li>
+<li><a href="#_스킬_페이지">스킬 페이지</a>
+<ul class="sectlevel2">
+<li><a href="#_스킬_추가삭제_성공">스킬 추가/삭제 (성공)</a></li>
+</ul>
+</li>
 <li><a href="#_블로그_페이지">블로그 페이지</a>
 <ul class="sectlevel2">
 <li><a href="#_블로그_게시글_등록_성공">블로그 게시글 등록 (성공)</a></li>
@@ -466,9 +471,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_블로그_게시글_삭제_성공">블로그 게시글 삭제 (성공)</a></li>
 </ul>
 </li>
-<li><a href="#_스킬_페이지">스킬 페이지</a>
+<li><a href="#_이력_페이지">이력 페이지</a>
 <ul class="sectlevel2">
-<li><a href="#_스킬_추가삭제_성공">스킬 추가/삭제 (성공)</a></li>
+<li><a href="#_공교육_등록_성공">공교육 등록 (성공)</a></li>
+<li><a href="#_공교육_삭제_성공">공교육 삭제 (성공)</a></li>
+<li><a href="#_공교육_row_이동_성공">공교육 Row 이동 (성공)</a></li>
+<li><a href="#_사교육_등록_성공">사교육 등록 (성공)</a></li>
+<li><a href="#_사교육_삭제_성공">사교육 삭제 (성공)</a></li>
+<li><a href="#_사교육_row_이동_성공">사교육 Row 이동 (성공)</a></li>
+<li><a href="#_자격증_등록_성공">자격증 등록 (성공)</a></li>
+<li><a href="#_자격증_삭제_성공">자격증 삭제 (성공)</a></li>
+<li><a href="#_자격증_row_이동_성공">자격증 Row 이동 (성공)</a></li>
+<li><a href="#_자기주도학습_등록_성공">자기주도학습 등록 (성공)</a></li>
+<li><a href="#_자기주도학습_삭제_성공">자기주도학습 삭제 (성공)</a></li>
+<li><a href="#_자기주도학습_row_이동_성공">자기주도학습 Row 이동 (성공)</a></li>
 </ul>
 </li>
 </ul>
@@ -486,7 +502,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/main HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjUsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.mMRLU0wkViP1s9tHTZAqTdqZmJQR8WsR_TGx9BGu0Coab9c_aH9PYaGRtPPLnYKLasQtTbDGRmGL96LAkkKz-Q
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDQsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.9UFYh37-V6JfZF7RpkxR253Qh4YPzQmC9Axz6caa7p-ZT3Xybt8E-J8Rcxvf0fjl09iKSEDGqK3GnBvsbjaIIg
 Content-Length: 204
 Host: localhost:8080
 
@@ -523,7 +539,7 @@ Content-Length: 356
     "id" : 3,
     "postTitle" : "등록 제목",
     "postContent" : "등록 내용",
-    "imgURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/main_introduce/%EB%93%B1%EB%A1%9D%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_7e08d944-d8ec-4bfb-9fd5-c5c50515e17f.png"
+    "imgURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/main_introduce/%EB%93%B1%EB%A1%9D%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_4685ab74-26a9-4204-a8e4-8036ad22c983.png"
   }
 }</code></pre>
 </div>
@@ -535,7 +551,7 @@ Content-Length: 356
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/main' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjUsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.mMRLU0wkViP1s9tHTZAqTdqZmJQR8WsR_TGx9BGu0Coab9c_aH9PYaGRtPPLnYKLasQtTbDGRmGL96LAkkKz-Q' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDQsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.9UFYh37-V6JfZF7RpkxR253Qh4YPzQmC9Axz6caa7p-ZT3Xybt8E-J8Rcxvf0fjl09iKSEDGqK3GnBvsbjaIIg' \
     -d '{
   "postTitle" : "등록 제목",
   "postContent" : "등록 내용",
@@ -555,7 +571,7 @@ Content-Length: 356
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /auth/main HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.5CX9brkhLz5dPq4Lbn71MmwnT7CVzUNCVjq32bKNNoZ9K0IXhXUjRUDPDAP6JAqq4biv1uCAaMe-VapthBZYuw
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDUsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.G0mq5yLvE97aQTKSNFumjU8Rb9p2WNFZVQCzRWjFyPaKn_9mK08o0mZVVdgSwfMDd6_gaMJW7sLDBoefN3Du-g
 Content-Length: 245
 Host: localhost:8080
 
@@ -594,7 +610,7 @@ Content-Length: 356
     "id" : 1,
     "postTitle" : "수정 제목",
     "postContent" : "수정 내용",
-    "imgURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/main_introduce/%EC%88%98%EC%A0%95%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_9e267d7a-3139-49d7-b98c-78dc9175aa61.png"
+    "imgURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/main_introduce/%EC%88%98%EC%A0%95%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_9a32614e-aa82-45f6-87e1-82c6c789f1df.png"
   }
 }</code></pre>
 </div>
@@ -606,7 +622,7 @@ Content-Length: 356
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/main' -i -X PUT \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.5CX9brkhLz5dPq4Lbn71MmwnT7CVzUNCVjq32bKNNoZ9K0IXhXUjRUDPDAP6JAqq4biv1uCAaMe-VapthBZYuw' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDUsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.G0mq5yLvE97aQTKSNFumjU8Rb9p2WNFZVQCzRWjFyPaKn_9mK08o0mZVVdgSwfMDd6_gaMJW7sLDBoefN3Du-g' \
     -d '{
   "id" : 1,
   "postTitle" : "수정 제목",
@@ -628,7 +644,7 @@ Content-Length: 356
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /auth/main?postPK=1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.5CX9brkhLz5dPq4Lbn71MmwnT7CVzUNCVjq32bKNNoZ9K0IXhXUjRUDPDAP6JAqq4biv1uCAaMe-VapthBZYuw
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDUsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.G0mq5yLvE97aQTKSNFumjU8Rb9p2WNFZVQCzRWjFyPaKn_9mK08o0mZVVdgSwfMDd6_gaMJW7sLDBoefN3Du-g
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -663,7 +679,7 @@ Content-Length: 59
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/main?postPK=1' -i -X DELETE \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.5CX9brkhLz5dPq4Lbn71MmwnT7CVzUNCVjq32bKNNoZ9K0IXhXUjRUDPDAP6JAqq4biv1uCAaMe-VapthBZYuw'</code></pre>
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDUsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.G0mq5yLvE97aQTKSNFumjU8Rb9p2WNFZVQCzRWjFyPaKn_9mK08o0mZVVdgSwfMDd6_gaMJW7sLDBoefN3Du-g'</code></pre>
 </div>
 </div>
 </div>
@@ -681,7 +697,7 @@ Content-Length: 59
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/myproject HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjcsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.OspImatO2ydELvOhk9rNTzUNd5uyZvrlAdwH_ISo2rCD0_Sd6hiB8HXkQmmjMRIFPENUcYoxN-HF69-_WiBXdA
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.Q0rDnjaUwXlAkod2gbEDnfvZWsZ0c4pRByyxuyFNTRkIW6VV7CPnERsnzCxnaR7dZQeCpqhOqcYdI5j64dKTfA
 Host: localhost:8080
 
 projectName=%EB%93%B1%EB%A1%9D+%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8+%EC%9D%B4%EB%A6%84&amp;member=3&amp;startDate=2023-09-03&amp;endDate=2023-09-05&amp;selectedRoles=BackEnd%2CFrontEnd&amp;readmeUrl=%EB%93%B1%EB%A1%9D+readme+%EC%A3%BC%EC%86%8C&amp;githubUrl=%EB%93%B1%EB%A1%9D+github+%EC%A3%BC%EC%86%8C&amp;projectImgBase64=data%3Aimage%2Fpng%3Bbase64%2CaGVsbG8%3D&amp;individualPerformanceBase64=data%3Aimage%2Fpng%3Bbase64%2CaGVsbG8%3D&amp;projectImageName=%EB%93%B1%EB%A1%9D+%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8+%EC%9D%B4%EB%AF%B8%EC%A7%80+%EC%9D%B4%EB%A6%84.png&amp;projectImageType=image%2Fpng&amp;individualPerformanceImageName=%EB%93%B1%EB%A1%9D+%EA%B0%9C%EC%9D%B8%EC%88%98%ED%96%89+%EC%9D%B4%EB%AF%B8%EC%A7%80+%EC%9D%B4%EB%A6%84.png&amp;individualPerformanceImageType=image%2Fpng</code></pre>
@@ -716,8 +732,8 @@ Content-Length: 873
     "selectedRoles" : [ "BackEnd", "FrontEnd" ],
     "readmeUrl" : "등록 readme 주소",
     "githubUrl" : "등록 github 주소",
-    "projectImgURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/my_project/%EB%93%B1%EB%A1%9D%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_d44b6d5b-ae98-4a51-b7e9-c3ef041e7ed2.png",
-    "individualPerformanceImageNameURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/my_project_performance/%EB%93%B1%EB%A1%9D%20%EA%B0%9C%EC%9D%B8%EC%88%98%ED%96%89%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_9ce828c9-50b7-44b8-9aa3-c08248a8c67b.png"
+    "projectImgURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/my_project/%EB%93%B1%EB%A1%9D%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_93c48b30-3340-4297-b481-4020e7ad8d6d.png",
+    "individualPerformanceImageNameURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/my_project_performance/%EB%93%B1%EB%A1%9D%20%EA%B0%9C%EC%9D%B8%EC%88%98%ED%96%89%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_e92c79f6-09b6-4b41-bd23-821f7ecdab91.png"
   }
 }</code></pre>
 </div>
@@ -729,7 +745,7 @@ Content-Length: 873
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/myproject' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjcsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.OspImatO2ydELvOhk9rNTzUNd5uyZvrlAdwH_ISo2rCD0_Sd6hiB8HXkQmmjMRIFPENUcYoxN-HF69-_WiBXdA' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.Q0rDnjaUwXlAkod2gbEDnfvZWsZ0c4pRByyxuyFNTRkIW6VV7CPnERsnzCxnaR7dZQeCpqhOqcYdI5j64dKTfA' \
     -d 'projectName=%EB%93%B1%EB%A1%9D+%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8+%EC%9D%B4%EB%A6%84&amp;member=3&amp;startDate=2023-09-03&amp;endDate=2023-09-05&amp;selectedRoles=BackEnd%2CFrontEnd&amp;readmeUrl=%EB%93%B1%EB%A1%9D+readme+%EC%A3%BC%EC%86%8C&amp;githubUrl=%EB%93%B1%EB%A1%9D+github+%EC%A3%BC%EC%86%8C&amp;projectImgBase64=data%3Aimage%2Fpng%3Bbase64%2CaGVsbG8%3D&amp;individualPerformanceBase64=data%3Aimage%2Fpng%3Bbase64%2CaGVsbG8%3D&amp;projectImageName=%EB%93%B1%EB%A1%9D+%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8+%EC%9D%B4%EB%AF%B8%EC%A7%80+%EC%9D%B4%EB%A6%84.png&amp;projectImageType=image%2Fpng&amp;individualPerformanceImageName=%EB%93%B1%EB%A1%9D+%EA%B0%9C%EC%9D%B8%EC%88%98%ED%96%89+%EC%9D%B4%EB%AF%B8%EC%A7%80+%EC%9D%B4%EB%A6%84.png&amp;individualPerformanceImageType=image%2Fpng'</code></pre>
 </div>
 </div>
@@ -743,7 +759,7 @@ Content-Length: 873
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /auth/myproject HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjcsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.OspImatO2ydELvOhk9rNTzUNd5uyZvrlAdwH_ISo2rCD0_Sd6hiB8HXkQmmjMRIFPENUcYoxN-HF69-_WiBXdA
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDcsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9._2_5EbVziUz2fO7BhfBhaBm__Y3DZwCv8x8jUzDhmaw0EgIrLCboPZGNyt8GfYmTZllb2xdq9Ogvo6k3GSTA-Q
 Content-Length: 744
 Host: localhost:8080
 
@@ -801,8 +817,8 @@ Content-Length: 883
     "selectedRoles" : [ "BackEnd", "FrontEnd", "DevOps" ],
     "readmeUrl" : "등록 readme 주소",
     "githubUrl" : "등록 github 주소",
-    "projectImgURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/my_project/%EB%93%B1%EB%A1%9D%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_770c5558-0e4c-4e24-a252-3ea264f83037.png",
-    "individualPerformanceImageNameURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/my_project_performance/%EB%93%B1%EB%A1%9D%20%EA%B0%9C%EC%9D%B8%EC%88%98%ED%96%89%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_8835d96b-f27f-4763-911f-d1331a7b2b1f.png"
+    "projectImgURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/my_project/%EB%93%B1%EB%A1%9D%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_6fc7a648-b7f1-4e83-ba68-47a91adba884.png",
+    "individualPerformanceImageNameURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/my_project_performance/%EB%93%B1%EB%A1%9D%20%EA%B0%9C%EC%9D%B8%EC%88%98%ED%96%89%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_1e648256-7d0a-4990-bcf0-f66ac7aecd97.png"
   }
 }</code></pre>
 </div>
@@ -814,7 +830,7 @@ Content-Length: 883
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/myproject' -i -X PUT \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjcsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.OspImatO2ydELvOhk9rNTzUNd5uyZvrlAdwH_ISo2rCD0_Sd6hiB8HXkQmmjMRIFPENUcYoxN-HF69-_WiBXdA' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDcsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9._2_5EbVziUz2fO7BhfBhaBm__Y3DZwCv8x8jUzDhmaw0EgIrLCboPZGNyt8GfYmTZllb2xdq9Ogvo6k3GSTA-Q' \
     -d '{
   "projectId" : 1,
   "projectName" : "등록 프로젝트 이름",
@@ -850,7 +866,7 @@ Content-Length: 883
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /auth/myproject?projectPK=1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjcsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.OspImatO2ydELvOhk9rNTzUNd5uyZvrlAdwH_ISo2rCD0_Sd6hiB8HXkQmmjMRIFPENUcYoxN-HF69-_WiBXdA
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDcsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9._2_5EbVziUz2fO7BhfBhaBm__Y3DZwCv8x8jUzDhmaw0EgIrLCboPZGNyt8GfYmTZllb2xdq9Ogvo6k3GSTA-Q
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -885,7 +901,7 @@ Content-Length: 59
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/myproject?projectPK=1' -i -X DELETE \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjcsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.OspImatO2ydELvOhk9rNTzUNd5uyZvrlAdwH_ISo2rCD0_Sd6hiB8HXkQmmjMRIFPENUcYoxN-HF69-_WiBXdA'</code></pre>
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDcsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9._2_5EbVziUz2fO7BhfBhaBm__Y3DZwCv8x8jUzDhmaw0EgIrLCboPZGNyt8GfYmTZllb2xdq9Ogvo6k3GSTA-Q'</code></pre>
 </div>
 </div>
 </div>
@@ -893,27 +909,34 @@ Content-Length: 59
 </div>
 </div>
 <div class="sect1">
-<h2 id="_블로그_페이지">블로그 페이지</h2>
+<h2 id="_스킬_페이지">스킬 페이지</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_블로그_게시글_등록_성공">블로그 게시글 등록 (성공)</h3>
+<h3 id="_스킬_추가삭제_성공">스킬 추가/삭제 (성공)</h3>
 <div class="sect4">
 <h5 id="_request_example_7">Request Example</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/blog HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/skills HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.5CX9brkhLz5dPq4Lbn71MmwnT7CVzUNCVjq32bKNNoZ9K0IXhXUjRUDPDAP6JAqq4biv1uCAaMe-VapthBZYuw
-Content-Length: 236
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDcsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9._2_5EbVziUz2fO7BhfBhaBm__Y3DZwCv8x8jUzDhmaw0EgIrLCboPZGNyt8GfYmTZllb2xdq9Ogvo6k3GSTA-Q
+Content-Length: 244
 Host: localhost:8080
 
 {
-  "mainTitle" : "등록 제목",
-  "content" : "등록 내용",
-  "subTitle" : "등록 소제목",
-  "imageName" : "등록 이미지 이름.png",
-  "contentType" : "image/png",
-  "imageData" : "data:image/png;base64,aGVsbG8="
+  "etc" : [ ],
+  "devOps" : [ ],
+  "frontEnd" : [ {
+    "name" : "CSS",
+    "status" : "removed"
+  } ],
+  "backEnd" : [ {
+    "name" : "Java",
+    "status" : "removed"
+  }, {
+    "name" : "Python",
+    "status" : "added"
+  } ]
 }</code></pre>
 </div>
 </div>
@@ -932,18 +955,12 @@ X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-Content-Length: 383
+Content-Length: 59
 
 {
   "status" : 200,
   "msg" : "성공",
-  "data" : {
-    "id" : 3,
-    "mainTitle" : "등록 제목",
-    "subTitle" : "등록 소제목",
-    "content" : "등록 내용",
-    "imgURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/my_blog/%EB%93%B1%EB%A1%9D%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_cb8b3715-9814-4e2d-8542-084f5483467f.png"
-  }
+  "data" : ""
 }</code></pre>
 </div>
 </div>
@@ -952,42 +969,52 @@ Content-Length: 383
 <h5 id="_curl_7">Curl</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/blog' -i -X POST \
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/skills' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.5CX9brkhLz5dPq4Lbn71MmwnT7CVzUNCVjq32bKNNoZ9K0IXhXUjRUDPDAP6JAqq4biv1uCAaMe-VapthBZYuw' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDcsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9._2_5EbVziUz2fO7BhfBhaBm__Y3DZwCv8x8jUzDhmaw0EgIrLCboPZGNyt8GfYmTZllb2xdq9Ogvo6k3GSTA-Q' \
     -d '{
+  "etc" : [ ],
+  "devOps" : [ ],
+  "frontEnd" : [ {
+    "name" : "CSS",
+    "status" : "removed"
+  } ],
+  "backEnd" : [ {
+    "name" : "Java",
+    "status" : "removed"
+  }, {
+    "name" : "Python",
+    "status" : "added"
+  } ]
+}'</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_블로그_페이지">블로그 페이지</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_블로그_게시글_등록_성공">블로그 게시글 등록 (성공)</h3>
+<div class="sect4">
+<h5 id="_request_example_8">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/blog HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.Q0rDnjaUwXlAkod2gbEDnfvZWsZ0c4pRByyxuyFNTRkIW6VV7CPnERsnzCxnaR7dZQeCpqhOqcYdI5j64dKTfA
+Content-Length: 236
+Host: localhost:8080
+
+{
   "mainTitle" : "등록 제목",
   "content" : "등록 내용",
   "subTitle" : "등록 소제목",
   "imageName" : "등록 이미지 이름.png",
   "contentType" : "image/png",
   "imageData" : "data:image/png;base64,aGVsbG8="
-}'</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_블로그_게시글_수정_성공">블로그 게시글 수정 (성공)</h3>
-<div class="sect4">
-<h5 id="_request_example_8">Request Example</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /auth/blog HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.5CX9brkhLz5dPq4Lbn71MmwnT7CVzUNCVjq32bKNNoZ9K0IXhXUjRUDPDAP6JAqq4biv1uCAaMe-VapthBZYuw
-Content-Length: 277
-Host: localhost:8080
-
-{
-  "id" : 1,
-  "mainTitle" : "수정 제목",
-  "content" : "수정 내용",
-  "subTitle" : "수정 소제목",
-  "imageName" : "수정 이미지 이름.png",
-  "contentType" : "image/png",
-  "imageData" : "data:image/png;base64,aGVsbG8=",
-  "imgChangeCheck" : true
 }</code></pre>
 </div>
 </div>
@@ -1012,11 +1039,11 @@ Content-Length: 383
   "status" : 200,
   "msg" : "성공",
   "data" : {
-    "id" : 1,
-    "mainTitle" : "수정 제목",
-    "subTitle" : "수정 소제목",
-    "content" : "수정 내용",
-    "imgURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/my_blog/%EC%88%98%EC%A0%95%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_fddd33ce-75a2-4039-975f-659352bbd5af.png"
+    "id" : 3,
+    "mainTitle" : "등록 제목",
+    "subTitle" : "등록 소제목",
+    "content" : "등록 내용",
+    "imgURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/my_blog/%EB%93%B1%EB%A1%9D%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_a48fec11-0adc-4cef-a4f0-5bcf0b144152.png"
   }
 }</code></pre>
 </div>
@@ -1026,10 +1053,34 @@ Content-Length: 383
 <h5 id="_curl_8">Curl</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/blog' -i -X PUT \
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/blog' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.5CX9brkhLz5dPq4Lbn71MmwnT7CVzUNCVjq32bKNNoZ9K0IXhXUjRUDPDAP6JAqq4biv1uCAaMe-VapthBZYuw' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.Q0rDnjaUwXlAkod2gbEDnfvZWsZ0c4pRByyxuyFNTRkIW6VV7CPnERsnzCxnaR7dZQeCpqhOqcYdI5j64dKTfA' \
     -d '{
+  "mainTitle" : "등록 제목",
+  "content" : "등록 내용",
+  "subTitle" : "등록 소제목",
+  "imageName" : "등록 이미지 이름.png",
+  "contentType" : "image/png",
+  "imageData" : "data:image/png;base64,aGVsbG8="
+}'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_블로그_게시글_수정_성공">블로그 게시글 수정 (성공)</h3>
+<div class="sect4">
+<h5 id="_request_example_9">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /auth/blog HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.Q0rDnjaUwXlAkod2gbEDnfvZWsZ0c4pRByyxuyFNTRkIW6VV7CPnERsnzCxnaR7dZQeCpqhOqcYdI5j64dKTfA
+Content-Length: 277
+Host: localhost:8080
+
+{
   "id" : 1,
   "mainTitle" : "수정 제목",
   "content" : "수정 내용",
@@ -1038,21 +1089,7 @@ Content-Length: 383
   "contentType" : "image/png",
   "imageData" : "data:image/png;base64,aGVsbG8=",
   "imgChangeCheck" : true
-}'</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_블로그_게시글_삭제_성공">블로그 게시글 삭제 (성공)</h3>
-<div class="sect4">
-<h5 id="_request_example_9">Request Example</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /auth/blog?blogPK=1 HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.5CX9brkhLz5dPq4Lbn71MmwnT7CVzUNCVjq32bKNNoZ9K0IXhXUjRUDPDAP6JAqq4biv1uCAaMe-VapthBZYuw
-Host: localhost:8080</code></pre>
+}</code></pre>
 </div>
 </div>
 </div>
@@ -1070,12 +1107,18 @@ X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-Content-Length: 59
+Content-Length: 383
 
 {
   "status" : 200,
   "msg" : "성공",
-  "data" : ""
+  "data" : {
+    "id" : 1,
+    "mainTitle" : "수정 제목",
+    "subTitle" : "수정 소제목",
+    "content" : "수정 내용",
+    "imgURL" : "https://aozpportfoliobucket.s3.ap-northeast-2.amazonaws.com/my_blog/%EC%88%98%EC%A0%95%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%9D%B4%EB%A6%84_f74503a1-8058-450e-823d-1a2fa84c7999.png"
+  }
 }</code></pre>
 </div>
 </div>
@@ -1084,45 +1127,33 @@ Content-Length: 59
 <h5 id="_curl_9">Curl</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/blog?blogPK=1' -i -X DELETE \
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/blog' -i -X PUT \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.5CX9brkhLz5dPq4Lbn71MmwnT7CVzUNCVjq32bKNNoZ9K0IXhXUjRUDPDAP6JAqq4biv1uCAaMe-VapthBZYuw'</code></pre>
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.Q0rDnjaUwXlAkod2gbEDnfvZWsZ0c4pRByyxuyFNTRkIW6VV7CPnERsnzCxnaR7dZQeCpqhOqcYdI5j64dKTfA' \
+    -d '{
+  "id" : 1,
+  "mainTitle" : "수정 제목",
+  "content" : "수정 내용",
+  "subTitle" : "수정 소제목",
+  "imageName" : "수정 이미지 이름.png",
+  "contentType" : "image/png",
+  "imageData" : "data:image/png;base64,aGVsbG8=",
+  "imgChangeCheck" : true
+}'</code></pre>
 </div>
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_스킬_페이지">스킬 페이지</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_스킬_추가삭제_성공">스킬 추가/삭제 (성공)</h3>
+<h3 id="_블로그_게시글_삭제_성공">블로그 게시글 삭제 (성공)</h3>
 <div class="sect4">
 <h5 id="_request_example_10">Request Example</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/skills HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /auth/blog?blogPK=1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjgsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.rUrhkIlhp-scV-yH6ViUdTlSK4XsZQHMI9yJvuVJIEw9GEiTKMYo-ah29tWKD82Tco9gFcqwOAtuG2JAHi4KWg
-Content-Length: 244
-Host: localhost:8080
-
-{
-  "backEnd" : [ {
-    "name" : "Java",
-    "status" : "removed"
-  }, {
-    "name" : "Python",
-    "status" : "added"
-  } ],
-  "frontEnd" : [ {
-    "name" : "CSS",
-    "status" : "removed"
-  } ],
-  "devOps" : [ ],
-  "etc" : [ ]
-}</code></pre>
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.Q0rDnjaUwXlAkod2gbEDnfvZWsZ0c4pRByyxuyFNTRkIW6VV7CPnERsnzCxnaR7dZQeCpqhOqcYdI5j64dKTfA
+Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
@@ -1154,24 +1185,716 @@ Content-Length: 59
 <h5 id="_curl_10">Curl</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/skills' -i -X POST \
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/blog?blogPK=1' -i -X DELETE \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjg0MjgsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.rUrhkIlhp-scV-yH6ViUdTlSK4XsZQHMI9yJvuVJIEw9GEiTKMYo-ah29tWKD82Tco9gFcqwOAtuG2JAHi4KWg' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NDYsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.Q0rDnjaUwXlAkod2gbEDnfvZWsZ0c4pRByyxuyFNTRkIW6VV7CPnERsnzCxnaR7dZQeCpqhOqcYdI5j64dKTfA'</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_이력_페이지">이력 페이지</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_공교육_등록_성공">공교육 등록 (성공)</h3>
+<div class="sect4">
+<h5 id="_request_example_11">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/resume/schooledu HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTMsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.-18v-PjfOnZf0o5wSOa-eU5qzBerxg1q7ixxfvU_546amJxMVptyhOokf9pL4VWBvmJDaR_Qg5CoFUB5k50aig
+Content-Length: 106
+Host: localhost:8080
+
+{
+  "values" : [ "2018-09-01", "2022-12-31", "졸업", "자바 대학교", "기계 공학과", "3.7" ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_11">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 337
+
+{
+  "status" : 200,
+  "msg" : "성공",
+  "data" : {
+    "id" : "64f5bb3d5a5c860427d312a6",
+    "schoolAdmissionDate" : "2018-09-01",
+    "schoolGraduateDate" : "2022-12-31",
+    "schoolGraduateStatus" : "졸업",
+    "schoolName" : "자바 대학교",
+    "schoolMajor" : "기계 공학과",
+    "schoolCredit" : "3.7"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_curl_11">Curl</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/resume/schooledu' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTMsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.-18v-PjfOnZf0o5wSOa-eU5qzBerxg1q7ixxfvU_546amJxMVptyhOokf9pL4VWBvmJDaR_Qg5CoFUB5k50aig' \
     -d '{
-  "backEnd" : [ {
-    "name" : "Java",
-    "status" : "removed"
-  }, {
-    "name" : "Python",
-    "status" : "added"
-  } ],
-  "frontEnd" : [ {
-    "name" : "CSS",
-    "status" : "removed"
-  } ],
-  "devOps" : [ ],
-  "etc" : [ ]
+  "values" : [ "2018-09-01", "2022-12-31", "졸업", "자바 대학교", "기계 공학과", "3.7" ]
 }'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_공교육_삭제_성공">공교육 삭제 (성공)</h3>
+<div class="sect4">
+<h5 id="_request_example_12">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /auth/resume/schooledu?resumeID=64f5bb3d5a5c860427d312bf HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTMsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.-18v-PjfOnZf0o5wSOa-eU5qzBerxg1q7ixxfvU_546amJxMVptyhOokf9pL4VWBvmJDaR_Qg5CoFUB5k50aig
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_12">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 59
+
+{
+  "status" : 200,
+  "msg" : "성공",
+  "data" : ""
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_curl_12">Curl</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/resume/schooledu?resumeID=64f5bb3d5a5c860427d312bf' -i -X DELETE \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTMsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.-18v-PjfOnZf0o5wSOa-eU5qzBerxg1q7ixxfvU_546amJxMVptyhOokf9pL4VWBvmJDaR_Qg5CoFUB5k50aig'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_공교육_row_이동_성공">공교육 Row 이동 (성공)</h3>
+<div class="sect4">
+<h5 id="_request_example_13">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/resume/updateOrder/schooledu HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTIsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.EHgUBIvTgP4IgBnOFPEOYL4m4w7CFRjSAP3NCuBBwQLcUq1KYrUxn9wz2nhe0jQ1PUxtaznoX9UlJaZStWAlOA
+Content-Length: 120
+Host: localhost:8080
+
+[ {
+  "id" : "64f5bb3c5a5c860427d31285",
+  "order" : 2
+}, {
+  "id" : "64f5bb3c5a5c860427d31286",
+  "order" : 1
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_13">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 59
+
+{
+  "status" : 200,
+  "msg" : "성공",
+  "data" : ""
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_curl_13">Curl</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/resume/updateOrder/schooledu' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTIsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.EHgUBIvTgP4IgBnOFPEOYL4m4w7CFRjSAP3NCuBBwQLcUq1KYrUxn9wz2nhe0jQ1PUxtaznoX9UlJaZStWAlOA' \
+    -d '[ {
+  "id" : "64f5bb3c5a5c860427d31285",
+  "order" : 2
+}, {
+  "id" : "64f5bb3c5a5c860427d31286",
+  "order" : 1
+} ]'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_사교육_등록_성공">사교육 등록 (성공)</h3>
+<div class="sect4">
+<h5 id="_request_example_14">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/resume/academyedu HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTIsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.EHgUBIvTgP4IgBnOFPEOYL4m4w7CFRjSAP3NCuBBwQLcUq1KYrUxn9wz2nhe0jQ1PUxtaznoX9UlJaZStWAlOA
+Content-Length: 110
+Host: localhost:8080
+
+{
+  "values" : [ "2022-09-01", "2023-03-31", "수료", "파이썬 아카데미", "웹개발 과정", "-" ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_14">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 346
+
+{
+  "status" : 200,
+  "msg" : "성공",
+  "data" : {
+    "id" : "64f5bb3c5a5c860427d31295",
+    "academyEnrollDate" : "2022-09-01",
+    "academyCompletionDate" : "2023-03-31",
+    "academyCompletionStatus" : "수료",
+    "academyName" : "파이썬 아카데미",
+    "academyCourse" : "웹개발 과정",
+    "academyEtc" : "-"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_curl_14">Curl</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/resume/academyedu' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTIsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.EHgUBIvTgP4IgBnOFPEOYL4m4w7CFRjSAP3NCuBBwQLcUq1KYrUxn9wz2nhe0jQ1PUxtaznoX9UlJaZStWAlOA' \
+    -d '{
+  "values" : [ "2022-09-01", "2023-03-31", "수료", "파이썬 아카데미", "웹개발 과정", "-" ]
+}'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_사교육_삭제_성공">사교육 삭제 (성공)</h3>
+<div class="sect4">
+<h5 id="_request_example_15">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /auth/resume/academyedu?resumeID=64f5bb3d5a5c860427d312b9 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTMsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.-18v-PjfOnZf0o5wSOa-eU5qzBerxg1q7ixxfvU_546amJxMVptyhOokf9pL4VWBvmJDaR_Qg5CoFUB5k50aig
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_15">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 59
+
+{
+  "status" : 200,
+  "msg" : "성공",
+  "data" : ""
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_curl_15">Curl</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/resume/academyedu?resumeID=64f5bb3d5a5c860427d312b9' -i -X DELETE \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTMsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.-18v-PjfOnZf0o5wSOa-eU5qzBerxg1q7ixxfvU_546amJxMVptyhOokf9pL4VWBvmJDaR_Qg5CoFUB5k50aig'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_사교육_row_이동_성공">사교육 Row 이동 (성공)</h3>
+<div class="sect4">
+<h5 id="_request_example_16">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/resume/updateOrder/academyedu HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTMsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.-18v-PjfOnZf0o5wSOa-eU5qzBerxg1q7ixxfvU_546amJxMVptyhOokf9pL4VWBvmJDaR_Qg5CoFUB5k50aig
+Content-Length: 120
+Host: localhost:8080
+
+[ {
+  "id" : "64f5bb3d5a5c860427d312e3",
+  "order" : 2
+}, {
+  "id" : "64f5bb3d5a5c860427d312e4",
+  "order" : 1
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_16">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 59
+
+{
+  "status" : 200,
+  "msg" : "성공",
+  "data" : ""
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_curl_16">Curl</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/resume/updateOrder/academyedu' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTMsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.-18v-PjfOnZf0o5wSOa-eU5qzBerxg1q7ixxfvU_546amJxMVptyhOokf9pL4VWBvmJDaR_Qg5CoFUB5k50aig' \
+    -d '[ {
+  "id" : "64f5bb3d5a5c860427d312e3",
+  "order" : 2
+}, {
+  "id" : "64f5bb3d5a5c860427d312e4",
+  "order" : 1
+} ]'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_자격증_등록_성공">자격증 등록 (성공)</h3>
+<div class="sect4">
+<h5 id="_request_example_17">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/resume/certificate HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTMsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.-18v-PjfOnZf0o5wSOa-eU5qzBerxg1q7ixxfvU_546amJxMVptyhOokf9pL4VWBvmJDaR_Qg5CoFUB5k50aig
+Content-Length: 111
+Host: localhost:8080
+
+{
+  "values" : [ "2023-06-01", "IT 자격증", "정보처리기사", "산업인력공단", "최종합격" ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_17">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 328
+
+{
+  "status" : 200,
+  "msg" : "성공",
+  "data" : {
+    "id" : "64f5bb3d5a5c860427d312e0",
+    "acquisitionDate" : "2023-06-01",
+    "certificateType" : "IT 자격증",
+    "certificateName" : "정보처리기사",
+    "certificateIssuingAgency" : "산업인력공단",
+    "certificateStatus" : "최종합격"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_curl_17">Curl</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/resume/certificate' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTMsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.-18v-PjfOnZf0o5wSOa-eU5qzBerxg1q7ixxfvU_546amJxMVptyhOokf9pL4VWBvmJDaR_Qg5CoFUB5k50aig' \
+    -d '{
+  "values" : [ "2023-06-01", "IT 자격증", "정보처리기사", "산업인력공단", "최종합격" ]
+}'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_자격증_삭제_성공">자격증 삭제 (성공)</h3>
+<div class="sect4">
+<h5 id="_request_example_18">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /auth/resume/certificate?resumeID=64f5bb3d5a5c860427d312b3 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTMsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.-18v-PjfOnZf0o5wSOa-eU5qzBerxg1q7ixxfvU_546amJxMVptyhOokf9pL4VWBvmJDaR_Qg5CoFUB5k50aig
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_18">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 59
+
+{
+  "status" : 200,
+  "msg" : "성공",
+  "data" : ""
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_curl_18">Curl</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/resume/certificate?resumeID=64f5bb3d5a5c860427d312b3' -i -X DELETE \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTMsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.-18v-PjfOnZf0o5wSOa-eU5qzBerxg1q7ixxfvU_546amJxMVptyhOokf9pL4VWBvmJDaR_Qg5CoFUB5k50aig'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_자격증_row_이동_성공">자격증 Row 이동 (성공)</h3>
+<div class="sect4">
+<h5 id="_request_example_19">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/resume/updateOrder/certificate HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTMsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.-18v-PjfOnZf0o5wSOa-eU5qzBerxg1q7ixxfvU_546amJxMVptyhOokf9pL4VWBvmJDaR_Qg5CoFUB5k50aig
+Content-Length: 120
+Host: localhost:8080
+
+[ {
+  "id" : "64f5bb3d5a5c860427d312cb",
+  "order" : 2
+}, {
+  "id" : "64f5bb3d5a5c860427d312cc",
+  "order" : 1
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_19">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 59
+
+{
+  "status" : 200,
+  "msg" : "성공",
+  "data" : ""
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_curl_19">Curl</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/resume/updateOrder/certificate' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTMsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.-18v-PjfOnZf0o5wSOa-eU5qzBerxg1q7ixxfvU_546amJxMVptyhOokf9pL4VWBvmJDaR_Qg5CoFUB5k50aig' \
+    -d '[ {
+  "id" : "64f5bb3d5a5c860427d312cb",
+  "order" : 2
+}, {
+  "id" : "64f5bb3d5a5c860427d312cc",
+  "order" : 1
+} ]'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_자기주도학습_등록_성공">자기주도학습 등록 (성공)</h3>
+<div class="sect4">
+<h5 id="_request_example_20">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/resume/selfstudy HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTMsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.-18v-PjfOnZf0o5wSOa-eU5qzBerxg1q7ixxfvU_546amJxMVptyhOokf9pL4VWBvmJDaR_Qg5CoFUB5k50aig
+Content-Length: 91
+Host: localhost:8080
+
+{
+  "values" : [ "2023-08-01", "데브옵스", "Docker", "인프런", "학습 링크" ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_20">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 300
+
+{
+  "status" : 200,
+  "msg" : "성공",
+  "data" : {
+    "id" : "64f5bb3d5a5c860427d312d7",
+    "selfStudyDate" : "2023-08-01",
+    "selfStudytype" : "데브옵스",
+    "selfStudyTheme" : "Docker",
+    "selfStudyPlatform" : "인프런",
+    "selfStudyBloggingLink" : "학습 링크"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_curl_20">Curl</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/resume/selfstudy' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTMsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.-18v-PjfOnZf0o5wSOa-eU5qzBerxg1q7ixxfvU_546amJxMVptyhOokf9pL4VWBvmJDaR_Qg5CoFUB5k50aig' \
+    -d '{
+  "values" : [ "2023-08-01", "데브옵스", "Docker", "인프런", "학습 링크" ]
+}'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_자기주도학습_삭제_성공">자기주도학습 삭제 (성공)</h3>
+<div class="sect4">
+<h5 id="_request_example_21">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /auth/resume/selfstudy?resumeID=64f5bb3c5a5c860427d3129c HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTIsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.EHgUBIvTgP4IgBnOFPEOYL4m4w7CFRjSAP3NCuBBwQLcUq1KYrUxn9wz2nhe0jQ1PUxtaznoX9UlJaZStWAlOA
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_21">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 59
+
+{
+  "status" : 200,
+  "msg" : "성공",
+  "data" : ""
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_curl_21">Curl</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/resume/selfstudy?resumeID=64f5bb3c5a5c860427d3129c' -i -X DELETE \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTIsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.EHgUBIvTgP4IgBnOFPEOYL4m4w7CFRjSAP3NCuBBwQLcUq1KYrUxn9wz2nhe0jQ1PUxtaznoX9UlJaZStWAlOA'</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_자기주도학습_row_이동_성공">자기주도학습 Row 이동 (성공)</h3>
+<div class="sect4">
+<h5 id="_request_example_22">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/resume/updateOrder/selfstudy HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTQsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.shHengIlZjugMYvHX_MIoG4KqMi5QoQ-zGQh04IaeBFhT4wg6WiLcvnVMKw3hfNjG3AvDuYF0Jzz8kyS8UhjSg
+Content-Length: 120
+Host: localhost:8080
+
+[ {
+  "id" : "64f5bb3e5a5c860427d312ef",
+  "order" : 2
+}, {
+  "id" : "64f5bb3e5a5c860427d312f0",
+  "order" : 1
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_22">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Content-Length: 59
+
+{
+  "status" : 200,
+  "msg" : "성공",
+  "data" : ""
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_curl_22">Curl</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/auth/resume/updateOrder/selfstudy' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3QiLCJyb2xlIjoiUk9MRV9hZG1pbiIsImlkIjoxLCJleHAiOjE2OTM4Mjk0NTQsImVtYWlsIjoiYW96cDczQG5hdmVyLmNvbSJ9.shHengIlZjugMYvHX_MIoG4KqMi5QoQ-zGQh04IaeBFhT4wg6WiLcvnVMKw3hfNjG3AvDuYF0Jzz8kyS8UhjSg' \
+    -d '[ {
+  "id" : "64f5bb3e5a5c860427d312ef",
+  "order" : 2
+}, {
+  "id" : "64f5bb3e5a5c860427d312f0",
+  "order" : 1
+} ]'</code></pre>
 </div>
 </div>
 </div>
@@ -1182,7 +1905,7 @@ Content-Length: 59
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-09-04 19:53:14 +0900
+Last updated 2023-09-04 20:10:10 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
