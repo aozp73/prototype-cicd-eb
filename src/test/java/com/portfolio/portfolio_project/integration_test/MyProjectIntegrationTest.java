@@ -117,14 +117,14 @@ public class MyProjectIntegrationTest extends AbstractIntegrationTest {
 
             MyProjectDTO_In.PutDTO.ImageDetails projectImageDetails = new MyProjectDTO_In.PutDTO.ImageDetails(
                     "data:image/png;base64,aGVsbG8=",
-                    "등록 프로젝트 이미지 이름.png",
+                    "수정 프로젝트 이미지 이름.png",
                     "image/png",
                     true 
             );
 
             MyProjectDTO_In.PutDTO.ImageDetails featureImageDetails = new MyProjectDTO_In.PutDTO.ImageDetails(
                     "data:image/png;base64,aGVsbG8=",
-                    "등록 개인수행 이미지 이름.png",
+                    "수정 개인수행 이미지 이름.png",
                     "image/png",
                     true 
             );
@@ -132,12 +132,12 @@ public class MyProjectIntegrationTest extends AbstractIntegrationTest {
             List<String> selectedRoles = Arrays.asList("BackEnd", "FrontEnd", "DevOps");
 
             MyProjectDTO_In.PutDTO putDTO_In = new MyProjectDTO_In.PutDTO(1L,
-                                                                            "등록 프로젝트 이름",
+                                                                            "수정 프로젝트 이름",
                                                                             2,
                                                                             "2023-09-03",
                                                                             "2023-09-05",
-                                                                            "등록 readme 주소",
-                                                                            "등록 github 주소",
+                                                                            "수정 readme 주소",
+                                                                            "수정 github 주소",
                                                                             selectedRoles,
                                                                             true, 
                                                                             projectImageDetails,
@@ -157,9 +157,9 @@ public class MyProjectIntegrationTest extends AbstractIntegrationTest {
             resultActions
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.data.id").value(1L))
-                    .andExpect(jsonPath("$.data.projectName").value("등록 프로젝트 이름"))
+                    .andExpect(jsonPath("$.data.projectName").value("수정 프로젝트 이름"))
                     .andExpect(jsonPath("$.data.member").value(2))
-                    .andExpect(jsonPath("$.data.githubUrl").value("등록 github 주소"))
+                    .andExpect(jsonPath("$.data.githubUrl").value("수정 github 주소"))
                     .andExpect(jsonPath("$.data.selectedRoles", hasSize(3)));
             resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }

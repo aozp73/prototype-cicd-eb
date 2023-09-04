@@ -65,7 +65,7 @@ tasks.named('asciidoctor') {
 bootJar {
     dependsOn asciidoctor
     copy {
-        from "${asciidoctor.outputDir}" // src/docs/asciidoc
+        from "${asciidoctor.outputDir}" // build/docs/asciidoc의 api.docs.html
         into 'src/main/resources/static/docs'
     }
 }
