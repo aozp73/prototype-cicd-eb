@@ -39,6 +39,7 @@ spring:
     ansi:
       enabled: always
 
+# S3 설정
 cloud:
   aws:
     region:
@@ -51,5 +52,17 @@ cloud:
       secret-key: ${secret-key}
     stack:
       auto: false # false로 설정된 경우, CloudFormation 스택은 자동으로 생성되거나 관리되지 않음
+
+# Sentry 설정
+sentry:
+  dsn: ${sentry-dsn}
+  enable-tracing: true
+  send-default-pii: true 
+  environment: development 
+  logging:
+    minimum-event-level: "WARN"
+    minimum-breadcrumb-level: "INFO"  
+  sample-rate: 1
+
 
 name: ${MY.JWT}
