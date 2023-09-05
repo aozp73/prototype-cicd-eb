@@ -56,13 +56,13 @@ cloud:
 # Sentry 설정
 sentry:
   dsn: ${sentry-dsn}
-  enable-tracing: true
-  send-default-pii: true 
-  environment: development 
+  enable-tracing: true     # 성능 데이터 전송
+  send-default-pii: true   # 사용자의 정보 포함
+  environment: development # 필터링에 사용
   logging:
-    minimum-event-level: "WARN"
-    minimum-breadcrumb-level: "INFO"  
-  sample-rate: 1
+    minimum-event-level: "WARN"      # 명시 레벨 이상의 로그 이벤트를 Sentry로 전송
+    minimum-breadcrumb-level: "INFO" # INFO 레벨 이상의 breadcrumb만 기록
+  sample-rate: 1 # 이벤트 샘플링 비율 설정 (1: 100%, 0.1: 10% 등) 
 
 
 name: ${MY.JWT}
