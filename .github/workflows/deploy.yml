@@ -17,18 +17,18 @@ jobs:
           java-version: 11
           distribution: zulu
 # 
-      - name: Setup MySQL
-        uses: samin/mysql-action@v1
-        with:
-          character set server: 'utf8' 
-          mysql database: 'portfolio_test' 
-          mysql user: 'test'
-          mysql password: 1234
+      # - name: Setup MySQL
+      #   uses: samin/mysql-action@v1
+      #   with:
+      #     character set server: 'utf8' 
+      #     mysql database: 'portfolio_test' 
+      #     mysql user: 'test'
+      #     mysql password: 1234
 
-      - name: Start MongoDB
-        uses: supercharge/mongodb-github-action@1.10.0
-        with:
-          mongodb-version: 5.0
+      # - name: Start MongoDB
+      #   uses: supercharge/mongodb-github-action@1.10.0
+      #   with:
+      #     mongodb-version: 5.0
 # 
 
       - name: Set Yaml
@@ -53,7 +53,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
       - name: Build with Gradle
-        run: ./gradlew clean build
+        run: ./gradlew clean build 
 
       - name: Archive test reports
         if: failure()
