@@ -42,8 +42,8 @@ jobs:
           spring.data.mongodb.uri : ${{ secrets.MONGO_HOST }}
           cloud.aws.region.static: ${{ secrets.STATIC }}
           cloud.aws.s3.bucket: ${{ secrets.BUCKET }}
-          cloud.aws.credentials.access-key : ${{ secrets.S3_AWS_SECRET_KEY }}
-          cloud.aws.credentials.secret-key: ${{ secrets.AWS_SECRET_KEY }}
+          cloud.aws.credentials.access-key : ${{ secrets.S3_AWS_ACCESS_KEY }}
+          cloud.aws.credentials.secret-key: ${{ secrets.S3_AWS_SECRET_KEY }}
           sentry.dsn : ${{ secrets.SENTRY_DSN }}
           name : ${{ secrets.MY_JWT }}
           bucket : ${{ secrets.BUCKET }}
