@@ -25,29 +25,18 @@ jobs:
           java-version: 11
           distribution: zulu
 
-      - name: Start MySQL
-        uses: mirromutth/mysql-action@v1.1
+      - name: Setup MySQL
+        uses: samin/mysql-action@v1
         with:
-          host port: 3306
-          container port: 3306
-          mysql database: 'portfolio_test'
-          mysql root password: ${{ secrets.RDS_PASSWORD }}
-          
-      - name: Create mongo Docker container
-        uses: DigiPie/mongo-action@v2.0.1
+          character set server: 'utf8' 
+          mysql database: 'portfolio_test' 
+          mysql user: 'tes'
+          mysql password: 1234
+
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.10.0
         with:
-          image_version: latest
-          port: 27017
-      - name: Install mongosh command
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget gnupg
-          wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
-          echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
-          sudo apt-get update
-          sudo apt-get install -y mongodb-mongosh
-      - name: Test mongo connection
-        run: "sudo mongosh localhost:27017"
+          mongodb-version: 5.0
 
       - name: Set Yaml
         uses: microsoft/variable-substitution@v1
