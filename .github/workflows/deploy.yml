@@ -30,22 +30,16 @@ jobs:
         with:
           files: './src/main/resources/application-prod.yml, ./src/test/resources/application-test.yml' 
         env:
-          # RDS_HOSTNAME: ${{ secrets.RDS_HOSTNAME }}
-          # RDS_PORT: ${{ secrets.RDS_PORT }}
-          # RDS_DB_NAME: ${{ secrets.RDS_DB_NAME }}
-          # RDS_USERNAME: ${{ secrets.RDS_USERNAME }}
-          # RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}
-          # MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
-          # MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
-          # EC2_HOSTNAME: ${{ secrets.EC2_HOSTNAME }}
-          # EC2_PORT: ${{ secrets.EC2_PORT }}
-          # MONGO_DB_NAME: ${{ secrets.MONGO_DB_NAME }}
+          spring.datasource.url: ${{ secrets.RDS_HOST }}
+          spring.datasource.username: ${{ secrets.RDS_USERNAME }}
+          spring.datasource.password: ${{ secrets.RDS_PASSWORD }}
+          spring.data.mongodb.uri : ${{ secrets.MONGO_HOST }}
           cloud.aws.region.static: ${{ secrets.STATIC }}
-          # BUCKET: ${{ secrets.BUCKET }}
-          # S3_AWS_SECRET_KEY: ${{ secrets.S3_AWS_SECRET_KEY }}
-          # AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-          # SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          # MY_JWT: ${{ secrets.MY_JWT }}
+          cloud.aws.s3.bucket: ${{ secrets.BUCKET }}
+          cloud.aws.credentials.access-key : ${{ secrets.S3_AWS_SECRET_KEY }}
+          cloud.aws.credentials.secret-key: ${{ secrets.AWS_SECRET_KEY }}
+          sentry.dsn : ${{ secrets.SENTRY_DSN }}
+          name : ${{ secrets.MY_JWT }}
           
       - name: Debug - Show application-prod.yml
         run: cat ./src/main/resources/application-prod.yml
