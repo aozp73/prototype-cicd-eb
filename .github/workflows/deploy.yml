@@ -16,7 +16,7 @@ jobs:
         with:
           java-version: 11
           distribution: zulu
-
+# 
       - name: Setup MySQL
         uses: samin/mysql-action@v1
         with:
@@ -29,7 +29,7 @@ jobs:
         uses: supercharge/mongodb-github-action@1.10.0
         with:
           mongodb-version: 5.0
-
+# 
       - name: Set Yaml
         uses: microsoft/variable-substitution@v1
         with:
@@ -53,6 +53,13 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build with Gradle
         run: ./gradlew clean build
+
+      - name: Archive test reports
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-reports
+          path: ./build/reports/tests/test/
 
       - name: Get current time
         uses: 1466587594/get-current-time@v2
