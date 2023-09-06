@@ -7,19 +7,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ROOT_PASSWORD: 1234
-          MYSQL_DATABASE: portfolio_test
-          MYSQL_USER: tes
-          MYSQL_PASSWORD: 1234
-      mongodb:
-        image: mongo:latest
-        env:
-          MONGO_INITDB_DATABASE: portfolio_test
    
     steps:
       - name: Checkout
@@ -30,18 +17,18 @@ jobs:
           java-version: 11
           distribution: zulu
 
-      # - name: Setup MySQL
-      #   uses: samin/mysql-action@v1
-      #   with:
-      #     character set server: 'utf8' 
-      #     mysql database: 'portfolio_test' 
-      #     mysql user: 'tes'
-      #     mysql password: 1234
+      - name: Setup MySQL
+        uses: samin/mysql-action@v1
+        with:
+          character set server: 'utf8' 
+          mysql database: 'portfolio_test' 
+          mysql user: 'tes'
+          mysql password: 1234
 
-      # - name: Start MongoDB
-      #   uses: supercharge/mongodb-github-action@1.10.0
-      #   with:
-      #     mongodb-version: 5.0
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.10.0
+        with:
+          mongodb-version: 5.0
 
       - name: Set Yaml
         uses: microsoft/variable-substitution@v1
