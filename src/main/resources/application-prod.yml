@@ -43,7 +43,7 @@ cloud:
     s3:
       bucket: ${BUCKET}
     credentials:
-      access-key: ${AWS_ACCESS_KEY}
+      access-key: ${S3_AWS_SECRET_KEY}
       secret-key: ${AWS_SECRET_KEY}
     stack:
       auto: false

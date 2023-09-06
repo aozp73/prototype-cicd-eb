@@ -7,6 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
     services:
       mysql:
         image: mysql:5.7
@@ -14,6 +15,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: 1234
       mongodb:
         image: mongo
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -22,6 +24,29 @@ jobs:
         with:
           java-version: 11
           distribution: zulu
+
+      - name: Set Yaml
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: './src/main/resources/application-prod.yml, ./src/test/resources/application-test.yml' 
+        env:
+          RDS_HOSTNAME: ${{ secrets.RDS_HOSTNAME }}
+          RDS_PORT: ${{ secrets.RDS_PORT }}
+          RDS_DB_NAME: ${{ secrets.RDS_DB_NAME }}
+          RDS_USERNAME: ${{ secrets.RDS_USERNAME }}
+          RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}
+          MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
+          MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+          EC2_HOSTNAME: ${{ secrets.EC2_HOSTNAME }}
+          EC2_PORT: ${{ secrets.EC2_PORT }}
+          MONGO_DB_NAME: ${{ secrets.MONGO_DB_NAME }}
+          STATIC: ${{ secrets.STATIC }}
+          BUCKET: ${{ secrets.BUCKET }}
+          S3_AWS_SECRET_KEY: ${{ secrets.S3_AWS_SECRET_KEY }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          MY_JWT: ${{ secrets.MY_JWT }}
+          
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
       - name: Build with Gradle
