@@ -12,14 +12,14 @@ spring:
       suffix: .jsp 
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/portfolio_test?useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimezone=UTC
+    url: jdbc:mysql://${RDS_HOSTNAME}:${RDS_PORT}/${RDS_DB_NAME}?useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: tes
-    password: 1234
+    username: ${RDS_USERNAME}
+    password: ${RDS_PASSWORD}
 
   data:
     mongodb:
-      uri: mongodb://127.0.0.1:27017/portfolio_test
+      uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${EC2_HOSTNAME}:${EC2_PORT}/${MONGO_DB_NAME}?authSource=admin
 
   jpa:
     open-in-view: false
