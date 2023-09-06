@@ -1,6 +1,7 @@
 package com.portfolio.portfolio_project;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +16,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
+
+import com.portfolio.portfolio_project.domain.jpa.myproject.enums.ProjectRole;
+import com.portfolio.portfolio_project.domain.jpa.myproject.my_project_role_code.MyProjectRoleCode;
+import com.portfolio.portfolio_project.domain.jpa.skills.enums.SkillType;
+import com.portfolio.portfolio_project.domain.jpa.skills.my_skill_type_code.MySkillTypeCode;
 
 @ExtendWith({ SpringExtension.class, RestDocumentationExtension.class })
 public class AbstractIntegrationTest {

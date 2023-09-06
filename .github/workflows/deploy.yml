@@ -1,0 +1,82 @@
+name: aws-portfolio
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: 1234
+      mongodb:
+        image: mongo
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: zulu
+
+      - name: Set Yaml
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: './src/main/resources/application-prod.yml, ./src/test/resources/application-test.yml' 
+        env:
+          RDS_HOSTNAME: ${{ secrets.RDS_HOSTNAME }}
+          RDS_PORT: ${{ secrets.RDS_PORT }}
+          RDS_DB_NAME: ${{ secrets.RDS_DB_NAME }}
+          RDS_USERNAME: ${{ secrets.RDS_USERNAME }}
+          RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}
+          MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
+          MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+          EC2_HOSTNAME: ${{ secrets.EC2_HOSTNAME }}
+          EC2_PORT: ${{ secrets.EC2_PORT }}
+          MONGO_DB_NAME: ${{ secrets.MONGO_DB_NAME }}
+          STATIC: ${{ secrets.STATIC }}
+          BUCKET: ${{ secrets.BUCKET }}
+          S3_AWS_SECRET_KEY: ${{ secrets.S3_AWS_SECRET_KEY }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          MY_JWT: ${{ secrets.MY_JWT }}
+          
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+      - name: Build with Gradle
+        run: ./gradlew clean build
+
+      - name: Get current time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYY-MM-DDTHH-mm-ss
+          utcOffset: "+09:00"
+
+      - name: Show Current Time
+        run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"
+
+      # EB에 CD 하기 위해 추가 작성
+      - name: Generate deployment package
+        run: |
+          mkdir -p deploy
+          cp build/libs/*.jar deploy/application.jar
+          cp Procfile deploy/Procfile
+          cp -r .ebextensions deploy/.ebextensions
+          cd deploy && zip -r deploy.zip .
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          application_name: aws-portfolio-beanstalk 
+          environment_name: Aws-portfolio-beanstalk-env 
+          version_label: aws-portfolio-${{steps.current-time.outputs.formattedTime}}
+          region: ap-northeast-2
+          deployment_package: deploy/deploy.zip
