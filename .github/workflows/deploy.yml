@@ -46,8 +46,8 @@ jobs:
           cloud.aws.credentials.secret-key: ${{ secrets.AWS_SECRET_KEY }}
           sentry.dsn : ${{ secrets.SENTRY_DSN }}
           name : ${{ secrets.MY_JWT }}
-          bucket : ${{ secrets.STATIC }}
-          static : ${{ secrets.BUCKET }}
+          bucket : ${{ secrets.BUCKET }}
+          static : ${{ secrets.STATIC }}
           
       - name: Debug - Show application-prod.yml
         run: cat ./src/main/resources/application-prod.yml
