@@ -25,9 +25,9 @@ public class S3Utils {
 
     private final AmazonS3Client amazonS3Client;
 
-    @Value("${bucket}")
+    @Value("${BUCKET}")
     private String bucket;
-    @Value("${static}")
+    @Value("${STATIC}")
     private String staticRegion;
 
     public List<String> uploadImageToS3(String imageData, String imageName, String contentType, String keyword) throws Exception500 {
