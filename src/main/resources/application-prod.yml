@@ -60,3 +60,5 @@ sentry:
   sample-rate: 1 
 
 name: ${MY_JWT}
+bucket: ${BUCKET}
+static: ${STATIC}
