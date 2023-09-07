@@ -23,13 +23,17 @@ public class MainIntroduceController {
 
     private final MainIntroduceService mainIntroduceService;
 
+    @GetMapping("/")
+    public String eb_request() {
+        return "redirect:/mainpage";
+    }
     // FindAll
-    @GetMapping({"/", "/mainpage"})
-    public ResponseEntity<String> main_findAll(Model model){
+    @GetMapping("/mainpage")
+    public String main_findAll(Model model){
         List<MainIntroduceDTO_Out.FindAllDTO> mainIntroduceList = mainIntroduceService.main_findAll();
         model.addAttribute("mainIntroduceList", mainIntroduceList);
-    
-        return ResponseEntity.ok("/mainpage");
+
+        return "/mainpage";
     }
 
     // POST
