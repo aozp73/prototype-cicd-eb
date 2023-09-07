@@ -47,7 +47,7 @@ cloud:
       secret-key: ${S3.AWS.SECRET.KEY}
     stack:
       auto: false
-
+ 
 # Sentry 설정
 sentry:
   dsn: ${SENTRY.DSN}
