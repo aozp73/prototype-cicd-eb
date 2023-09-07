@@ -158,7 +158,7 @@ public class MainIntroduceIntegrationTest extends AbstractIntegrationTest {
 
             // when
             ResultActions resultActions = mvc
-                                            .perform(get("/")
+                                            .perform(get("/mainpage")
                                             .contentType(MediaType.APPLICATION_JSON));
 
             // then
