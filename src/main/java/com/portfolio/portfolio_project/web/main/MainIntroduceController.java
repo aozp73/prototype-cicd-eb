@@ -23,10 +23,6 @@ public class MainIntroduceController {
 
     private final MainIntroduceService mainIntroduceService;
 
-    // @GetMapping("/")
-    // public String eb_request() {
-    //     return "redirect:/mainpage";
-    // }
     // FindAll
     @GetMapping({"/","/mainpage"})
     public String main_findAll(Model model){
