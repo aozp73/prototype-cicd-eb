@@ -72,6 +72,7 @@ public class MyProjectIntegrationTest extends AbstractIntegrationTest {
     @BeforeEach
     public void init() {
             em.createNativeQuery("ALTER TABLE my_project_tb AUTO_INCREMENT = 1").executeUpdate();
+            em.createNativeQuery("ALTER TABLE my_project_role_code_tb AUTO_INCREMENT = 1").executeUpdate();
             setup();
     }
 
