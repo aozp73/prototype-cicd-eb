@@ -31,7 +31,7 @@ public class MyExceptionAdvice {
 
     @ExceptionHandler(Exception403.class)
     public ResponseEntity<?> forbidden(Exception403 e) {
-        Sentry.captureException(e);
+        Sentry.captureException(e); 
         return new ResponseEntity<>(e.body(), e.status());
     }
 
