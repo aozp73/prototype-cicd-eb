@@ -49,15 +49,15 @@ cloud:
       auto: false
 
 # Sentry 설정
-sentry:
-  dsn: ${SENTRY_DSN}
-  enable-tracing: true
-  send-default-pii: true
-  environment: development
-  logging:
-    minimum-event-level: "WARN"
-    minimum-breadcrumb-level: "INFO" 
-  sample-rate: 1 
+# sentry:
+#   dsn: ${SENTRY_DSN}
+#   enable-tracing: true
+#   send-default-pii: true
+#   environment: development
+#   logging:
+#     minimum-event-level: "WARN"
+#     minimum-breadcrumb-level: "INFO" 
+#   sample-rate: 1 
 
 name: ${MY_JWT}
 bucket: ${BUCKET}
