@@ -25,11 +25,11 @@ public class MainIntroduceController {
 
     // FindAll
     @GetMapping({"/", "/mainpage"})
-    public String main_findAll(Model model){
+    public ResponseEntity<String> main_findAll(Model model){
         List<MainIntroduceDTO_Out.FindAllDTO> mainIntroduceList = mainIntroduceService.main_findAll();
         model.addAttribute("mainIntroduceList", mainIntroduceList);
-
-        return "/mainpage";
+    
+        return ResponseEntity.ok("/mainpage");
     }
 
     // POST
