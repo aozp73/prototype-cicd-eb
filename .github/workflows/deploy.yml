@@ -16,20 +16,6 @@ jobs:
         with:
           java-version: 11
           distribution: zulu
-# 
-      # - name: Setup MySQL
-      #   uses: samin/mysql-action@v1
-      #   with:
-      #     character set server: 'utf8' 
-      #     mysql database: 'portfolio_test' 
-      #     mysql user: 'test'
-      #     mysql password: 1234
-
-      # - name: Start MongoDB
-      #   uses: supercharge/mongodb-github-action@1.10.0
-      #   with:
-      #     mongodb-version: 5.0
-# 
 
       - name: Set Yaml
         uses: microsoft/variable-substitution@v1
@@ -87,8 +73,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          application_name: aws-portfolio-beanstalk 
-          environment_name: Aws-portfolio-beanstalk-env 
+          application_name: aws-portfolio-beanstalk
+          environment_name: Aws-portfolio-beanstalk-env
           version_label: aws-portfolio-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
           deployment_package: deploy/deploy.zip
