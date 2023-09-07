@@ -23,12 +23,12 @@ public class MainIntroduceController {
 
     private final MainIntroduceService mainIntroduceService;
 
-    @GetMapping("/")
-    public String eb_request() {
-        return "redirect:/mainpage";
-    }
+    // @GetMapping("/")
+    // public String eb_request() {
+    //     return "redirect:/mainpage";
+    // }
     // FindAll
-    @GetMapping("/mainpage")
+    @GetMapping({"/","/mainpage"})
     public String main_findAll(Model model){
         List<MainIntroduceDTO_Out.FindAllDTO> mainIntroduceList = mainIntroduceService.main_findAll();
         model.addAttribute("mainIntroduceList", mainIntroduceList);
