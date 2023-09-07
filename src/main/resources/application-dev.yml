@@ -3,7 +3,7 @@ server:
     encoding:
       charset: utf-8
       force: true
-  port: 8080
+  port: 5000
 
 spring:
   mvc:
@@ -12,24 +12,19 @@ spring:
       suffix: .jsp 
 
   datasource:
-    url: jdbc:mysql://localhost:3306/portfolio?useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://${RDS.HOSTNAME}:${RDS.PORT}/${RDS.DB.NAME}?useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimezone=UTC&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: 1234
-  # sql:
-  #   init:
-  #     mode: always
+    username: ${RDS.USERNAME}
+    password: ${RDS.PASSWORD}
 
   data:
     mongodb:
-      uri: mongodb://localhost:27017/portfolio
+      uri: mongodb://${MONGO.USERNAME}:${MONGO.PASSWORD}@${EC2.HOSTNAME}:${EC2.PORT}/${MONGO.DB.NAME}?authSource=admin
 
   jpa:
-    # defer-datasource-initialization: true
     open-in-view: false
     hibernate:
-      # ddl-auto: create
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
@@ -44,17 +39,26 @@ cloud:
   aws:
     region:
       static: ${STATIC}
-      auto: false # false면 자동으로 리전을 선택하지 않고, static 설정을 따름
+      auto: false
     s3:
       bucket: ${BUCKET}
     credentials:
-      access-key: ${S3_AWS_ACCESS_KEY}
-      secret-key: ${S3_AWS_SECRET_KEY}
+      access-key: ${S3.AWS.ACCESS.KEY}
+      secret-key: ${S3.AWS.SECRET.KEY}
     stack:
-      auto: false # false로 설정된 경우, CloudFormation 스택은 자동으로 생성되거나 관리되지 않음
+      auto: false
 
+# Sentry 설정
+sentry:
+  dsn: ${SENTRY.DSN}
+  enable-tracing: true
+  send-default-pii: true
+  environment: development
+  logging:
+    minimum-event-level: "WARN"
+    minimum-breadcrumb-level: "INFO" 
+  sample-rate: 1 
 
-
-name: ${MY_JWT}
+name: ${MY.JWT}
 bucket: ${BUCKET}
 static: ${STATIC}
