@@ -71,6 +71,7 @@ public class MySkillIntegrationTest extends AbstractIntegrationTest {
     @BeforeEach
     public void init() {
             em.createNativeQuery("ALTER TABLE my_skill_tb AUTO_INCREMENT = 1").executeUpdate();
+            em.createNativeQuery("ALTER TABLE my_skill_type_code_tb AUTO_INCREMENT = 1").executeUpdate();
             setup();
     }
 
