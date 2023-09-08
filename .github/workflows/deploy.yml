@@ -17,6 +17,7 @@ jobs:
           java-version: 11
           distribution: zulu
 
+          # Yaml 환경변수 세팅
       - name: Set Yaml
         uses: microsoft/variable-substitution@v1
         with:
@@ -38,13 +39,13 @@ jobs:
       - name: Debug - Show application-prod.yml
         run: cat ./src/main/resources/application-prod.yml
 
+        # 권한 부여 후, War 빌드
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
-      # - name: Build with Gradle
-      #   run: ./gradlew clean build 
       - name: Build with Gradle
         run: ./gradlew bootWar
 
+        # Build 테스트 실패 시 디버깅 용도
       - name: Archive test reports
         if: failure()
         uses: actions/upload-artifact@v2
@@ -62,9 +63,7 @@ jobs:
       - name: Show Current Time
         run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"
 
-
-
-      # EB에 CD 하기 위해 추가 작성
+      # EB에 CD
       - name: Generate deployment package
         run: |
           mkdir -p deploy
